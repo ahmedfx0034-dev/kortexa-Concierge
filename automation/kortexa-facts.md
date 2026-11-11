@@ -32,13 +32,14 @@ editing. It doesn't.
 
 - The Photo-to-Cinema Method is a one-hour online workshop where Ahmed-Saleem
   teaches agents to make these videos themselves, step by step.
-- Price: GH₵700 per person. The first 5 people to sign up pay GH₵500.
-- Only 10 seats, because it is hands-on.
+- Price: GH₵700 per person. (The GH₵500 early price for the first 5 is gone.)
+- The workshop is limited to 10 people because it is hands-on. Only 1 seat is left.
 - Every attendee gets Ahmed-Saleem's ready-made folder so they can start the
   same day.
 - No editing skills needed.
 - Workshop date: [date]
-- Booking link for a call: [booking link]
+- Booking link for a 15-minute call: https://cal.com/ahmed-saleem-kortexa/photo-to-cinema-call
+- On that call Ahmed-Saleem phones them on the number they give.
 
 ## Be honest about these (never write around them)
 
@@ -53,5 +54,5 @@ editing. It doesn't.
 
 ## Hand over to Ahmed-Saleem (don't answer these yourself)
 
-- Refunds, discounts beyond the GH₵500 early price, payment problems,
+- Refunds, discounts, payment problems,
   complaints, legal questions, anything about a specific AI tool's pricing.
