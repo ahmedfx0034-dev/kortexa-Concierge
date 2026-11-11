@@ -1,31 +1,35 @@
 # What the AI is allowed to say about Kortexa
 
 The AI reply assistant only states facts written in this file. Edit it in your
-own words. Anything that isn't here, the AI says "{sender} will confirm that on
-the call" instead of guessing.
+own words. Anything that isn't here, the AI says "{sender} will confirm that"
+instead of guessing.
 
 ## The five elements
 
-- **Target customer:** real estate agencies and agents in Ghana who get buyer
-  and tenant enquiries on WhatsApp, Instagram, Facebook and their website.
-- **Desired outcome:** more booked viewings from the enquiries they already get.
-- **Benefit:** without hiring extra staff and without answering messages late
-  at night.
-- **Pain point:** answering the same "is it still available? how much?"
-  questions all day, and losing serious leads who booked with the agent who
-  answered first.
-- **Signature solution:** the 60-Second Booking System by Kortexa.
+- **Target customer:** real estate agencies and agents in Ghana who market
+  their listings on Instagram, TikTok, Facebook and WhatsApp Status.
+- **Desired outcome:** a property video for every listing.
+- **Benefit:** ready in under 10 minutes, made from the photos they already have.
+- **Pain point:** paying a videographer, a cameraman and an editor, booking a
+  shoot day, and waiting days for the edit, so most listings go up as photos only.
+- **Signature solution:** the Photo-to-Video Listing System by Kortexa.
+
+## The limiting belief to challenge
+
+Agents believe a good property video needs a videographer, a shoot day and an
+editor. It doesn't: the photos they already have are enough.
 
 ## Facts (confirm each one is true before going live)
 
-- Replies to every enquiry within a minute, any time of day.
-- Asks about budget, timeline and what they're looking for.
-- Books the viewing into the agency's calendar.
-- Kortexa sets everything up for the agency.
+- The agency uploads its listing photos.
+- Kortexa turns them into a finished real estate video in under 10 minutes.
+- No videographer, cameraman or editor is needed.
+- The video is ready to post on Instagram, TikTok and WhatsApp Status.
 
 ## What we want them to do
 
-- Agree to a short call with {sender} to see how it would work for them.
+- Ask to see a sample video made from just photos.
+- Then try it on one of their own listings.
 
 ## Things the AI must not discuss (hand over to a human)
 

@@ -13,7 +13,7 @@ Download "replied" CSV                 Agency replies → Claude drafts or sends
                                        Silent 2 days → follow-up 1 (template)
                                        Silent 5 more → follow-up 2 (template), then stops
                                        STOP → opted out forever
-                                       Demo booked → stops following up
+                                       Committed (sample / trial) → stops following up
 ```
 
 ## What it does
@@ -66,13 +66,13 @@ structure as the outreach messages: problem first, then outcome and benefit,
 then a low-stakes ask.
 
 **`kortexa_continue`** (sent once, when you import someone who replied)
-> Hi {{1}}, it's Kortexa, following up on our WhatsApp chat about getting more viewings from the enquiries you already get. This is our main business line. Would a short call this week work to see how the 60-Second Booking System would fit your agency? Reply STOP to opt out.
+> Hi {{1}}, it's Kortexa, following up on our WhatsApp chat. This is our main business line. If you want a property video for every listing without paying a videographer or editor, send us the photos of any listing and we'll show you what the Photo-to-Video Listing System makes in under 10 minutes. Reply STOP to opt out.
 
 **`kortexa_followup_1`** (after 2 quiet days)
-> Hi {{1}}, quick one from Kortexa. The enquiries that arrive after 6pm are often your most serious buyers, and they book with whoever answers first. The 60-Second Booking System answers them within a minute and books the viewing for you. Shall we set up a short call?
+> Hi {{1}}, quick one from Kortexa. By the time a shoot is booked and the edit comes back, most listings have been online for days without a video. With the Photo-to-Video Listing System, your photos become a finished video in under 10 minutes. Want to see a sample?
 
 **`kortexa_followup_2`** (after 5 more quiet days, then nothing)
-> Last message from Kortexa, {{1}}. If you ever want more viewings without hiring extra staff or answering messages at midnight, reply YES and we'll set up a short call. Reply STOP and we won't message again.
+> Last message from Kortexa, {{1}}. If you ever want a video for every listing without paying for a shoot or an editor, reply YES and we'll send you a sample made from just photos. Reply STOP and we won't message again.
 
 ### 2. Run it
 
