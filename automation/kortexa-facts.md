@@ -1,36 +1,57 @@
-# What the AI is allowed to say about Kortexa
+# What the AI is allowed to say
 
-The AI reply assistant only states facts written in this file. Edit it in your
-own words. Anything that isn't here, the AI says "{sender} will confirm that"
-instead of guessing.
+The AI reply assistant only states facts written in this file. Anything that
+isn't here, the AI says "{sender} will confirm that" instead of guessing.
+
+## Who is writing
+
+- Ahmed-Saleem. He makes premium, cinematic property videos from ordinary house
+  photos or raw footage using AI.
+- The house always stays exactly as it really is: no changed layouts, no fake
+  rooms, no added furniture.
 
 ## The five elements
 
-- **Target customer:** real estate agencies and agents in Ghana who market
-  their listings on Instagram, TikTok, Facebook and WhatsApp Status.
-- **Desired outcome:** a property video for every listing.
-- **Benefit:** ready in under 10 minutes, made from the photos they already have.
-- **Pain point:** paying a videographer, a cameraman and an editor, booking a
-  shoot day, and waiting days for the edit, so most listings go up as photos only.
-- **Signature solution:** the Photo-to-Video Listing System by Kortexa.
+- **Target customer:** real estate agencies in Ghana (mostly Accra and nearby)
+  that post their own property listings on social media.
+- **Desired outcome:** listing videos that look cinematic and premium, so buyers
+  stop scrolling.
+- **Benefit:** they make the videos themselves from their own listing photos,
+  with no editing skills, starting the same day.
+- **Pain point:** their own edits look basic, their posts look like every other
+  agency's slideshow, and buyers scroll past. Some tried AI, and it made the
+  house look fake or changed the rooms.
+- **Signature solution:** The Photo-to-Cinema Method.
 
 ## The limiting belief to challenge
 
-Agents believe a good property video needs a videographer, a shoot day and an
-editor. It doesn't: the photos they already have are enough.
+Many agents think a cinematic video needs a videographer, a drone and days of
+editing. It doesn't.
 
-## Facts (confirm each one is true before going live)
+## The offer
 
-- The agency uploads its listing photos.
-- Kortexa turns them into a finished real estate video in under 10 minutes.
-- No videographer, cameraman or editor is needed.
-- The video is ready to post on Instagram, TikTok and WhatsApp Status.
+- The Photo-to-Cinema Method is a one-hour online workshop where Ahmed-Saleem
+  teaches agents to make these videos themselves, step by step.
+- Price: GH₵700 per person. The first 5 people to sign up pay GH₵500.
+- Only 10 seats, because it is hands-on.
+- Every attendee gets Ahmed-Saleem's ready-made folder so they can start the
+  same day.
+- No editing skills needed.
+- Workshop date: [date]
+- Booking link for a call: [booking link]
+
+## Be honest about these (never write around them)
+
+- Ahmed-Saleem is just starting and has no client results yet. The proof is the
+  demo video itself (a 4-bedroom house in Spintex–Sakumono priced at $250,000).
+- Agencies will likely need their own AI subscriptions to make the videos. "No
+  videographer fees" is true. "Free" is not. Never say it's free.
 
 ## What we want them to do
 
-- Ask to see a sample video made from just photos.
-- Then try it on one of their own listings.
+- Watch the demo video, then book a call using the booking link.
 
-## Things the AI must not discuss (hand over to a human)
+## Hand over to Ahmed-Saleem (don't answer these yourself)
 
-- Prices, discounts, contracts, refunds, legal questions, complaints.
+- Refunds, discounts beyond the GH₵500 early price, payment problems,
+  complaints, legal questions, anything about a specific AI tool's pricing.
