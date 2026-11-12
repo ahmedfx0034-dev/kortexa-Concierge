@@ -38,8 +38,8 @@ editing. It doesn't.
   same day.
 - No editing skills needed.
 - Workshop date: [date]
-- Booking link for a 15-minute call: https://cal.com/ahmed-saleem-kortexa/photo-to-cinema-call
-- On that call Ahmed-Saleem phones them on the number they give.
+- Booking link for a 15-minute WhatsApp call: https://cal.com/ahmed-saleem-kortexa/photo-to-cinema-call
+- Ahmed-Saleem calls them on WhatsApp at the number they give when booking.
 
 ## Be honest about these (never write around them)
 
