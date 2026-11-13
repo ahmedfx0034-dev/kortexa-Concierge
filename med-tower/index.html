@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MED Residences — Choose Your Floor</title>
+<meta name="description" content="Choose a floor, fly in through the glass and walk the apartment room by room.">
+<meta name="theme-color" content="#06090f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06090f;
+    --glass: rgba(10, 16, 28, 0.58);
+    --glass-strong: rgba(10, 16, 28, 0.78);
+    --line: rgba(255, 255, 255, 0.14);
+    --text: #f4f6fa;
+    --muted: #a7b0c0;
+    --accent: #3d8bff;
+    --gold: #e7c26b;
+    --warm: #ffcf7a;
+    --radius: 18px;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden; }
+  button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+
+  /* ---------- stage: media + overlay share one box that "covers" the viewport ---------- */
+  #stage { position: fixed; inset: 0; overflow: hidden; background: #000; }
+  #frame { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+  #frame img, #frame video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: fill; transition: opacity .7s ease; }
+  .layer-hidden { opacity: 0; pointer-events: none; }
+  #floors { position: absolute; inset: 0; }
+  #floors svg { width: 100%; height: 100%; display: block; }
+  .band { fill: rgba(255, 207, 122, 0); stroke: rgba(255, 207, 122, 0); stroke-width: 1.2; transition: fill .2s, stroke .2s; cursor: pointer; }
+  .band.sold { cursor: not-allowed; }
+  .band.hover { fill: rgba(255, 207, 122, 0.28); stroke: rgba(255, 230, 170, 0.9); }
+  .band.sel { fill: rgba(61, 139, 255, 0.35); stroke: #9cc5ff; }
+  .band.sold.hover { fill: rgba(150, 150, 160, 0.25); stroke: rgba(200,200,210,.6); }
+  .breathe .band.avail { animation: breathe 3.2s ease-in-out infinite; }
+  @keyframes breathe { 0%, 100% { fill: rgba(255, 207, 122, 0); } 50% { fill: rgba(255, 207, 122, 0.10); } }
+
+  /* ---------- chrome ---------- */
+  .top { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; gap: 12px; padding: 18px 22px; z-index: 10; pointer-events: none; }
+  .logo { pointer-events: auto; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .logo .mk { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); display: grid; place-items: center; font-family: Montserrat; font-weight: 800; font-size: 11px; color: var(--gold); letter-spacing: .5px; }
+  .logo .nm { font-family: Montserrat; font-weight: 700; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; }
+  .logo .nm small { display: block; font-weight: 500; letter-spacing: 2px; font-size: 9.5px; color: var(--muted); margin-top: 2px; }
+  .spacer { flex: 1; }
+  .chip { white-space: nowrap; pointer-events: auto; background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+  .chip:hover { background: var(--glass-strong); }
+
+  .title { position: fixed; left: 22px; bottom: calc(26px + var(--safe-b)); z-index: 6; pointer-events: none; max-width: 520px; transition: opacity .5s; }
+  .title .eyebrow { font-family: Montserrat; font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--accent); text-transform: uppercase; }
+  .title h1 { font-family: Montserrat; font-weight: 800; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.02; margin: 8px 0 0; text-shadow: 0 2px 30px rgba(0,0,0,.45); }
+  .title h1 span { display: inline-block; border: 2px solid #fff; padding: 2px 12px; margin-top: 6px; font-weight: 600; letter-spacing: 4px; font-size: .62em; }
+  .title p { color: #dfe5ef; font-size: 14px; margin: 12px 0 0; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
+
+  /* ---------- floor panel ---------- */
+  .panel { position: fixed; z-index: 12; background: var(--glass); backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 20px 60px rgba(0,0,0,.35); transition: opacity .45s, transform .45s cubic-bezier(.2,.8,.2,1); }
+  .panel.off { opacity: 0; pointer-events: none; transform: translateY(14px); }
+  #picker { right: 28px; top: 50%; transform: translateY(-50%); width: 320px; padding: 22px; }
+  #picker.off { transform: translateY(-46%); }
+  #picker h2 { font-family: Montserrat; font-weight: 700; margin: 0; font-size: 22px; line-height: 1.15; }
+  #picker .sub { color: var(--muted); font-size: 12.5px; margin: 6px 0 16px; line-height: 1.45; }
+  .stepper { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .stepper .num { font-family: Montserrat; font-weight: 800; font-size: 52px; line-height: 1; min-width: 74px; }
+  .stepper .num small { display: block; font-size: 10px; letter-spacing: 2px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .stepper .arrows { display: flex; flex-direction: column; gap: 6px; }
+  .stepper .arrows button { width: 34px; height: 30px; border-radius: 9px; background: rgba(255,255,255,.08); border: 1px solid var(--line); font-size: 14px; }
+  .stepper .arrows button:hover { background: rgba(255,255,255,.16); }
+  .stepper .info { flex: 1; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .stepper .info b { color: var(--text); font-size: 14px; display: block; }
+  .status { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; margin-top: 4px; }
+  .status.avail { background: rgba(80, 200, 120, .18); color: #7fe0a2; }
+  .status.reserved { background: rgba(231, 194, 107, .18); color: var(--gold); }
+  .status.sold { background: rgba(255, 255, 255, .1); color: var(--muted); }
+  .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .specs div { background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; }
+  .specs b { display: block; font-family: Montserrat; font-size: 15px; }
+  .specs span { font-size: 10.5px; color: var(--muted); }
+  .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 16px; border-radius: 12px; font-weight: 600; font-size: 14.5px; }
+  .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 8px 24px rgba(61,139,255,.35); }
+  .btn.primary:hover { background: #2f7cf0; }
+  .btn.primary[disabled] { background: rgba(255,255,255,.12); box-shadow: none; color: var(--muted); cursor: not-allowed; }
+  .btn.ghost { background: rgba(255,255,255,.08); border: 1px solid var(--line); margin-top: 8px; }
+  .legend { display: flex; gap: 12px; margin-top: 14px; font-size: 11px; color: var(--muted); }
+  .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+
+  /* ---------- room HUD ---------- */
+  #roomHud { left: 22px; bottom: calc(22px + var(--safe-b)); width: min(380px, calc(100vw - 44px)); padding: 18px 20px; }
+  #roomHud .eyebrow { font-family: Montserrat; font-size: 10.5px; letter-spacing: 2.5px; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+  #roomHud h3 { font-family: Montserrat; font-weight: 700; font-size: 22px; margin: 6px 0 4px; }
+  #roomHud p { color: #d4dae5; font-size: 13px; line-height: 1.5; margin: 0 0 12px; }
+  #roomHud .row { display: flex; gap: 8px; }
+  #roomHud .row .btn { margin-top: 0; }
+  .dots { display: flex; gap: 6px; margin: 2px 0 12px; }
+  .dots span { width: 22px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.2); }
+  .dots span.on { background: var(--accent); }
+
+  .hotspot { position: absolute; transform: translate(-50%, -50%); z-index: 3; display: flex; align-items: center; gap: 10px; pointer-events: auto; }
+  .hotspot .ring { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #fff; display: grid; place-items: center; background: rgba(61,139,255,.35); box-shadow: 0 0 0 0 rgba(255,255,255,.6); animation: ping 2s infinite; }
+  .hotspot .ring::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+  .hotspot .lbl { background: var(--glass-strong); backdrop-filter: blur(10px); border: 1px solid var(--line); padding: 7px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.55); } 80%, 100% { box-shadow: 0 0 0 18px rgba(255,255,255,0); } }
+
+  .skip { position: fixed; right: 22px; bottom: calc(24px + var(--safe-b)); z-index: 12; }
+  .progress { position: fixed; left: 0; bottom: 0; height: 3px; background: var(--accent); z-index: 13; width: 0; transition: width .1s linear; }
+
+  /* ---------- modal ---------- */
+  .modal { position: fixed; inset: 0; z-index: 30; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; padding: 16px; }
+  .modal.show { display: flex; }
+  .modal form { width: 100%; max-width: 400px; background: #0e1522; border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+  .modal h3 { font-family: Montserrat; margin: 0 0 4px; font-size: 21px; }
+  .modal .sub { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .modal label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; font-weight: 600; }
+  .modal input { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--text); font: inherit; font-size: 15px; }
+  .note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
+
+  /* ---------- loader ---------- */
+  #loader { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; transition: opacity .8s; }
+  #loader.done { opacity: 0; pointer-events: none; }
+  #loader .mk { width: 58px; height: 58px; border-radius: 50%; border: 2px solid var(--gold); display: grid; place-items: center; font-family: Montserrat; font-weight: 800; color: var(--gold); animation: pulse 1.6s infinite; }
+  #loader .bar { width: 160px; height: 2px; background: rgba(255,255,255,.1); overflow: hidden; border-radius: 2px; }
+  #loader .bar i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .3s; }
+  @keyframes pulse { 50% { opacity: .5; } }
+
+  /* ---------- setup mode ---------- */
+  #setup { position: fixed; left: 16px; top: 80px; z-index: 50; width: 300px; background: #0e1522; border: 1px solid var(--accent); border-radius: 14px; padding: 14px; font-size: 12px; display: none; }
+  #setup.show { display: block; }
+  #setup label { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
+  #setup input[type=range] { flex: 1; }
+  #setup textarea { width: 100%; height: 90px; background: #000; color: #9cc5ff; border: 1px solid var(--line); border-radius: 8px; font: 11px monospace; margin-top: 8px; }
+
+  @media (max-width: 760px) {
+    .top { padding: 14px 14px; }
+    .logo .nm small { display: none; }
+    .hide-sm { display: none; }
+    .logo .nm { font-size: 11px; letter-spacing: 2px; }
+    #picker { left: 12px; right: 12px; top: auto; bottom: calc(12px + var(--safe-b)); width: auto; transform: none; padding: 16px 18px; }
+    #picker.off { transform: translateY(20px); }
+    #picker .sub { display: none; }
+    .stepper .num { font-size: 40px; min-width: 58px; }
+    .title { top: 72px; bottom: auto; left: 14px; right: 14px; }
+    .title p { display: none; }
+    #roomHud { left: 12px; right: 12px; bottom: calc(12px + var(--safe-b)); width: auto; padding: 14px 16px; }
+    #roomHud p { display: none; }
+    .skip { bottom: auto; top: 64px; right: 14px; }
+    .hotspot .lbl { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="frame">
+    <img id="still" alt="">
+    <video id="vid" playsinline muted preload="auto" class="layer-hidden"></video>
+    <div id="floors"></div>
+    <div id="hotspots"></div>
+  </div>
+</div>
+
+<div class="top">
+  <a class="logo" href="#" id="home"><div class="mk">MED</div><div class="nm">MED Residences<small>by MED Property</small></div></a>
+  <div class="spacer"></div>
+  <button class="chip" id="backTower" style="display:none">↺ <span class="hide-sm">Back to the </span>Tower</button>
+  <button class="chip" id="bookTop">Book<span class="hide-sm"> a viewing</span></button>
+</div>
+
+<div class="title" id="title">
+  <div class="eyebrow">Labadi Coast · Accra</div>
+  <h1>20 FLOORS<br><span>ON THE ATLANTIC</span></h1>
+  <p>Hover over the tower and choose your floor. Then fly in through the glass.</p>
+</div>
+
+<aside class="panel off" id="picker">
+  <h2>Choose<br>your floor</h2>
+  <div class="sub">Move over the tower, or use the arrows. Each floor shows its availability.</div>
+  <div class="stepper">
+    <div class="num"><small>FLOOR</small><span id="fNum">14</span></div>
+    <div class="arrows"><button id="fUp" aria-label="Floor up">▲</button><button id="fDown" aria-label="Floor down">▼</button></div>
+    <div class="info"><b id="fType">3-Bedroom Sea View</b><span id="fPrice">from $480,000</span><br><span class="status avail" id="fStatus">Available</span></div>
+  </div>
+  <div class="specs"><div><b id="fBeds">3</b><span>Bedrooms</span></div><div><b id="fArea">210 m²</b><span>Interior</span></div><div><b id="fTerrace">45 m²</b><span>Terrace</span></div></div>
+  <button class="btn primary" id="enter">Enter floor 14 →</button>
+  <div class="legend"><span><i style="background:#7fe0a2"></i>Available</span><span><i style="background:var(--gold)"></i>Reserved</span><span><i style="background:#666"></i>Sold</span></div>
+</aside>
+
+<aside class="panel off" id="roomHud">
+  <div class="eyebrow" id="rEyebrow">Floor 14 · Apartment A</div>
+  <h3 id="rName">Living Room</h3>
+  <div class="dots" id="rDots"></div>
+  <p id="rDesc"></p>
+  <div class="row">
+    <button class="btn ghost" id="rPrev">← Previous</button>
+    <button class="btn primary" id="rNext">Next room →</button>
+  </div>
+</aside>
+
+<button class="chip skip" id="skip" style="display:none">Skip ›</button>
+<div class="progress" id="progress"></div>
+
+<div class="modal" id="modal">
+  <form id="bookForm">
+    <h3>Book a viewing</h3>
+    <div class="sub" id="bookSub">MED Residences, Labadi Coast</div>
+    <label for="bName">Your name</label><input id="bName" required autocomplete="name">
+    <label for="bPhone">Phone / WhatsApp</label><input id="bPhone" required inputmode="tel" autocomplete="tel">
+    <label for="bDate">Preferred date</label><input id="bDate" type="date">
+    <button class="btn primary" style="margin-top:16px" type="submit" id="bSubmit">Request viewing</button>
+    <button class="btn ghost" type="button" id="bCancel">Cancel</button>
+    <div class="note">Concept preview: requests aren't sent anywhere yet.</div>
+  </form>
+</div>
+
+<div id="setup">
+  <b>Floor tracing</b> · line the bands up with the tower
+  <label>Left <input type="range" id="sL" min="0" max="1" step="0.001"></label>
+  <label>Right <input type="range" id="sR" min="0" max="1" step="0.001"></label>
+  <label>Roof <input type="range" id="sT" min="0" max="1" step="0.001"></label>
+  <label>Floor 1 <input type="range" id="sB" min="0" max="1" step="0.001"></label>
+  <label>Skew <input type="range" id="sK" min="-0.05" max="0.05" step="0.001"></label>
+  <textarea id="sOut" readonly></textarea>
+</div>
+
+<div id="loader"><div class="mk">MED</div><div class="bar"><i id="loadBar"></i></div></div>
+
+<script>
+// ============================================================================
+// CONFIG: every image, clip, floor and room lives here
+// ============================================================================
+const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_3KkBqFbaM0LiPKOyC27sdIQIGf4/';
+const MEDIA = {
+  tower:    CDN + 'hf_20261113_124035_71cf2d9b-4fa8-4f34-bc04-50415c61ee14.png',
+  terrace:  CDN + 'hf_20261113_124035_3ff1c7c8-2d48-455b-a2d7-26d606316022.png',
+  bedroom:  CDN + 'hf_20261113_124035_ba003593-6143-4289-bc50-ab27a9d64609.png',
+  bathroom: CDN + 'hf_20261113_124035_8f747af6-8952-4ed2-b805-acf17508a9a0.png',
+  flight:   CDN + 'hf_20261113_125143_bd62e7e0-180b-44b9-985c-643659b6ff81.mp4',
+  toBedroom:CDN + 'hf_20261113_125144_01ae7511-ae2d-4569-b280-34608fe1233e.mp4',
+  toBath:   CDN + 'hf_20261113_125144_03f23fa4-2122-4519-924e-2e0b729f8383.mp4',
+};
+// Tower outline in image coordinates (0–1). Tune with ?setup in the URL.
+let TOWER = { left: 0.375, right: 0.488, top: 0.075, bottom: 0.80, skew: 0, floors: 20 };
+// Focus point that stays on screen when a phone crops the 16:9 picture
+const FOCUS_X = 0.43;
+
+const ROOMS = [
+  { id: 'living', name: 'Living Room', still: 'terrace', desc: 'Open-plan living with a walnut slatted ceiling and a stone feature wall. The full-height glass wall slides open to the sea-facing terrace.',
+    next: { clip: 'toBedroom', to: 'bedroom', label: 'Walk to the master bedroom', x: 0.80, y: 0.50 } },
+  { id: 'bedroom', name: 'Master Bedroom', still: 'bedroom', desc: 'King suite with floor-to-ceiling ocean views, warm cove lighting and an ensuite through the side door.',
+    next: { clip: 'toBath', to: 'bathroom', label: 'Into the ensuite', x: 0.84, y: 0.52 } },
+  { id: 'bathroom', name: 'Ensuite Bathroom', still: 'bathroom', desc: 'Travertine throughout, a freestanding stone tub in front of the Atlantic, a double vanity and a walk-in rain shower.' },
+];
+
+// Floor inventory (sample data)
+const TYPES = [
+  { from: 1, to: 6, type: '2-Bedroom Garden View', beds: 2, area: 145, terrace: 28, base: 285000 },
+  { from: 7, to: 15, type: '3-Bedroom Sea View', beds: 3, area: 210, terrace: 45, base: 420000 },
+  { from: 16, to: 19, type: '4-Bedroom Sky Residence', beds: 4, area: 290, terrace: 70, base: 690000 },
+  { from: 20, to: 20, type: 'Penthouse with Roof Deck', beds: 5, area: 420, terrace: 160, base: 1350000 },
+];
+const SOLD = [3, 5, 8, 11, 17], RESERVED = [6, 12, 19];
+const FLOORS = Array.from({ length: TOWER.floors }, (_, i) => {
+  const n = i + 1, t = TYPES.find((t) => n >= t.from && n <= t.to);
+  return { n, ...t, price: Math.round((t.base + (n - t.from) * 9000) / 1000) * 1000, status: SOLD.includes(n) ? 'sold' : RESERVED.includes(n) ? 'reserved' : 'avail' };
+});
+
+// ============================================================================
+const $ = (id) => document.getElementById(id);
+const frame = $('frame'), still = $('still'), vid = $('vid');
+const IMG_W = 1920, IMG_H = 1080; // 16:9 working space
+const isTouch = matchMedia('(pointer: coarse)').matches;
+let state = 'tower', floor = 14, roomIndex = 0, playing = false;
+
+// ---- cover-fit with a focus point, so overlays stay glued to the picture ----
+function layout() {
+  const vw = innerWidth, vh = innerHeight;
+  const s = Math.max(vw / IMG_W, vh / IMG_H);
+  const w = IMG_W * s, h = IMG_H * s;
+  let x = (vw - w) / 2;
+  if (w > vw) {
+    // keep the subject on screen when a narrow screen crops the picture
+    const r = ROOMS[roomIndex];
+    const fx = state === 'tower' ? FOCUS_X : state === 'room' && r.next ? (0.5 + r.next.x) / 2 + 0.06 : 0.5;
+    const want = state === 'tower' && vw >= 761 ? vw * 0.42 : vw / 2;
+    x = Math.min(0, Math.max(vw - w, want - fx * w));
+  }
+  const y = (vh - h) / 2;
+  frame.style.width = IMG_W + 'px'; frame.style.height = IMG_H + 'px';
+  frame.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+}
+addEventListener('resize', layout);
+
+// ---- floor bands (SVG in 1920×1080 space) ----
+function bandPath(n) {
+  const T = TOWER, fh = (T.bottom - T.top) / T.floors;
+  const yTop = T.bottom - n * fh, yBot = yTop + fh;
+  const sk = T.skew * (n % 2 ? 1 : -1); // slabs are offset floor by floor
+  const L = (T.left + sk) * IMG_W, R = (T.right + sk) * IMG_W;
+  return `M${L},${yTop * IMG_H + 1} L${R},${yTop * IMG_H + 1} L${R},${yBot * IMG_H - 1} L${L},${yBot * IMG_H - 1} Z`;
+}
+function drawFloors() {
+  const svg = [`<svg viewBox="0 0 ${IMG_W} ${IMG_H}" preserveAspectRatio="none">`];
+  for (const f of FLOORS) svg.push(`<path class="band ${f.status}" data-n="${f.n}" d="${bandPath(f.n)}"/>`);
+  svg.push('</svg>');
+  $('floors').innerHTML = svg.join('');
+  $('floors').classList.add('breathe');
+  markBands();
+}
+function markBands(hover) {
+  document.querySelectorAll('.band').forEach((b) => {
+    const n = +b.dataset.n;
+    b.classList.toggle('sel', n === floor);
+    b.classList.toggle('hover', n === hover && n !== floor);
+  });
+}
+$('floors').addEventListener('pointermove', (e) => { const b = e.target.closest('.band'); markBands(b ? +b.dataset.n : null); if (b && !isTouch) setFloor(+b.dataset.n, true); });
+$('floors').addEventListener('pointerleave', () => markBands());
+$('floors').addEventListener('click', (e) => { const b = e.target.closest('.band'); if (b) setFloor(+b.dataset.n); });
+
+const fmt = (n) => '$' + n.toLocaleString('en-US');
+function setFloor(n, soft = false) {
+  floor = Math.max(1, Math.min(TOWER.floors, n));
+  const f = FLOORS[floor - 1];
+  $('fNum').textContent = floor;
+  $('fType').textContent = f.type;
+  $('fPrice').textContent = f.status === 'sold' ? 'Sold' : 'from ' + fmt(f.price);
+  const st = $('fStatus'); st.className = 'status ' + f.status; st.textContent = { avail: 'Available', reserved: 'Reserved', sold: 'Sold' }[f.status];
+  $('fBeds').textContent = f.beds; $('fArea').textContent = f.area + ' m²'; $('fTerrace').textContent = f.terrace + ' m²';
+  const en = $('enter');
+  en.disabled = f.status === 'sold';
+  en.textContent = f.status === 'sold' ? `Floor ${floor} is sold` : `Enter floor ${floor} →`;
+  markBands();
+  if (!soft) $('picker').classList.remove('off');
+}
+$('fUp').onclick = () => setFloor(floor + 1);
+$('fDown').onclick = () => setFloor(floor - 1);
+addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if (state === 'tower') {
+    if (e.key === 'ArrowUp') setFloor(floor + 1);
+    if (e.key === 'ArrowDown') setFloor(floor - 1);
+    if (e.key === 'Enter' && !$('enter').disabled) enterFloor();
+  } else if (e.key === 'Escape') toTower();
+});
+
+// ---- video player: plays a clip, then holds on its matching still ----
+function showStill(key) { still.src = MEDIA[key]; still.classList.remove('layer-hidden'); }
+function playClip(key, endStill, done) {
+  const src = MEDIA[key];
+  if (!src || src.startsWith('__')) { crossfade(endStill, done); return; }
+  playing = true;
+  $('skip').style.display = '';
+  vid.src = src; vid.currentTime = 0;
+  const finish = () => {
+    if (!playing) return; playing = false;
+    vid.onended = vid.ontimeupdate = vid.onerror = null;
+    $('skip').style.display = 'none'; $('progress').style.width = 0;
+    showStill(endStill);
+    const swap = () => { vid.classList.add('layer-hidden'); done && done(); };
+    still.complete ? swap() : (still.onload = swap);
+  };
+  vid.onended = finish;
+  vid.onerror = () => { playing = false; $('skip').style.display = 'none'; crossfade(endStill, done); };
+  vid.ontimeupdate = () => { if (vid.duration) $('progress').style.width = (vid.currentTime / vid.duration) * 100 + '%'; };
+  $('skip').onclick = finish;
+  vid.play().then(() => { vid.classList.remove('layer-hidden'); still.classList.add('layer-hidden'); }).catch(() => vid.onerror());
+}
+function crossfade(key, done) {
+  still.classList.add('layer-hidden');
+  setTimeout(() => { showStill(key); done && done(); }, 450);
+}
+
+// ---- flows ----
+function enterFloor() {
+  if (FLOORS[floor - 1].status === 'sold') return;
+  state = 'flight';
+  $('picker').classList.add('off'); $('title').style.opacity = 0; $('floors').style.display = 'none';
+  layout();
+  playClip('flight', 'terrace', () => { state = 'room'; layout(); showRoom(0); });
+}
+function showRoom(i) {
+  roomIndex = i; const r = ROOMS[i]; layout();
+  $('backTower').style.display = '';
+  $('rEyebrow').textContent = `Floor ${floor} · ${FLOORS[floor - 1].type}`;
+  $('rName').textContent = r.name; $('rDesc').textContent = r.desc;
+  $('rDots').innerHTML = ROOMS.map((_, k) => `<span class="${k === i ? 'on' : ''}"></span>`).join('');
+  $('rPrev').style.display = i === 0 ? 'none' : '';
+  $('rNext').textContent = r.next ? 'Next room →' : 'Book a viewing';
+  $('roomHud').classList.remove('off');
+  const hs = $('hotspots'); hs.innerHTML = '';
+  if (r.next) {
+    const h = document.createElement('button');
+    h.className = 'hotspot'; h.style.left = r.next.x * IMG_W + 'px'; h.style.top = r.next.y * IMG_H + 'px';
+    h.innerHTML = `<span class="ring"></span><span class="lbl">${r.next.label}</span>`;
+    const flip = r.next.x > 0.6;
+    if (flip) { h.style.flexDirection = 'row-reverse'; h.style.transformOrigin = 'calc(100% - 22px) 50%'; h.style.transform = `translate(calc(-100% + 22px), -50%) scale(${1 / currentScale()})`; }
+    else { h.style.transformOrigin = '22px 50%'; h.style.transform = `translate(-22px, -50%) scale(${1 / currentScale()})`; }
+    h.onclick = nextRoom; hs.appendChild(h);
+  }
+}
+function currentScale() { return Math.max(innerWidth / IMG_W, innerHeight / IMG_H); }
+function nextRoom() {
+  const r = ROOMS[roomIndex];
+  if (!r.next) { openBooking(); return; }
+  $('roomHud').classList.add('off'); $('hotspots').innerHTML = '';
+  playClip(r.next.clip, r.next.to, () => showRoom(roomIndex + 1));
+}
+function prevRoom() {
+  if (roomIndex === 0) return;
+  $('hotspots').innerHTML = '';
+  crossfade(ROOMS[roomIndex - 1].still, () => showRoom(roomIndex - 1));
+}
+function toTower() {
+  playing = false; vid.pause(); vid.classList.add('layer-hidden');
+  $('skip').style.display = 'none'; $('progress').style.width = 0;
+  $('roomHud').classList.add('off'); $('hotspots').innerHTML = ''; $('backTower').style.display = 'none';
+  crossfade('tower', () => {
+    state = 'tower'; layout();
+    $('floors').style.display = ''; $('title').style.opacity = 1; $('picker').classList.remove('off');
+  });
+}
+$('enter').onclick = enterFloor;
+$('rNext').onclick = nextRoom;
+$('rPrev').onclick = prevRoom;
+$('backTower').onclick = toTower;
+$('home').onclick = (e) => { e.preventDefault(); if (state !== 'tower') toTower(); };
+
+// ---- booking (demo) ----
+function openBooking() {
+  const f = FLOORS[floor - 1];
+  $('bookSub').textContent = state === 'tower' ? 'MED Residences, Labadi Coast' : `Floor ${floor} · ${f.type} · from ${fmt(f.price)}`;
+  $('modal').classList.add('show');
+}
+$('bookTop').onclick = openBooking;
+$('bCancel').onclick = () => $('modal').classList.remove('show');
+$('bookForm').onsubmit = (e) => {
+  e.preventDefault();
+  $('bSubmit').textContent = `Thank you, ${$('bName').value.split(' ')[0]}! We'll call you.`;
+  setTimeout(() => { $('modal').classList.remove('show'); $('bookForm').reset(); $('bSubmit').textContent = 'Request viewing'; }, 1800);
+};
+
+// ---- setup mode: ?setup lets you trace the floors on the real photo ----
+function setupMode() {
+  try { const saved = JSON.parse(localStorage.getItem('med-tower') || 'null'); if (saved) TOWER = { ...TOWER, ...saved }; } catch (e) {}
+  if (!new URLSearchParams(location.search).has('setup')) return;
+  $('setup').classList.add('show');
+  const map = { sL: 'left', sR: 'right', sT: 'top', sB: 'bottom', sK: 'skew' };
+  const out = () => { $('sOut').value = 'let TOWER = ' + JSON.stringify(TOWER) + ';'; try { localStorage.setItem('med-tower', JSON.stringify(TOWER)); } catch (e) {} };
+  for (const [id, k] of Object.entries(map)) {
+    const el = $(id); el.value = TOWER[k];
+    el.oninput = () => { TOWER[k] = +el.value; drawFloors(); out(); };
+  }
+  document.querySelectorAll('.band').forEach((b) => b.style.stroke = 'rgba(255,255,255,.5)');
+  out();
+}
+
+// ---- boot: preload stills, then reveal ----
+(async function boot() {
+  layout();
+  const keys = ['tower', 'terrace', 'bedroom', 'bathroom'];
+  let loaded = 0;
+  await Promise.all(keys.map((k) => new Promise((res) => {
+    const im = new Image(); im.onload = im.onerror = () => { loaded++; $('loadBar').style.width = (loaded / keys.length) * 100 + '%'; res(); }; im.src = MEDIA[k];
+  })));
+  showStill('tower');
+  setupMode();
+  drawFloors();
+  setFloor(14, true);
+  // warm the first clip so the fly-in starts instantly
+  if (!MEDIA.flight.startsWith('__')) { const pre = document.createElement('link'); pre.rel = 'preload'; pre.as = 'video'; pre.href = MEDIA.flight; document.head.appendChild(pre); }
+  setTimeout(() => { $('loader').classList.add('done'); $('picker').classList.remove('off'); }, 300);
+})();
+</script>
+</body>
+</html>
