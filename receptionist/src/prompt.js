@@ -3,8 +3,8 @@
 
 const DAY = 86400000;
 
-/** Viewing slots for the next few days, in Ghana time (UTC+0, no daylight saving). */
-export function viewingSlots(agency, now = Date.now()) {
+/** Viewing slots for the next few days, in Ghana time (UTC+0, no daylight saving): [{label, at}]. */
+export function viewingSlotTimes(agency, now = Date.now()) {
   const slots = [];
   const days = agency.viewingDaysAhead || 3;
   const minNotice = (agency.minNoticeHours ?? 2) * 3600000;
@@ -15,10 +15,18 @@ export function viewingSlots(agency, now = Date.now()) {
     for (const t of agency.viewingTimes || []) {
       const [h, m] = t.split(":").map(Number);
       const at = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), h, m || 0);
-      if (at - now >= minNotice) slots.push(`${label} at ${to12h(t)}`);
+      if (at - now >= minNotice) slots.push({ label: `${label} at ${to12h(t)}`, at });
     }
   }
   return slots;
+}
+
+export const viewingSlots = (agency, now) => viewingSlotTimes(agency, now).map((s) => s.label);
+
+/** Turn the slot text the AI booked back into a time, so reminders can be sent. */
+export function slotTime(agency, label, now = Date.now()) {
+  const norm = (s) => String(s).toLowerCase().replace(/^today,\s*/, "").replace(/\s+/g, " ").trim();
+  return viewingSlotTimes(agency, now).find((s) => norm(s.label) === norm(label))?.at || null;
 }
 
 function to12h(hhmm) {
@@ -57,8 +65,15 @@ ${viewingSlots(agency, now).map((s) => "- " + s).join("\n")}
 
 YOUR JOB, in this order:
 1. Answer the buyer's question about a listing using ONLY the facts above. If they ask what's available, briefly suggest the listings that match what they want (sale or rent, area, bedrooms, budget). Only mention a listing's video tour if it has one. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
-2. Get to know them, one question at a time, naturally: their name, their budget, when they want to move or buy, and how they plan to pay (cash, mortgage, installments).
-3. Offer two or three viewing slots from the list, starting with the soonest ones that fit what they asked for. When they pick one and you know their name, confirm it.
+2. CAPTURE AND QUALIFY: while helping, find out these things, one question at a time and in a natural order (never as a form):
+   a) their name
+   b) buying or renting, and what they want (type, bedrooms, area)
+   c) their budget
+   d) when they want to move in or buy
+   e) how they will pay (cash, mortgage, installments; for rent: can they pay the advance)
+   f) whether it's to live in or an investment
+   Skip anything they already told you. If a listing doesn't fit their budget or needs, say so honestly and suggest the closest one that does.
+3. Once you know what they want, offer two or three viewing slots from the list, starting with the soonest. When they pick one and you know their name, confirm it. If they hesitate, find out why (price, location, timing, spouse needs to see it) and answer from the facts.
 4. If they ask for something you can't handle (negotiating price, legal or payment questions, complaints, other properties), say ${agency.agentName} will get back to them shortly.
 
 STYLE: WhatsApp messages. Short: 1 to 3 sentences. Friendly, plain English as used in Ghana. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message, and don't repeat a question they skipped: move on to the next useful one and come back to it later. If they write in another language, reply in that language.
@@ -90,5 +105,41 @@ export function parseReply(raw, agency) {
   return { text, actions: actions.filter((a) => { const k = JSON.stringify(a); return seen.has(k) ? false : seen.add(k); }) };
 }
 
-export const SUMMARY_PROMPT = `Read this WhatsApp conversation between a real estate agency's AI receptionist and a buyer. Return ONLY a JSON object, no other text, with these keys (use "" when not mentioned):
-{"name":"","property":"","budget":"","timeline":"","payment":"","viewing":"","seriousness":"hot|warm|cold","next_step":"one short sentence for the agent"}`;
+export const LEAD_PROMPT = `Read this WhatsApp conversation between a real estate agency's AI receptionist and a buyer or tenant. Extract what the BUYER said. Return ONLY a JSON object, no other text. Use "" when not mentioned, never guess.
+{"name":"","looking_for":"buy|rent|","property_type":"","areas":"","bedrooms":"","budget":"","timeline":"","timeline_months":null,"payment":"","purpose":"live|invest|","interested_listing":"","objections":"","viewing":"","next_step":"one short sentence telling the agent what to do next"}
+timeline_months = how many months until they want to move or buy, as a number (0 = now/this month), or null if unknown.`;
+
+/** Kept for the web demo page. */
+export const SUMMARY_PROMPT = LEAD_PROMPT;
+
+/**
+ * Lead score from the facts the buyer gave, so "hot" means the same thing every time.
+ * 100 points: budget 20, timeline 25 (sooner = more), payment 15, needs 10, name 5, viewing booked 25.
+ */
+export function scoreLead(lead = {}, booking = null) {
+  const has = (v) => v != null && String(v).trim() !== "";
+  let score = 0;
+  const missing = [];
+  if (has(lead.name)) score += 5; else missing.push("name");
+  if (has(lead.looking_for) && (has(lead.property_type) || has(lead.bedrooms) || has(lead.areas))) score += 10; else missing.push("what they want");
+  if (has(lead.budget)) score += 20; else missing.push("budget");
+  const m = typeof lead.timeline_months === "number" ? lead.timeline_months : null;
+  if (m !== null) score += m <= 1 ? 25 : m <= 3 ? 18 : m <= 6 ? 10 : 4;
+  else if (has(lead.timeline)) score += 8;
+  else missing.push("timeline");
+  if (has(lead.payment)) score += 15; else missing.push("payment");
+  if (booking) score += 25;
+  const temperature = score >= 70 ? "hot" : score >= 40 ? "warm" : "cold";
+  return { score, temperature, missing };
+}
+
+/** Instruction used when the buyer has gone quiet, so the AI writes a follow-up. */
+export function nudgeInstruction(kind, lead = {}) {
+  const missing = scoreLead(lead).missing;
+  const base = kind === "last"
+    ? "This is the last follow-up you are allowed to send, because WhatsApp only allows free messages within 24 hours of their last message."
+    : "The buyer stopped replying a few hours ago.";
+  return `[Note from the system, not from the buyer] ${base} Write ONE short, friendly follow-up message (1 to 2 sentences) that gives them an easy reason to reply. ` +
+    `Pick what fits best: offer a viewing slot from the list, mention one helpful fact about the listing they liked (or the closest match to what they want), or ask ${missing.length ? `about their ${missing[0]}` : "if they'd like to book a viewing"}. ` +
+    `Don't say you are following up "as a reminder", don't be pushy, don't repeat your last message, and don't use any action tags except [[VIDEO:...]] if they haven't seen that video yet.`;
+}

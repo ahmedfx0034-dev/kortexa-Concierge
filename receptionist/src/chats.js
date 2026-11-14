@@ -20,8 +20,12 @@ export class Chats {
       waId, name: "", messages: [],
       aiPaused: false,     // true after a hand-off: a human answers instead
       optedOut: false,     // customer asked us to stop
-      booking: null,       // {listing, slot, name, at}
-      summary: null,       // lead summary for the agent
+      booking: null,       // {listing, slot, name, at, reminded}
+      lead: null,          // details captured from the chat (budget, timeline, ...)
+      score: 0, temperature: "", missing: [],   // qualification
+      nudges: 0,           // follow-ups sent since their last message
+      buyerMessages: 0,
+      summary: null,
       needsHuman: false,
       createdAt: Date.now(), updatedAt: Date.now(),
     });

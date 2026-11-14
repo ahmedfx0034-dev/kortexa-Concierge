@@ -1,6 +1,8 @@
 // The agency's inbox page: every WhatsApp chat, bookings, lead summaries,
 // and buttons to take over from the AI.
 
+import { stageOf } from "./receptionist.js";
+
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const when = (t) => (t ? new Date(t).toLocaleString("en-GB", { timeZone: "Africa/Accra", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "");
 const pretty = (n) => { const m = /^233(\d{2})(\d{3})(\d{4})$/.exec(n); return m ? `+233 ${m[1]} ${m[2]} ${m[3]}` : "+" + n; };
@@ -9,20 +11,24 @@ function chatCard(c, now) {
   const lastIn = [...c.messages].reverse().find((m) => m.role === "user");
   const windowOpen = lastIn && now - lastIn.at < 86400000;
   const tags = [
+    `<span class="tag ${c.temperature === "hot" ? "ok" : ""}">${esc(stageOf(c))}</span>`,
+    c.temperature ? `<span class="tag ${c.temperature === "hot" ? "hot" : ""}">${c.score}/100 · ${esc(c.temperature)}</span>` : "",
     c.needsHuman ? '<span class="tag hot">Needs you</span>' : "",
     c.booking ? '<span class="tag ok">Viewing booked</span>' : "",
     c.aiPaused ? '<span class="tag">AI paused</span>' : '<span class="tag ok">AI answering</span>',
     c.optedOut ? '<span class="tag bad">Opted out</span>' : "",
   ].join("");
-  const s = c.summary;
-  const summary = s ? `<dl>${[["Budget", s.budget], ["Timeline", s.timeline], ["Payment", s.payment], ["Viewing", s.viewing], ["Lead", s.seriousness], ["Next step", s.next_step]]
+  const s = c.lead;
+  const summary = s ? `<dl>${[["Looking to", s.looking_for], ["Wants", [s.bedrooms && s.bedrooms + " bed", s.property_type, s.areas].filter(Boolean).join(", ")], ["Budget", s.budget], ["Timeline", s.timeline], ["Payment", s.payment], ["Purpose", s.purpose], ["Liked", s.interested_listing], ["Concerns", s.objections], ["Still to ask", (c.missing || []).join(", ")], ["Next step", s.next_step]]
     .map(([k, v]) => `<dt>${k}</dt><dd>${esc(v || "—")}</dd>`).join("")}</dl>` : "";
+  const note = c.agentNote ? `<p class="note">⚠ ${esc(c.agentNote)}</p>` : "";
+  const followups = c.nudges ? `<p class="note">${c.nudges} follow-up${c.nudges > 1 ? "s" : ""} sent since their last message.</p>` : "";
   const booking = c.booking ? `<p class="booking">📅 <b>${esc(c.booking.slot)}</b> · ${esc(c.booking.listing)} · ${esc(c.booking.name)}</p>` : "";
   const msgs = c.messages.slice(-12).map((m) => `<div class="m ${m.role === "user" ? "in" : "out"}">${esc(m.content)}<time>${when(m.at)}</time></div>`).join("");
   const id = esc(c.waId);
   return `<section class="chat" id="c${id}">
   <header><div><b>${esc(c.name || pretty(c.waId))}</b><span>${pretty(c.waId)} · ${when(c.updatedAt)}</span></div><div class="tags">${tags}</div></header>
-  ${booking}${summary}
+  ${booking}${note}${summary}${followups}
   <details${c.needsHuman ? " open" : ""}><summary>Conversation (${c.messages.length})</summary><div class="msgs">${msgs}</div></details>
   <div class="actions">
     ${c.aiPaused ? `<form method="post" action="/inbox/${id}/resume"><button>Let AI answer again</button></form>` : `<form method="post" action="/inbox/${id}/pause"><button>Pause AI</button></form>`}
@@ -35,6 +41,7 @@ function chatCard(c, now) {
 
 export function inboxPage(chats, { agency, notice = "", now = Date.now() }) {
   const needs = chats.filter((c) => c.needsHuman).length;
+  const hot = chats.filter((c) => c.temperature === "hot").length;
   const booked = chats.filter((c) => c.booking).length;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="refresh" content="30"><title>${esc(agency.agencyName)} · Inbox</title>
@@ -58,7 +65,7 @@ button{font:inherit;font-size:14px;padding:6px 12px;border-radius:8px;border:1px
 .note{color:var(--muted);font-size:13px;margin:8px 0 0}.empty{color:var(--muted);text-align:center;padding:40px}
 </style></head><body><main>
 <h1>${esc(agency.agencyName)} · WhatsApp inbox</h1>
-<p class="sub">${chats.length} chats · ${needs} need you · ${booked} viewings booked · refreshes every 30 seconds</p>
+<p class="sub">${chats.length} chats · ${hot} hot leads · ${booked} viewings booked · ${needs} need you · refreshes every 30 seconds</p>
 ${notice ? `<div class="notice">${esc(notice)}</div>` : ""}
 ${chats.length ? chats.map((c) => chatCard(c, now)).join("") : '<p class="empty">No WhatsApp chats yet. Send a message to the business number to test it.</p>'}
 </main></body></html>`;

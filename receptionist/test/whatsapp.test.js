@@ -112,3 +112,79 @@ test("WhatsApp client builds the right requests", async () => {
   assert.ok(validSignature(Buffer.from("x"), "sha256=" + crypto.createHmac("sha256", "s").update("x").digest("hex"), "s"));
   assert.equal(parseWebhook({}).length, 0);
 });
+
+// ---- capture, qualify, nurture ------------------------------------------------
+import { scoreLead } from "../src/prompt.js";
+const H = 3600000;
+
+test("lead score: facts add up to hot, warm or cold", () => {
+  assert.equal(scoreLead({}).temperature, "cold");
+  assert.deepEqual(scoreLead({}).missing, ["name", "what they want", "budget", "timeline", "payment"]);
+  const warm = scoreLead({ name: "Esi", looking_for: "rent", bedrooms: "2", budget: "$2,000", timeline_months: 4 });
+  assert.equal(warm.temperature, "warm");
+  const hot = scoreLead({ name: "Kofi", looking_for: "buy", property_type: "house", budget: "$300k", timeline_months: 1, payment: "cash" });
+  assert.equal(hot.score, 75);
+  assert.equal(hot.temperature, "hot");
+  assert.equal(scoreLead({ name: "x" }, { slot: "x" }).score, 30, "booking adds 25");
+});
+
+test("lead details are captured every 2 buyer messages", async () => {
+  const { chats, r } = setup(["Hi! What are you looking for?", "Nice. What's your budget?", '{"name":"Esi","looking_for":"rent","bedrooms":"2","budget":"$2,000","timeline_months":1,"payment":"cash"}']);
+  await r.handle(inbound("c1", "Hello"));
+  assert.equal(chats.get("233241234567").lead, null);
+  await r.handle(inbound("c2", "2 bedroom to rent"));
+  const c = chats.get("233241234567");
+  assert.equal(c.lead.budget, "$2,000");
+  assert.equal(c.temperature, "hot");
+});
+
+function nurtureSetup(replies, startAt) {
+  let clock = startAt;
+  const wa = fakeWa(), llm = fakeLlm(replies), chats = new Chats("");
+  const r = new Receptionist({ agency, llm, wa, chats, limiter: new Limiter(), log: quiet, now: () => clock });
+  return { wa, llm, chats, r, setClock: (t) => { clock = t; } };
+}
+
+test("nurture: one follow-up after 2 quiet hours, a last one at 20 hours, nothing after 24", async () => {
+  const t0 = Date.UTC(2026, 10, 16, 9); // Monday 9am Ghana time
+  const { wa, chats, r, setClock } = nurtureSetup(["Hi! Are you buying or renting?", "Just checking: are you looking to buy or rent?", "Last one: shall I hold a viewing for you?"], t0);
+  // Messages carry real timestamps; pin them to the test clock.
+  await r.handle(inbound("n1", "Hi"));
+  chats.get("233241234567").messages.forEach((m) => { m.at = t0; });
+  assert.equal((await r.tick(t0 + 1 * H)).sent, 0, "too soon");
+  assert.equal((await r.tick(t0 + 2 * H)).sent, 1);
+  assert.equal(wa.sent.at(-1).text, "Just checking: are you looking to buy or rent?");
+  assert.equal((await r.tick(t0 + 3 * H)).sent, 0, "only one first follow-up");
+  assert.equal((await r.tick(t0 + 20 * H)).sent, 0, "5am is outside sending hours");
+  const c = chats.get("233241234567");
+  c.messages.forEach((m) => { m.at = t0 + 3 * H; }); // pretend their last message was at noon
+  assert.equal((await r.tick(t0 + 23 * H)).sent, 1, "last follow-up at 8am next day, before the window closes");
+  assert.equal(c.nudges, 2);
+  assert.equal((await r.tick(t0 + 26 * H)).sent, 0, "window closed and no more nudges");
+  assert.equal(r.tick && c.optedOut, false);
+});
+
+test("nurture never messages opted-out, paused or booked chats", async () => {
+  const t0 = Date.UTC(2026, 10, 16, 9);
+  const { wa, chats, r } = nurtureSetup(["Hi!"], t0);
+  for (const [id, field] of [["233200000001", "optedOut"], ["233200000002", "aiPaused"], ["233200000003", "booking"]]) {
+    const c = chats.get(id);
+    c.messages = [{ role: "user", content: "hi", at: t0 }, { role: "assistant", content: "hello", at: t0 }];
+    c[field] = field === "booking" ? { slot: "x" } : true;
+  }
+  assert.equal((await r.tick(t0 + 5 * H)).sent, 0);
+  assert.equal(wa.sent.length, 0);
+});
+
+test("viewing reminder goes out 3 hours before, once", async () => {
+  const t0 = Date.UTC(2026, 10, 16, 8); // Monday 8am
+  const { wa, chats, r } = nurtureSetup(["Booked!\n[[BOOKED:east-legon-4bed|today, Monday 16 November at 1pm|Kofi]]", "{}"], t0);
+  await r.handle(inbound("v1", "Today 1pm please, I'm Kofi"));
+  const c = chats.get("233241234567");
+  assert.equal(c.booking.at, Date.UTC(2026, 10, 16, 13));
+  c.messages.forEach((m) => { m.at = t0; });
+  assert.equal((await r.tick(Date.UTC(2026, 10, 16, 9))).sent, 0);
+  assert.equal((await r.tick(Date.UTC(2026, 10, 16, 10, 5))).sent, 1);
+  assert.match(wa.sent.at(-1).text, /reminder of your viewing of the 4-bedroom house in East Legon today at 1:00 pm/);
+  assert.equal((await r.tick(Date.UTC(2026, 10, 16, 11))).sent, 0, "only once");
+});

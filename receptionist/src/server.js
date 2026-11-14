@@ -8,7 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { LLM, LLMError } from "./llm.js";
-import { systemPrompt, parseReply, SUMMARY_PROMPT } from "./prompt.js";
+import { systemPrompt, parseReply, SUMMARY_PROMPT, scoreLead } from "./prompt.js";
 import { WhatsApp, parseWebhook, validSignature } from "./whatsapp.js";
 import { Chats } from "./chats.js";
 import { Receptionist } from "./receptionist.js";
@@ -154,7 +154,7 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         let summary = null;
         try { summary = match ? JSON.parse(match[0]) : null; } catch { /* handled below */ }
         if (!summary) return send(res, 502, { error: "Couldn't make the summary. Try again." });
-        return send(res, 200, summary);
+        return send(res, 200, { ...summary, ...scoreLead(summary, summary.viewing ? true : null) });
       }
 
       if (req.method === "GET") {
@@ -200,4 +200,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     if (!env.ADMIN_PASSWORD) console.warn("ADMIN_PASSWORD is not set: the /inbox page is off.");
     if (!env.DATA_FILE) console.warn("DATA_FILE is not set: chats are kept in memory and lost on restart.");
   });
+  // Nurturing: follow-ups and viewing reminders, checked every 5 minutes.
+  if (receptionist) setInterval(() => receptionist.tick().then((r) => r.sent && console.log(`Sent ${r.sent} follow-up(s)/reminder(s).`)), 5 * 60000);
 }

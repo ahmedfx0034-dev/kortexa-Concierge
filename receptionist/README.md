@@ -14,6 +14,23 @@ When a buyer texts the WhatsApp number, the receptionist:
 - hands the chat to a person when it can't help (price negotiation, complaints…)
 - respects STOP (and START to opt back in)
 
+### Capture, qualify, nurture
+
+- **Capture:** every 2 buyer messages (and when a viewing is booked) the AI
+  pulls out their details: buying or renting, type, bedrooms, area, budget,
+  timeline, payment, live-in or investment, which listing they liked, and any
+  concerns.
+- **Qualify:** each lead gets a score out of 100 from those facts (budget 20,
+  timeline 25 (sooner scores higher), payment 15, needs 10, name 5, viewing booked 25):
+  70+ is **hot**, 40+ **warm**, below that **cold**. The inbox shows what's
+  still missing so the AI (or the agent) knows what to ask next.
+- **Nurture:** if a buyer goes quiet, the AI sends one friendly follow-up after
+  2 hours and a last one about 20 hours after their last message (only between
+  8am and 8pm). After 24 hours it stops, because WhatsApp only allows free
+  messages within 24 hours of the customer's last message. Booked viewings get a
+  reminder 3 hours before. If that's outside the 24 hours, the inbox tells the
+  agent to call instead.
+
 The agency sees everything in a password-protected **inbox** at `/inbox`:
 each chat, viewings booked, a lead summary (budget, timeline, payment, hot/warm/cold),
 and buttons to pause the AI and reply themselves.

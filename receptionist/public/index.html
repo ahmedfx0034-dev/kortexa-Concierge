@@ -111,7 +111,7 @@ function render() {
     } else if (it.kind === "summary") {
       const c = el("div", "card"); c.append(el("h3", null, "What the agent receives"));
       const s = it.data, dl = el("dl");
-      [["Name", s.name], ["Property", s.property], ["Budget", s.budget], ["Timeline", s.timeline], ["Payment", s.payment], ["Viewing", s.viewing], ["Lead", s.seriousness], ["Next step", s.next_step]]
+      [["Lead score", s.score != null ? s.score + "/100 · " + s.temperature : ""], ["Name", s.name], ["Looking to", s.looking_for], ["Wants", [s.bedrooms && s.bedrooms + " bed", s.property_type, s.areas].filter(Boolean).join(", ")], ["Budget", s.budget], ["Timeline", s.timeline], ["Payment", s.payment], ["Purpose", s.purpose], ["Liked", s.interested_listing], ["Viewing", s.viewing], ["Still to ask", (s.missing || []).join(", ")], ["Next step", s.next_step]]
         .forEach(([k, v]) => dl.append(el("dt", null, k), el("dd", null, v || "—")));
       c.append(dl); chat.append(c);
     } else if (it.kind === "error") chat.append(el("div", "error", it.text));
