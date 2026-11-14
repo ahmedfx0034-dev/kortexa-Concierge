@@ -1,0 +1,28 @@
+{
+  "_note": "Edit this file to change the demo agency. Leave a field empty (\"\") if you don't know it: the AI will say the agent will confirm it instead of guessing.",
+
+  "agencyName": "Spintex Homes (Demo)",
+  "receptionistName": "Ama",
+  "city": "Accra",
+  "agentName": "the agent",
+  "officeHours": "Monday to Saturday, 9am to 5pm",
+  "viewingTimes": ["10:00", "13:00", "16:00"],
+  "viewingDaysAhead": 3,
+
+  "listings": [
+    {
+      "id": "spintex-4bed",
+      "title": "4-bedroom house in Spintex–Sakumono",
+      "area": "Spintex–Sakumono, Accra",
+      "type": "House",
+      "bedrooms": 4,
+      "bathrooms": "",
+      "price": "$250,000",
+      "forSaleOrRent": "For sale",
+      "landSize": "",
+      "parking": "",
+      "features": "",
+      "video": "https://d2ol7oe51mr4n9.cloudfront.net/user_3KkBqFbaM0LiPKOyC27sdIQIGf4/9acc17f7-1504-41e1-94c5-fd1238365a6d.mp4"
+    }
+  ]
+}
