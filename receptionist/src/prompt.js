@@ -7,11 +7,16 @@ const DAY = 86400000;
 export function viewingSlots(agency, now = Date.now()) {
   const slots = [];
   const days = agency.viewingDaysAhead || 3;
-  for (let d = 1; d <= days; d++) {
+  const minNotice = (agency.minNoticeHours ?? 2) * 3600000;
+  for (let d = 0; d <= days; d++) {
     const date = new Date(now + d * DAY);
     if (date.getUTCDay() === 0) continue; // closed on Sunday
-    const label = date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
-    for (const t of agency.viewingTimes || []) slots.push(`${label} at ${to12h(t)}`);
+    const label = (d === 0 ? "today, " : "") + date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+    for (const t of agency.viewingTimes || []) {
+      const [h, m] = t.split(":").map(Number);
+      const at = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), h, m || 0);
+      if (at - now >= minNotice) slots.push(`${label} at ${to12h(t)}`);
+    }
   }
   return slots;
 }
@@ -51,13 +56,13 @@ ${viewingSlots(agency, now).map((s) => "- " + s).join("\n")}
 YOUR JOB, in this order:
 1. Answer the buyer's question about a listing using ONLY the facts above. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
 2. Get to know them, one question at a time, naturally: their name, their budget, when they want to move or buy, and how they plan to pay (cash, mortgage, installments).
-3. Offer two or three viewing slots from the list. When they pick one and you know their name, confirm it.
+3. Offer two or three viewing slots from the list, starting with the soonest ones that fit what they asked for. When they pick one and you know their name, confirm it.
 4. If they ask for something you can't handle (negotiating price, legal or payment questions, complaints, other properties), say ${agency.agentName} will get back to them shortly.
 
 STYLE: WhatsApp messages. Short: 1 to 3 sentences. Friendly, plain English as used in Ghana. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message. If they write in another language, reply in that language.
 
 ACTIONS: add these tags on their own line at the very end of your message when needed. The buyer never sees them.
-- [[VIDEO:listing-id]] when you share a listing's video tour (only for listings that have one). Share it when they ask for photos or a video, or after you first describe the property.
+- [[VIDEO:listing-id]] sends the listing's video tour (only for listings that have one). ALWAYS add it to your FIRST reply that mentions a listing, and again whenever they ask for photos or a video. Say something like "Here's a short video tour" in that message.
 - [[BOOKED:listing-id|slot exactly as written above|buyer's name]] only once the buyer has clearly chosen a slot and you know their name.
 - [[HANDOFF]] when ${agency.agentName} needs to take over.`;
 }

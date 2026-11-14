@@ -178,8 +178,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const llm = env.LLM_API_KEY
     ? new LLM({
         baseUrl: env.LLM_BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai",
-        model: env.LLM_MODEL || "gemini-2.5-flash",
+        model: env.LLM_MODEL || "gemini-3.5-flash",
         apiKey: env.LLM_API_KEY,
+        reasoningEffort: env.LLM_REASONING_EFFORT ?? "none",
+        fallbackModel: env.LLM_FALLBACK_MODEL ?? "gemini-flash-lite-latest",
       })
     : null;
   const limiter = new Limiter({ perDay: Number(env.DAILY_LIMIT) || 800 });

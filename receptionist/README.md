@@ -77,7 +77,9 @@ Now text the number from your phone. The AI should answer within a few seconds.
 |---|---|
 | `LLM_API_KEY` | Your free Gemini key |
 | `LLM_BASE_URL` | AI service (default: Google Gemini) |
-| `LLM_MODEL` | AI model (default `gemini-2.5-flash`; if you get "model not found", pick a current one from Google's list) |
+| `LLM_MODEL` | AI model (default `gemini-3.5-flash`; if you get "model not found" or "no longer available", pick a current one from Google's list) |
+| `LLM_REASONING_EFFORT` | How much the AI "thinks" first. `none` (default) answers in about a second |
+| `LLM_FALLBACK_MODEL` | Backup model tried once when Google is busy (default `gemini-flash-lite-latest`) |
 | `WHATSAPP_TOKEN` | Permanent token from step 2 |
 | `WHATSAPP_PHONE_NUMBER_ID` | Phone number ID from step 2 |
 | `WHATSAPP_APP_SECRET` | App secret (proves messages really come from Meta) |

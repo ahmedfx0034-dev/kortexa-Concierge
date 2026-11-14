@@ -9,11 +9,11 @@ import { createApp, Limiter, cleanMessages } from "../src/server.js";
 const agency = JSON.parse(fs.readFileSync(new URL("../config/agency.json", import.meta.url)));
 const THU = Date.UTC(2026, 10, 12, 9); // Thursday 12 Nov 2026
 
-test("viewing slots skip Sunday and use 12-hour times", () => {
-  const slots = viewingSlots(agency, THU); // Fri, Sat, (Sun skipped)
-  assert.equal(slots.length, 6);
-  assert.equal(slots[0], "Friday 13 November at 10am");
-  assert.ok(!slots.some((s) => s.startsWith("Sunday")));
+test("viewing slots: same day with 2 hours notice, skip Sunday, 12-hour times", () => {
+  const slots = viewingSlots(agency, THU); // Thu 9:00 UTC: today 1pm and 4pm, then Fri, Sat (Sun skipped)
+  assert.deepEqual(slots.slice(0, 3), ["today, Thursday 12 November at 1pm", "today, Thursday 12 November at 4pm", "Friday 13 November at 10am"]);
+  assert.equal(slots.length, 8);
+  assert.ok(!slots.some((s) => s.includes("Sunday")));
 });
 
 test("prompt lists only known facts and marks unknowns", () => {
@@ -85,4 +85,17 @@ test("rate-limit and missing-key errors are readable", async () => {
     const r = await fetch(`http://127.0.0.1:${server.address().port}/api/chat`, { method: "POST", body: "{}" });
     assert.equal(r.status, 503);
   } finally { server.close(); }
+});
+
+test("busy main model falls back once to the backup model", async () => {
+  const seen = [];
+  const fetchImpl = async (url, o) => {
+    const b = JSON.parse(o.body); seen.push([b.model, b.reasoning_effort]);
+    return b.model === "main"
+      ? { ok: false, status: 503, json: async () => ({ error: { message: "high demand" } }) }
+      : { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: "Hi from backup" } }] }) };
+  };
+  const llm = new LLM({ baseUrl: "https://x", model: "main", apiKey: "k", reasoningEffort: "none", fallbackModel: "backup", fetchImpl });
+  assert.equal(await llm.chat([{ role: "user", content: "hi" }]), "Hi from backup");
+  assert.deepEqual(seen, [["main", "none"], ["backup", undefined]]);
 });
