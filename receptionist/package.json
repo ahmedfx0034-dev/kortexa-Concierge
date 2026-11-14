@@ -1,8 +1,8 @@
 {
-  "name": "kortexa-receptionist-demo",
+  "name": "kortexa-receptionist",
   "version": "1.0.0",
   "private": true,
-  "description": "Demo AI WhatsApp-style receptionist for a real estate agency, running on a free AI plan.",
+  "description": "AI WhatsApp receptionist for a real estate agency, running on a free AI plan.",
   "type": "module",
   "engines": { "node": ">=20" },
   "scripts": {
