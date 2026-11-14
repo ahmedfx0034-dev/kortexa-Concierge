@@ -1,0 +1,12 @@
+{
+  "name": "kortexa-receptionist",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI WhatsApp receptionist for a real estate agency, running on a free AI plan.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  }
+}
