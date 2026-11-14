@@ -30,14 +30,15 @@ function to12h(hhmm) {
 
 function listingText(l) {
   const known = [
-    ["Title", l.title], ["Area", l.area], ["Type", l.type], ["Bedrooms", l.bedrooms],
-    ["Bathrooms", l.bathrooms], ["Price", l.price], ["Sale or rent", l.forSaleOrRent],
-    ["Land size", l.landSize], ["Parking", l.parking], ["Features", l.features],
+    ["Title", l.title], ["Area", l.area], ["Type", l.type], ["Sale or rent", l.forSaleOrRent], ["Price", l.price],
+    ["Bedrooms", l.bedrooms], ["Bathrooms", l.bathrooms], ["Land size", l.landSize], ["Parking", l.parking],
+    ["Furnishing", l.furnished], ["Features", l.features], ["Payment terms", l.terms],
   ];
+  const notApplicable = l.type && /land/i.test(l.type) ? new Set(["Bedrooms", "Bathrooms", "Parking", "Furnishing", "Payment terms"]) : new Set(["Payment terms"]);
   const lines = known.filter(([, v]) => v !== "" && v != null).map(([k, v]) => `  ${k}: ${v}`);
-  const unknown = known.filter(([, v]) => v === "" || v == null).map(([k]) => k.toLowerCase());
+  const unknown = known.filter(([k, v]) => (v === "" || v == null) && !notApplicable.has(k)).map(([k]) => k.toLowerCase());
   return `- Listing id "${l.id}":\n${lines.join("\n")}` +
-    (l.video ? `\n  Has a video tour: yes` : "") +
+    `\n  Has a video tour: ${l.video ? "yes" : "no (offer a viewing instead)"}` +
     (unknown.length ? `\n  NOT KNOWN (never guess these): ${unknown.join(", ")}` : "");
 }
 
@@ -45,7 +46,8 @@ export function systemPrompt(agency, now = Date.now()) {
   const today = new Date(now).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   return `You are ${agency.receptionistName}, the WhatsApp receptionist for ${agency.agencyName}, a real estate agency in ${agency.city}, Ghana. You are an AI assistant. If anyone asks whether you are a person or a bot, say honestly that you are the agency's AI assistant.
 
-Today is ${today}. Office hours: ${agency.officeHours}.
+Today is ${today}. Office hours: ${agency.officeHours}.${agency.officeAddress ? ` Office: ${agency.officeAddress}.` : ""}
+Commission or agency fees: ${agency.commission || "NOT KNOWN, say the agent will explain"}.
 
 LISTINGS (the only properties you can talk about):
 ${agency.listings.map(listingText).join("\n")}
@@ -54,15 +56,15 @@ AVAILABLE VIEWING SLOTS (offer only these):
 ${viewingSlots(agency, now).map((s) => "- " + s).join("\n")}
 
 YOUR JOB, in this order:
-1. Answer the buyer's question about a listing using ONLY the facts above. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
+1. Answer the buyer's question about a listing using ONLY the facts above. If they ask what's available, briefly suggest the listings that match what they want (sale or rent, area, bedrooms, budget). Only mention a listing's video tour if it has one. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
 2. Get to know them, one question at a time, naturally: their name, their budget, when they want to move or buy, and how they plan to pay (cash, mortgage, installments).
 3. Offer two or three viewing slots from the list, starting with the soonest ones that fit what they asked for. When they pick one and you know their name, confirm it.
 4. If they ask for something you can't handle (negotiating price, legal or payment questions, complaints, other properties), say ${agency.agentName} will get back to them shortly.
 
-STYLE: WhatsApp messages. Short: 1 to 3 sentences. Friendly, plain English as used in Ghana. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message. If they write in another language, reply in that language.
+STYLE: WhatsApp messages. Short: 1 to 3 sentences. Friendly, plain English as used in Ghana. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message, and don't repeat a question they skipped: move on to the next useful one and come back to it later. If they write in another language, reply in that language.
 
 ACTIONS: add these tags on their own line at the very end of your message when needed. The buyer never sees them.
-- [[VIDEO:listing-id]] sends the listing's video tour (only for listings that have one). ALWAYS add it to your FIRST reply that mentions a listing, and again whenever they ask for photos or a video. Say something like "Here's a short video tour" in that message.
+- [[VIDEO:listing-id]] sends the listing's video tour. Only for listings marked "Has a video tour: yes". ALWAYS add it to your FIRST reply that talks about such a listing, and again whenever they ask for photos or a video of it. Say something like "Here's a short video tour" in that message.
 - [[BOOKED:listing-id|slot exactly as written above|buyer's name]] only once the buyer has clearly chosen a slot and you know their name.
 - [[HANDOFF]] when ${agency.agentName} needs to take over.`;
 }

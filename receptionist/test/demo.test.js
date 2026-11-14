@@ -18,14 +18,16 @@ test("viewing slots: same day with 2 hours notice, skip Sunday, 12-hour times", 
 
 test("prompt lists only known facts and marks unknowns", () => {
   const p = systemPrompt(agency, THU);
-  assert.match(p, /Price: \$250,000/);
-  assert.match(p, /NOT KNOWN \(never guess these\): bathrooms, land size, parking, features/);
+  assert.match(p, /Price: \$320,000/);
+  assert.match(p, /Has a video tour: no \(offer a viewing instead\)/);
+  assert.match(p, /Commission or agency fees: NOT KNOWN/);
+  assert.ok(!/Bedrooms: \n/.test(p));
   assert.match(p, /Today is Thursday,? 12 November 2026/);
   assert.match(p, /you are the agency's AI assistant/);
 });
 
 test("action tags are stripped and turned into actions", () => {
-  const r = parseReply("Here's the tour! **Enjoy**\n[[VIDEO:spintex-4bed]]\n[[BOOKED:spintex-4bed|Friday 13 November at 10am|Kofi]]\n[[VIDEO:nope]]", agency);
+  const r = parseReply("Here's the tour! **Enjoy**\n[[VIDEO:east-legon-4bed]]\n[[BOOKED:east-legon-4bed|Friday 13 November at 10am|Kofi]]\n[[VIDEO:nope]]", agency);
   assert.equal(r.text, "Here's the tour! Enjoy");
   assert.deepEqual(r.actions.map((a) => a.type), ["video", "booked"]);
   assert.equal(r.actions[1].name, "Kofi");
@@ -54,7 +56,7 @@ test("end to end: chat and summary through a fake AI", async () => {
     const body = JSON.parse(opts.body);
     calls.push({ url, body, auth: opts.headers.Authorization });
     const isSummary = body.messages[0].content.startsWith("Read this WhatsApp conversation");
-    const content = isSummary ? 'Sure: {"name":"Kofi","budget":"$250k","seriousness":"hot"}' : "Yes, it's available! [[VIDEO:spintex-4bed]]";
+    const content = isSummary ? 'Sure: {"name":"Kofi","budget":"$250k","seriousness":"hot"}' : "Yes, it's available! [[VIDEO:east-legon-4bed]]";
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content } }] }) };
   };
   const llm = new LLM({ baseUrl: "https://ai.example/v1/", model: "m", apiKey: "k", fetchImpl: fakeFetch });

@@ -31,8 +31,8 @@ function setup(replies) {
 }
 
 test("answers in WhatsApp, sends the video, keeps the conversation", async () => {
-  const { wa, llm, chats, r } = setup(["Yes, it's available!\n[[VIDEO:spintex-4bed]]", "Great, what's your name?"]);
-  await r.handle(inbound("m1", "Is the Spintex house available?"));
+  const { wa, llm, chats, r } = setup(["Yes, it's available!\n[[VIDEO:east-legon-4bed]]", "Great, what's your name?"]);
+  await r.handle(inbound("m1", "Is the East Legon house available?"));
   await r.handle(inbound("m2", "Yes please"));
   assert.deepEqual(wa.sent.map((s) => s.text || "video"), ["Yes, it's available!", "video", "Great, what's your name?"]);
   assert.equal(llm.calls[1][0].role, "system");
@@ -48,7 +48,7 @@ test("duplicate deliveries are ignored", async () => {
 });
 
 test("booking is recorded and summarised for the agent", async () => {
-  const { chats, r } = setup(["Booked for Friday!\n[[BOOKED:spintex-4bed|Friday 13 November at 10am|Kofi]]", '{"name":"Kofi","budget":"$250k","seriousness":"hot"}']);
+  const { chats, r } = setup(["Booked for Friday!\n[[BOOKED:east-legon-4bed|Friday 13 November at 10am|Kofi]]", '{"name":"Kofi","budget":"$250k","seriousness":"hot"}']);
   await r.handle(inbound("b1", "Friday 10am, I'm Kofi"));
   const c = chats.get("233241234567");
   assert.equal(c.booking.slot, "Friday 13 November at 10am");
