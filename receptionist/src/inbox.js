@@ -22,13 +22,13 @@ function chatCard(c, now) {
   const summary = s ? `<dl>${[["Looking to", s.looking_for], ["Wants", [s.bedrooms && s.bedrooms + " bed", s.property_type, s.areas].filter(Boolean).join(", ")], ["Budget", s.budget], ["Timeline", s.timeline], ["Payment", s.payment], ["Purpose", s.purpose], ["Liked", s.interested_listing], ["Concerns", s.objections], ["Still to ask", (c.missing || []).join(", ")], ["Next step", s.next_step]]
     .map(([k, v]) => `<dt>${k}</dt><dd>${esc(v || "—")}</dd>`).join("")}</dl>` : "";
   const note = c.agentNote ? `<p class="note">⚠ ${esc(c.agentNote)}</p>` : "";
-  const followups = c.nudges ? `<p class="note">${c.nudges} follow-up${c.nudges > 1 ? "s" : ""} sent since their last message.</p>` : "";
+
   const booking = c.booking ? `<p class="booking">📅 <b>${esc(c.booking.slot)}</b> · ${esc(c.booking.listing)} · ${esc(c.booking.name)}</p>` : "";
   const msgs = c.messages.slice(-12).map((m) => `<div class="m ${m.role === "user" ? "in" : "out"}">${esc(m.content)}<time>${when(m.at)}</time></div>`).join("");
   const id = esc(c.waId);
   return `<section class="chat" id="c${id}">
   <header><div><b>${esc(c.name || pretty(c.waId))}</b><span>${pretty(c.waId)} · ${when(c.updatedAt)}</span></div><div class="tags">${tags}</div></header>
-  ${booking}${note}${summary}${followups}
+  ${booking}${note}${summary}
   <details${c.needsHuman ? " open" : ""}><summary>Conversation (${c.messages.length})</summary><div class="msgs">${msgs}</div></details>
   <div class="actions">
     ${c.aiPaused ? `<form method="post" action="/inbox/${id}/resume"><button>Let AI answer again</button></form>` : `<form method="post" action="/inbox/${id}/pause"><button>Pause AI</button></form>`}

@@ -132,14 +132,3 @@ export function scoreLead(lead = {}, booking = null) {
   const temperature = score >= 70 ? "hot" : score >= 40 ? "warm" : "cold";
   return { score, temperature, missing };
 }
-
-/** Instruction used when the buyer has gone quiet, so the AI writes a follow-up. */
-export function nudgeInstruction(kind, lead = {}) {
-  const missing = scoreLead(lead).missing;
-  const base = kind === "last"
-    ? "This is the last follow-up you are allowed to send, because WhatsApp only allows free messages within 24 hours of their last message."
-    : "The buyer stopped replying a few hours ago.";
-  return `[Note from the system, not from the buyer] ${base} Write ONE short, friendly follow-up message (1 to 2 sentences) that gives them an easy reason to reply. ` +
-    `Pick what fits best: offer a viewing slot from the list, mention one helpful fact about the listing they liked (or the closest match to what they want), or ask ${missing.length ? `about their ${missing[0]}` : "if they'd like to book a viewing"}. ` +
-    `Don't say you are following up "as a reminder", don't be pushy, don't repeat your last message, and don't use any action tags except [[VIDEO:...]] if they haven't seen that video yet.`;
-}

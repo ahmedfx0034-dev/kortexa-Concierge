@@ -113,7 +113,7 @@ test("WhatsApp client builds the right requests", async () => {
   assert.equal(parseWebhook({}).length, 0);
 });
 
-// ---- capture, qualify, nurture ------------------------------------------------
+// ---- capture, qualify, reminders -----------------------------------------------
 import { scoreLead } from "../src/prompt.js";
 const H = 3600000;
 
@@ -145,35 +145,13 @@ function nurtureSetup(replies, startAt) {
   return { wa, llm, chats, r, setClock: (t) => { clock = t; } };
 }
 
-test("nurture: one follow-up after 2 quiet hours, a last one at 20 hours, nothing after 24", async () => {
-  const t0 = Date.UTC(2026, 10, 16, 9); // Monday 9am Ghana time
-  const { wa, chats, r, setClock } = nurtureSetup(["Hi! Are you buying or renting?", "Just checking: are you looking to buy or rent?", "Last one: shall I hold a viewing for you?"], t0);
-  // Messages carry real timestamps; pin them to the test clock.
+test("no follow-ups: quiet buyers are never chased", async () => {
+  const t0 = Date.UTC(2026, 10, 16, 9);
+  const { wa, chats, r } = nurtureSetup(["Hi! Are you buying or renting?", "SHOULD NOT SEND"], t0);
   await r.handle(inbound("n1", "Hi"));
   chats.get("233241234567").messages.forEach((m) => { m.at = t0; });
-  assert.equal((await r.tick(t0 + 1 * H)).sent, 0, "too soon");
-  assert.equal((await r.tick(t0 + 2 * H)).sent, 1);
-  assert.equal(wa.sent.at(-1).text, "Just checking: are you looking to buy or rent?");
-  assert.equal((await r.tick(t0 + 3 * H)).sent, 0, "only one first follow-up");
-  assert.equal((await r.tick(t0 + 20 * H)).sent, 0, "5am is outside sending hours");
-  const c = chats.get("233241234567");
-  c.messages.forEach((m) => { m.at = t0 + 3 * H; }); // pretend their last message was at noon
-  assert.equal((await r.tick(t0 + 23 * H)).sent, 1, "last follow-up at 8am next day, before the window closes");
-  assert.equal(c.nudges, 2);
-  assert.equal((await r.tick(t0 + 26 * H)).sent, 0, "window closed and no more nudges");
-  assert.equal(r.tick && c.optedOut, false);
-});
-
-test("nurture never messages opted-out, paused or booked chats", async () => {
-  const t0 = Date.UTC(2026, 10, 16, 9);
-  const { wa, chats, r } = nurtureSetup(["Hi!"], t0);
-  for (const [id, field] of [["233200000001", "optedOut"], ["233200000002", "aiPaused"], ["233200000003", "booking"]]) {
-    const c = chats.get(id);
-    c.messages = [{ role: "user", content: "hi", at: t0 }, { role: "assistant", content: "hello", at: t0 }];
-    c[field] = field === "booking" ? { slot: "x" } : true;
-  }
-  assert.equal((await r.tick(t0 + 5 * H)).sent, 0);
-  assert.equal(wa.sent.length, 0);
+  for (const h of [2, 5, 20, 23]) assert.equal((await r.tick(t0 + h * H)).sent, 0);
+  assert.equal(wa.sent.length, 1);
 });
 
 test("viewing reminder goes out 3 hours before, once", async () => {

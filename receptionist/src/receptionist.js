@@ -1,19 +1,15 @@
 // What happens when a customer sends the agency a WhatsApp message, plus the
-// follow-ups (nurturing) and viewing reminders that run on a timer.
+// viewing reminders that run on a timer. (No follow-ups to buyers who go quiet.)
 
-import { systemPrompt, parseReply, LEAD_PROMPT, scoreLead, nudgeInstruction, slotTime } from "./prompt.js";
+import { systemPrompt, parseReply, LEAD_PROMPT, scoreLead, slotTime } from "./prompt.js";
 
 const HOUR = 3600000;
 const WINDOW = 24 * HOUR; // WhatsApp: free messages only within 24h of the customer's last message
 const STOP = /^\s*(stop|unsubscribe|stop messaging( me)?)\s*[.!]*\s*$/i;
 const START = /^\s*(start|resume)\s*[.!]*\s*$/i;
 
-export const NURTURE_DEFAULTS = {
-  firstNudgeHours: 2,     // buyer quiet this long after our reply -> friendly follow-up
-  lastNudgeHours: 20,     // hours after THEIR last message -> one last follow-up before the window closes
+export const DEFAULTS = {
   reminderHours: 3,       // viewing reminder this long before the viewing
-  sendFromHour: 8,        // only nurture between 8am and 8pm Ghana time
-  sendUntilHour: 20,
   extractEvery: 2,        // refresh the lead details every N buyer messages
 };
 
@@ -22,15 +18,13 @@ export function stageOf(c) {
   if (c.aiPaused) return "With agent";
   if (c.booking) return "Viewing booked";
   if (c.temperature === "hot") return "Qualified";
-  const last = c.messages[c.messages.length - 1];
-  if (c.nudges > 0 && last?.role === "assistant") return "Nurturing";
   return "Qualifying";
 }
 
 export class Receptionist {
-  constructor({ agency, llm, wa, chats, limiter, now = () => Date.now(), log = console, nurture = {} }) {
+  constructor({ agency, llm, wa, chats, limiter, now = () => Date.now(), log = console, settings = {} }) {
     Object.assign(this, { agency, llm, wa, chats, limiter, now, log });
-    this.nurture = { ...NURTURE_DEFAULTS, ...nurture };
+    this.settings = { ...DEFAULTS, ...settings };
     this.queues = new Map(); // one job at a time per customer, in order
   }
 
@@ -69,7 +63,6 @@ export class Receptionist {
       c.optedOut = false;
     }
 
-    c.nudges = 0; // they replied: follow-ups start over if they go quiet again
     if (!msg.text) {
       this.chats.add(c.waId, "user", `[sent a ${msg.type}]`);
       if (!c.aiPaused) await this.#reply(c, "Thanks! I can only read text messages for now. Could you type your question?");
@@ -97,7 +90,7 @@ export class Receptionist {
     if (parsed.text) await this.#reply(c, parsed.text);
     const bookedNow = await this.#runActions(c, parsed.actions);
     await this.chats.save();
-    if (bookedNow || c.aiPaused || c.buyerMessages % this.nurture.extractEvery === 0) await this.updateLead(c);
+    if (bookedNow || c.aiPaused || c.buyerMessages % this.settings.extractEvery === 0) await this.updateLead(c);
   }
 
   async #runActions(c, actions) {
@@ -133,21 +126,18 @@ export class Receptionist {
     await this.chats.save();
   }
 
-  /** NURTURE: follow up with buyers who went quiet, and remind people about viewings. Called on a timer. */
+  /** Remind people about booked viewings. Called on a timer. */
   async tick(now = this.now()) {
-    const hour = new Date(now).getUTCHours(); // Ghana = UTC+0
-    const inHours = hour >= this.nurture.sendFromHour && hour < this.nurture.sendUntilHour;
     let sent = 0;
     for (const c of this.chats.all()) {
       if (c.optedOut || c.aiPaused) continue;
       const lastIn = [...c.messages].reverse().find((m) => m.role === "user");
-      const last = c.messages[c.messages.length - 1];
-      if (!lastIn || !last) continue;
+      if (!lastIn) continue;
       const windowLeft = lastIn.at + WINDOW - now;
 
       // Viewing reminder (any hour, it's about their appointment)
       const b = c.booking;
-      if (b?.at && !b.reminded && now >= b.at - this.nurture.reminderHours * HOUR && now < b.at) {
+      if (b?.at && !b.reminded && now >= b.at - this.settings.reminderHours * HOUR && now < b.at) {
         await this.#enqueue(c.waId, async () => {
           if (windowLeft > 0) {
             const time = new Date(b.at).toLocaleTimeString("en-GB", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "UTC" });
@@ -163,24 +153,6 @@ export class Receptionist {
         continue;
       }
 
-      if (!inHours || c.booking || last.role !== "assistant" || windowLeft <= 0) continue;
-      const quietFor = now - last.at;
-      let kind = null;
-      if ((c.nudges || 0) === 0 && quietFor >= this.nurture.firstNudgeHours * HOUR && windowLeft > HOUR) kind = "first";
-      else if (c.nudges === 1 && now - lastIn.at >= this.nurture.lastNudgeHours * HOUR) kind = "last";
-      if (!kind) continue;
-
-      await this.#enqueue(c.waId, async () => {
-        try {
-          const instruction = { role: "user", content: nudgeInstruction(kind, c.lead || {}) };
-          const parsed = parseReply(await this.llm.chat([{ role: "system", content: systemPrompt(this.agency, now) }, ...this.#history(c), instruction]), this.agency);
-          if (parsed.text) { await this.#reply(c, parsed.text, "nudge"); sent++; }
-          await this.#runActions(c, parsed.actions.filter((a) => a.type === "video"));
-          c.nudges = (c.nudges || 0) + 1;
-          c.lastNudgeAt = now;
-        } catch (e) { this.log.error("follow-up failed:", e.message); }
-        await this.chats.save();
-      });
     }
     return { sent };
   }

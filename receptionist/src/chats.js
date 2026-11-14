@@ -23,7 +23,6 @@ export class Chats {
       booking: null,       // {listing, slot, name, at, reminded}
       lead: null,          // details captured from the chat (budget, timeline, ...)
       score: 0, temperature: "", missing: [],   // qualification
-      nudges: 0,           // follow-ups sent since their last message
       buyerMessages: 0,
       summary: null,
       needsHuman: false,

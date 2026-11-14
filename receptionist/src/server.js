@@ -200,6 +200,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     if (!env.ADMIN_PASSWORD) console.warn("ADMIN_PASSWORD is not set: the /inbox page is off.");
     if (!env.DATA_FILE) console.warn("DATA_FILE is not set: chats are kept in memory and lost on restart.");
   });
-  // Nurturing: follow-ups and viewing reminders, checked every 5 minutes.
-  if (receptionist) setInterval(() => receptionist.tick().then((r) => r.sent && console.log(`Sent ${r.sent} follow-up(s)/reminder(s).`)), 5 * 60000);
+  // Viewing reminders, checked every 5 minutes.
+  if (receptionist) setInterval(() => receptionist.tick().then((r) => r.sent && console.log(`Sent ${r.sent} viewing reminder(s).`)), 5 * 60000);
 }
