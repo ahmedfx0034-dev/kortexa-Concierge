@@ -2,6 +2,7 @@
 // viewing reminders that run on a timer. (No follow-ups to buyers who go quiet.)
 
 import { systemPrompt, parseReply, LEAD_PROMPT, scoreLead, slotTime } from "./prompt.js";
+import { demoCodeIn } from "./demos.js";
 
 const HOUR = 3600000;
 const WINDOW = 24 * HOUR; // WhatsApp: free messages only within 24h of the customer's last message
@@ -22,8 +23,8 @@ export function stageOf(c) {
 }
 
 export class Receptionist {
-  constructor({ agency, llm, wa, chats, limiter, now = () => Date.now(), log = console, settings = {} }) {
-    Object.assign(this, { agency, llm, wa, chats, limiter, now, log });
+  constructor({ agency, llm, wa, chats, limiter, demos = null, now = () => Date.now(), log = console, settings = {} }) {
+    Object.assign(this, { agency, llm, wa, chats, limiter, demos, now, log });
     this.settings = { ...DEFAULTS, ...settings };
     this.queues = new Map(); // one job at a time per customer, in order
   }
@@ -38,6 +39,20 @@ export class Receptionist {
   }
 
   handle(msg) { return this.#enqueue(msg.from, () => this.#handle(msg)); }
+
+  /** The agency this chat is talking to: a personalised demo, or the default agency. */
+  agencyFor(c) { return (c.demo && this.demos?.get(c.demo)) || this.agency; }
+
+  /** "DEMO primehomes" switches this chat to that agency's demo and starts fresh. */
+  async #startDemo(c, code) {
+    const demo = this.demos?.get(code);
+    if (!demo) {
+      await this.#reply(c, `Sorry, I couldn't find a demo called "${code}". Please check the code and try again.`, "system");
+      return;
+    }
+    Object.assign(c, { demo: code, messages: [], lead: null, booking: null, score: 0, temperature: "", missing: [], aiPaused: false, needsHuman: false, buyerMessages: 0 });
+    await this.#reply(c, `Hello! 👋 This is ${demo.receptionistName}, the AI receptionist for ${demo.agencyName}. (This is a demo with sample listings.) Pretend you're a buyer or tenant: ask me about a property, prices, or booking a viewing.`, "welcome");
+  }
 
   async #reply(c, text, kind = "reply") {
     await this.wa.sendText(c.waId, text);
@@ -69,6 +84,9 @@ export class Receptionist {
       return this.chats.save();
     }
 
+    const code = demoCodeIn(msg.text);
+    if (code && this.demos) { await this.#startDemo(c, code); return this.chats.save(); }
+
     this.chats.add(c.waId, "user", msg.text);
     c.buyerMessages = (c.buyerMessages || 0) + 1;
     if (c.aiPaused) { c.needsHuman = true; return this.chats.save(); } // a person is handling this chat
@@ -79,11 +97,12 @@ export class Receptionist {
     this.wa.markReadTyping(msg.id);
     let parsed;
     try {
-      parsed = parseReply(await this.llm.chat([{ role: "system", content: systemPrompt(this.agency, this.now()) }, ...this.#history(c)]), this.agency);
+      const agency = this.agencyFor(c);
+      parsed = parseReply(await this.llm.chat([{ role: "system", content: systemPrompt(agency, this.now()) }, ...this.#history(c)]), agency);
     } catch (e) {
       this.log.error("AI failed:", e.message);
       c.needsHuman = true;
-      await this.#reply(c, `Sorry, I'm having a little trouble right now. ${cap(this.agency.agentName)} will reply to you shortly.`).catch(() => {});
+      await this.#reply(c, `Sorry, I'm having a little trouble right now. ${cap(this.agencyFor(c).agentName)} will reply to you shortly.`).catch(() => {});
       return this.chats.save();
     }
 
@@ -100,7 +119,7 @@ export class Receptionist {
         await this.wa.sendVideo(c.waId, a.url, a.title).catch((e) => this.log.error("video failed:", e.message));
         this.chats.add(c.waId, "assistant", `[shared the video tour of ${a.title}]`);
       } else if (a.type === "booked") {
-        c.booking = { listing: a.listing, slot: a.slot, name: a.name, at: slotTime(this.agency, a.slot, this.now()), bookedAt: this.now(), reminded: false };
+        c.booking = { listing: a.listing, slot: a.slot, name: a.name, at: slotTime(this.agencyFor(c), a.slot, this.now()), bookedAt: this.now(), reminded: false };
         c.needsHuman = true; // the agent should confirm the viewing
         booked = true;
       } else if (a.type === "handoff") {
@@ -141,7 +160,7 @@ export class Receptionist {
         await this.#enqueue(c.waId, async () => {
           if (windowLeft > 0) {
             const time = new Date(b.at).toLocaleTimeString("en-GB", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "UTC" });
-            await this.#reply(c, `Hi${b.name ? " " + b.name : ""}, a quick reminder of your viewing of the ${b.listing} today at ${time}. ${cap(this.agency.agentName)} will share the exact meeting point. Reply here if anything changes.`, "reminder");
+            await this.#reply(c, `Hi${b.name ? " " + b.name : ""}, a quick reminder of your viewing of the ${b.listing} today at ${time}. ${cap(this.agencyFor(c).agentName)} will share the exact meeting point. Reply here if anything changes.`, "reminder");
             sent++;
           } else {
             c.needsHuman = true; // outside the free window: the agent should call instead

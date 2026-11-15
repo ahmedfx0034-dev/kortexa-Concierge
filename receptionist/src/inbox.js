@@ -7,7 +7,8 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const when = (t) => (t ? new Date(t).toLocaleString("en-GB", { timeZone: "Africa/Accra", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "");
 const pretty = (n) => { const m = /^233(\d{2})(\d{3})(\d{4})$/.exec(n); return m ? `+233 ${m[1]} ${m[2]} ${m[3]}` : "+" + n; };
 
-function chatCard(c, now) {
+function chatCard(c, now, demos) {
+  const demo = c.demo && demos?.get(c.demo);
   const lastIn = [...c.messages].reverse().find((m) => m.role === "user");
   const windowOpen = lastIn && now - lastIn.at < 86400000;
   const tags = [
@@ -27,7 +28,7 @@ function chatCard(c, now) {
   const msgs = c.messages.slice(-12).map((m) => `<div class="m ${m.role === "user" ? "in" : "out"}">${esc(m.content)}<time>${when(m.at)}</time></div>`).join("");
   const id = esc(c.waId);
   return `<section class="chat" id="c${id}">
-  <header><div><b>${esc(c.name || pretty(c.waId))}</b><span>${pretty(c.waId)} · ${when(c.updatedAt)}</span></div><div class="tags">${tags}</div></header>
+  <header><div><b>${esc(c.name || pretty(c.waId))}</b><span>${pretty(c.waId)} · ${when(c.updatedAt)}${demo ? ` · demo for ${esc(demo.agencyName)}` : ""}</span></div><div class="tags">${tags}</div></header>
   ${booking}${note}${summary}
   <details${c.needsHuman ? " open" : ""}><summary>Conversation (${c.messages.length})</summary><div class="msgs">${msgs}</div></details>
   <div class="actions">
@@ -39,7 +40,7 @@ function chatCard(c, now) {
 </section>`;
 }
 
-export function inboxPage(chats, { agency, notice = "", now = Date.now() }) {
+export function inboxPage(chats, { agency, demos = null, notice = "", now = Date.now() }) {
   const needs = chats.filter((c) => c.needsHuman).length;
   const hot = chats.filter((c) => c.temperature === "hot").length;
   const booked = chats.filter((c) => c.booking).length;
@@ -67,6 +68,6 @@ button{font:inherit;font-size:14px;padding:6px 12px;border-radius:8px;border:1px
 <h1>${esc(agency.agencyName)} · WhatsApp inbox</h1>
 <p class="sub">${chats.length} chats · ${hot} hot leads · ${booked} viewings booked · ${needs} need you · refreshes every 30 seconds</p>
 ${notice ? `<div class="notice">${esc(notice)}</div>` : ""}
-${chats.length ? chats.map((c) => chatCard(c, now)).join("") : '<p class="empty">No WhatsApp chats yet. Send a message to the business number to test it.</p>'}
+${chats.length ? chats.map((c) => chatCard(c, now, demos)).join("") : '<p class="empty">No WhatsApp chats yet. Send a message to the business number to test it.</p>'}
 </main></body></html>`;
 }

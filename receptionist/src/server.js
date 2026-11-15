@@ -13,6 +13,7 @@ import { WhatsApp, parseWebhook, validSignature } from "./whatsapp.js";
 import { Chats } from "./chats.js";
 import { Receptionist } from "./receptionist.js";
 import { inboxPage } from "./inbox.js";
+import { Demos } from "./demos.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(here, "..", "public");
@@ -53,7 +54,8 @@ export function cleanMessages(input, { endWithUser = true } = {}) {
 }
 
 export function createApp({ agency, llm, limiter = new Limiter(), now = () => Date.now(), log = console,
-  wa = null, chats = null, receptionist = null, verifyToken = "", appSecret = "", adminPassword = "" }) {
+  wa = null, chats = null, receptionist = null, demos = null, verifyToken = "", appSecret = "", adminPassword = "" }) {
+  const agencyFor = (code) => (code && demos?.get(code)) || agency;
   const send = (res, code, body) => {
     res.writeHead(code, { "Content-Type": "application/json", "Cache-Control": "no-store" });
     res.end(JSON.stringify(body));
@@ -106,7 +108,7 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         if (!authed(req)) { res.writeHead(401, { "WWW-Authenticate": 'Basic realm="Inbox", charset="UTF-8"' }); return res.end("Login required"); }
         if (url.pathname === "/inbox" && req.method === "GET") {
           res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
-          return res.end(inboxPage(chats.all(), { agency, notice: url.searchParams.get("notice") || "", now: now() }));
+          return res.end(inboxPage(chats.all(), { agency, demos, notice: url.searchParams.get("notice") || "", now: now() }));
         }
         const m = /^\/inbox\/(\d{8,15})\/(pause|resume|done|reply)$/.exec(url.pathname);
         if (m && req.method === "POST") {
@@ -134,15 +136,27 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
       }
 
       if (url.pathname === "/api/agency" && req.method === "GET") {
-        const { agencyName, receptionistName, listings } = agency;
-        return send(res, 200, { agencyName, receptionistName, listings: listings.map(({ id, title, price }) => ({ id, title, price })) });
+        const code = url.searchParams.get("demo");
+        if (code && !demos?.get(code)) return send(res, 404, { error: "No demo with that code." });
+        const { agencyName, receptionistName, listings, isDemo = false } = agencyFor(code);
+        return send(res, 200, { agencyName, receptionistName, isDemo, listings: listings.map(({ id, title, price }) => ({ id, title, price })) });
+      }
+
+      // Personalised demo pages: /d/<code> shows the same chat page for that agency.
+      const dm = /^\/d\/([a-z0-9-]{2,24})\/?$/.exec(url.pathname);
+      if (dm && req.method === "GET") {
+        if (!demos?.get(dm[1])) return send(res, 404, { error: "No demo with that code." });
+        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        return fs.createReadStream(path.join(PUBLIC, "index.html")).pipe(res);
       }
 
       if ((url.pathname === "/api/chat" || url.pathname === "/api/summary") && req.method === "POST") {
         if (!llm) return send(res, 503, { error: "The AI isn't connected yet. Add LLM_API_KEY to the server settings." });
         const tooMany = limiter.allow(ipOf(req), now());
         if (tooMany) return send(res, 429, { error: tooMany });
-        const messages = cleanMessages((await readJson(req)).messages, { endWithUser: url.pathname === "/api/chat" });
+        const body = await readJson(req);
+        const messages = cleanMessages(body.messages, { endWithUser: url.pathname === "/api/chat" });
+        const agency = agencyFor(body.demo);
 
         if (url.pathname === "/api/chat") {
           const raw = await llm.chat([{ role: "system", content: systemPrompt(agency, now()) }, ...messages]);
@@ -187,13 +201,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const limiter = new Limiter({ perDay: Number(env.DAILY_LIMIT) || 800 });
   const wa = new WhatsApp({ token: env.WHATSAPP_TOKEN, phoneNumberId: env.WHATSAPP_PHONE_NUMBER_ID, apiVersion: env.WHATSAPP_API_VERSION || "v23.0" });
   const chats = new Chats(env.DATA_FILE || "");
-  const receptionist = llm ? new Receptionist({ agency, llm, wa, chats, limiter }) : null;
+  const demos = new Demos();
+  const receptionist = llm ? new Receptionist({ agency, llm, wa, chats, limiter, demos }) : null;
   const port = Number(env.PORT) || 3000;
   http.createServer(createApp({
-    agency, llm, limiter, wa, chats, receptionist,
+    agency, llm, limiter, wa, chats, receptionist, demos,
     verifyToken: env.WHATSAPP_VERIFY_TOKEN || "", appSecret: env.WHATSAPP_APP_SECRET || "", adminPassword: env.ADMIN_PASSWORD || "",
   })).listen(port, () => {
-    console.log(`Receptionist running on http://localhost:${port}`);
+    console.log(`Receptionist running on http://localhost:${port} (${demos.list().length} personalised demos loaded)`);
     if (!llm) console.warn("LLM_API_KEY is not set: the AI won't answer.");
     if (wa.dryRun) console.warn("WhatsApp is in dry-run mode: replies are printed here, not sent. Set WHATSAPP_TOKEN and WHATSAPP_PHONE_NUMBER_ID.");
     if (!env.WHATSAPP_APP_SECRET) console.warn("WHATSAPP_APP_SECRET is not set: webhook signatures are NOT checked.");

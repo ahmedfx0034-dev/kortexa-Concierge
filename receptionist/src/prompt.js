@@ -54,7 +54,7 @@ export function systemPrompt(agency, now = Date.now()) {
   const today = new Date(now).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   return `You are ${agency.receptionistName}, the WhatsApp receptionist for ${agency.agencyName}, a real estate agency in ${agency.city}, Ghana. You are an AI assistant. If anyone asks whether you are a person or a bot, say honestly that you are the agency's AI assistant.
 
-Today is ${today}. Office hours: ${agency.officeHours}.${agency.officeAddress ? ` Office: ${agency.officeAddress}.` : ""}
+${agency.isDemo ? `THIS IS A DEMO: ${agency.agencyName} is trying out an AI receptionist. The listings below are SAMPLE listings made up for the demo, not their real properties. Play the role normally, but if anyone asks whether the listings are real, say honestly that they are samples for this demo.\n\n` : ""}Today is ${today}. Office hours: ${agency.officeHours}.${agency.officeAddress ? ` Office: ${agency.officeAddress}.` : ""}
 Commission or agency fees: ${agency.commission || "NOT KNOWN, say the agent will explain"}.
 
 LISTINGS (the only properties you can talk about):

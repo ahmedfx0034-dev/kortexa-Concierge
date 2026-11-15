@@ -114,6 +114,35 @@ prints the replies instead of sending them. Useful for testing.
 | Groq | `https://api.groq.com/openai/v1` |
 | OpenRouter (models ending in `:free`) | `https://openrouter.ai/api/v1` |
 
+## Personalised demos (one per agency you pitch)
+
+Make a demo that introduces itself as the agency's own receptionist, using
+sample listings from their city (Accra, Tema, Kumasi or Takoradi):
+
+```bash
+PUBLIC_URL=https://your-app.onrender.com DEMO_WHATSAPP_NUMBER=233XXXXXXXXX \
+  npm run make-demo -- "Prime Homes Ltd" Accra
+```
+
+It prints two links to send the agency:
+
+- **WhatsApp:** `https://wa.me/<your demo number>?text=DEMO%20prime`. It opens WhatsApp
+  with `DEMO prime` typed. When they send it, the receptionist switches to
+  their agency and starts a fresh chat.
+- **Web:** `https://your-app.onrender.com/d/prime`, the same chat in a browser.
+
+All demos share one WhatsApp number. Without a code, people get the default
+demo agency in `config/agency.json`. Each demo says it's a demo with sample
+listings, and the AI admits the listings are samples if asked.
+
+Demo files are saved in `config/demos/` and are **not** uploaded to GitHub
+(see `.gitignore`), because this repository is public and they would reveal
+which agencies you're pitching. To deploy them, make the repository private on
+GitHub and remove the `config/demos/*.json` line from `.gitignore`.
+
+Options: `--code shortcode` to choose the code, `--name Esi` for a different
+receptionist name. Restart or redeploy the server after making demos.
+
 ## Change the agency
 
 Edit [`config/agency.json`](config/agency.json): name, receptionist name, office

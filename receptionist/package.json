@@ -4,9 +4,12 @@
   "private": true,
   "description": "AI WhatsApp receptionist for a real estate agency, running on a free AI plan.",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node src/server.js",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "make-demo": "node scripts/make-demo.js"
   }
 }
