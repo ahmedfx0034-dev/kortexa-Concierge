@@ -46,8 +46,15 @@ function listingText(l) {
   const lines = known.filter(([, v]) => v !== "" && v != null).map(([k, v]) => `  ${k}: ${v}`);
   const unknown = known.filter(([k, v]) => (v === "" || v == null) && !notApplicable.has(k)).map(([k]) => k.toLowerCase());
   return `- Listing id "${l.id}":\n${lines.join("\n")}` +
-    `\n  Has a video tour: ${l.video ? "yes" : "no (offer a viewing instead)"}` +
     (unknown.length ? `\n  NOT KNOWN (never guess these): ${unknown.join(", ")}` : "");
+}
+
+/** How the receptionist writes. Defaults below; agencies change it with the "style" section of their settings file. */
+export function styleText(agency) {
+  const s = agency.style || {};
+  const rules = (s.extraRules || []).filter((r) => String(r).trim());
+  return `WhatsApp messages. ${s.replyLength || "1 to 3 short sentences"}. Tone: ${s.tone || "friendly, plain English as used in Ghana"}. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message, and don't repeat a question they skipped: move on to the next useful one and come back to it later. If they write in another language, reply in that language.` +
+    (rules.length ? `\nAlso follow these rules from the agency:\n${rules.map((r) => "- " + r).join("\n")}` : "");
 }
 
 export function systemPrompt(agency, now = Date.now()) {
@@ -64,7 +71,7 @@ AVAILABLE VIEWING SLOTS (offer only these):
 ${viewingSlots(agency, now).map((s) => "- " + s).join("\n")}
 
 YOUR JOB, in this order:
-1. Answer the buyer's question about a listing using ONLY the facts above. If they ask what's available, briefly suggest the listings that match what they want (sale or rent, area, bedrooms, budget). Only mention a listing's video tour if it has one. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
+1. Answer the buyer's question about a listing using ONLY the facts above. If they ask what's available, briefly suggest the listings that match what they want (sale or rent, area, bedrooms, budget). If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, sizes, features, discounts or availability of other properties.
 2. CAPTURE AND QUALIFY: while helping, find out these things, one question at a time and in a natural order (never as a form):
    a) their name
    b) buying or renting, and what they want (type, bedrooms, area)
@@ -76,30 +83,28 @@ YOUR JOB, in this order:
 3. Once you know what they want, offer two or three viewing slots from the list, starting with the soonest. When they pick one and you know their name, confirm it. If they hesitate, find out why (price, location, timing, spouse needs to see it) and answer from the facts.
 4. If they ask for something you can't handle (negotiating price, legal or payment questions, complaints, other properties), say ${agency.agentName} will get back to them shortly.
 
-STYLE: WhatsApp messages. Short: 1 to 3 sentences. Friendly, plain English as used in Ghana. At most one emoji. No markdown, no bullet lists, no asterisks. Ask only one question per message, and don't repeat a question they skipped: move on to the next useful one and come back to it later. If they write in another language, reply in that language.
+STYLE: ${styleText(agency)}
 
 ACTIONS: add these tags on their own line at the very end of your message when needed. The buyer never sees them.
-- [[VIDEO:listing-id]] sends the listing's video tour. Only for listings marked "Has a video tour: yes". ALWAYS add it to your FIRST reply that talks about such a listing, and again whenever they ask for photos or a video of it. Say something like "Here's a short video tour" in that message.
+If they ask for photos or a video, don't promise to send any: offer to book a viewing so they can see the property in person.
 - [[BOOKED:listing-id|slot exactly as written above|buyer's name]] only once the buyer has clearly chosen a slot and you know their name.
 - [[HANDOFF]] when ${agency.agentName} needs to take over.`;
 }
 
-const TAG = /\[\[(VIDEO|BOOKED|HANDOFF)(?::([^\]]*))?\]\]/g;
+const TAG = /\[\[(BOOKED|HANDOFF)(?::([^\]]*))?\]\]/g;
 
 /** Strip action tags from the AI's text and return them as structured actions. */
 export function parseReply(raw, agency) {
   const actions = [];
   const text = String(raw || "").replace(TAG, (_, kind, arg = "") => {
-    if (kind === "VIDEO") {
-      const l = agency.listings.find((x) => x.id === arg.trim());
-      if (l?.video) actions.push({ type: "video", url: l.video, title: l.title });
-    } else if (kind === "BOOKED") {
+    if (kind === "BOOKED") {
       const [listingId, slot, name] = arg.split("|").map((s) => (s || "").trim());
       const l = agency.listings.find((x) => x.id === listingId);
       if (slot) actions.push({ type: "booked", listing: l?.title || listingId, slot, name });
     } else if (kind === "HANDOFF") actions.push({ type: "handoff" });
     return "";
-  }).replace(/\*\*/g, "").replace(/\n{3,}/g, "\n\n").trim();
+  }).replace(/\[\[[^\]]*\]\]/g, "") // never show any other [[tag]] to the buyer
+    .replace(/\*\*/g, "").replace(/\n{3,}/g, "\n\n").trim();
   // Never send the same action twice in one reply.
   const seen = new Set();
   return { text, actions: actions.filter((a) => { const k = JSON.stringify(a); return seen.has(k) ? false : seen.add(k); }) };

@@ -24,13 +24,12 @@ test("demo codes are short and typeable", () => {
   assert.equal(demoCodeIn("I'd like a demo of the house"), null);
 });
 
-test("a demo uses the agency name and that city's sample listings, with the video on the first house", () => {
+test("a demo uses the agency name and that city's sample listings", () => {
   const d = makeDemo({ name: "Ach Estate", city: "kumasi" });
   assert.equal(d.city, "Kumasi");
   assert.ok(d.isDemo);
   assert.ok(d.listings.every((l) => /Kumasi/.test(l.area)));
-  assert.match(d.listings[0].video, /^https:/);
-  assert.equal(d.listings[1].video, "");
+  assert.ok(d.listings.every((l) => !("video" in l)), "no videos");
   assert.equal(makeDemo({ name: "X", city: "Ho" }).city, "Accra", "unknown city falls back to Accra");
   assert.throws(() => makeDemo({ name: " " }), /required/);
   const p = systemPrompt(d, Date.UTC(2026, 10, 16, 9));
@@ -51,14 +50,14 @@ test("WhatsApp: DEMO code switches the chat to that agency and starts fresh", as
   const demos = tmpDemos();
   demos.save(makeDemo({ name: "Prime Homes Ltd", city: "Tema" }));
   const sent = [], prompts = [];
-  const wa = { sendText: async (to, t) => { sent.push(t); return {}; }, sendVideo: async () => ({}), markReadTyping: async () => {} };
+  const wa = { sendText: async (to, t) => { sent.push(t); return {}; }, markReadTyping: async () => {} };
   const llm = { chat: async (m) => { prompts.push(m[0].content); return "Hi! We have a 4-bedroom in Community 25."; } };
   const chats = new Chats("");
   const r = new Receptionist({ agency, llm, wa, chats, limiter: new Limiter(), demos, log: quiet });
   const msg = (id, text) => ({ id, from: "233241234567", name: "Kofi", type: "text", text, at: Date.now() });
 
   await r.handle(msg("a", "Hello"));
-  assert.match(prompts[0], /Nyansapo Homes/, "no code: the default demo agency");
+  assert.match(prompts[0], /Ivory Crest Realty/, "no code: the default demo agency");
   await r.handle(msg("b", "DEMO prime"));
   assert.match(sent.at(-1), /AI receptionist for Prime Homes Ltd/);
   const c = chats.get("233241234567");

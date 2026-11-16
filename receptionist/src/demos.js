@@ -21,7 +21,7 @@ export function demoCode(name) {
 export function makeDemo({ name, city = "Accra", receptionistName = "Ama", code }, samples = JSON.parse(fs.readFileSync(SAMPLES_FILE, "utf8"))) {
   if (!name || !String(name).trim()) throw new Error("Agency name is required.");
   const cityKey = Object.keys(samples).find((k) => k.toLowerCase() === String(city).toLowerCase()) || "Accra";
-  const listings = samples[cityKey].map(({ video, ...l }) => ({ ...l, video: video ? samples.video : "" }));
+  const listings = samples[cityKey].map((l) => ({ ...l }));
   return {
     code: code || demoCode(name),
     isDemo: true,
@@ -35,6 +35,11 @@ export function makeDemo({ name, city = "Accra", receptionistName = "Ama", code 
     viewingDaysAhead: 3,
     minNoticeHours: 2,
     commission: "",
+    style: {
+      tone: "Warm, polished and professional, like the front desk of a premium agency. Friendly but never too casual.",
+      replyLength: "1 to 3 short sentences",
+      extraRules: [],
+    },
     listings,
   };
 }

@@ -19,7 +19,8 @@ test("viewing slots: same day with 2 hours notice, skip Sunday, 12-hour times", 
 test("prompt lists only known facts and marks unknowns", () => {
   const p = systemPrompt(agency, THU);
   assert.match(p, /Price: \$320,000/);
-  assert.match(p, /Has a video tour: no \(offer a viewing instead\)/);
+  assert.ok(!/video tour/i.test(p), "no video instructions");
+  assert.match(p, /Tone: Warm, polished and professional/);
   assert.match(p, /Commission or agency fees: NOT KNOWN/);
   assert.ok(!/Bedrooms: \n/.test(p));
   assert.match(p, /Today is Thursday,? 12 November 2026/);
@@ -27,10 +28,10 @@ test("prompt lists only known facts and marks unknowns", () => {
 });
 
 test("action tags are stripped and turned into actions", () => {
-  const r = parseReply("Here's the tour! **Enjoy**\n[[VIDEO:east-legon-4bed]]\n[[BOOKED:east-legon-4bed|Friday 13 November at 10am|Kofi]]\n[[VIDEO:nope]]", agency);
-  assert.equal(r.text, "Here's the tour! Enjoy");
-  assert.deepEqual(r.actions.map((a) => a.type), ["video", "booked"]);
-  assert.equal(r.actions[1].name, "Kofi");
+  const r = parseReply("See you then! **Enjoy**\n[[BOOKED:east-legon-4bed|Friday 13 November at 10am|Kofi]]", agency);
+  assert.equal(r.text, "See you then! Enjoy");
+  assert.deepEqual(r.actions.map((a) => a.type), ["booked"]);
+  assert.equal(r.actions[0].name, "Kofi");
   assert.deepEqual(parseReply("Sure [[HANDOFF]]", agency).actions, [{ type: "handoff" }]);
 });
 
@@ -56,7 +57,7 @@ test("end to end: chat and summary through a fake AI", async () => {
     const body = JSON.parse(opts.body);
     calls.push({ url, body, auth: opts.headers.Authorization });
     const isSummary = body.messages[0].content.startsWith("Read this WhatsApp conversation");
-    const content = isSummary ? 'Sure: {"name":"Kofi","budget":"$250k","seriousness":"hot"}' : "Yes, it's available! [[VIDEO:east-legon-4bed]]";
+    const content = isSummary ? 'Sure: {"name":"Kofi","budget":"$250k","seriousness":"hot"}' : "Yes, it's available! [[HANDOFF]]";
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content } }] }) };
   };
   const llm = new LLM({ baseUrl: "https://ai.example/v1/", model: "m", apiKey: "k", fetchImpl: fakeFetch });
@@ -65,7 +66,7 @@ test("end to end: chat and summary through a fake AI", async () => {
   try {
     const chat = await (await fetch(base + "/api/chat", { method: "POST", body: JSON.stringify({ messages: [{ role: "user", content: "Is it available?" }] }) })).json();
     assert.equal(chat.text, "Yes, it's available!");
-    assert.equal(chat.actions[0].type, "video");
+    assert.equal(chat.actions[0].type, "handoff");
     assert.equal(calls[0].url, "https://ai.example/v1/chat/completions");
     assert.equal(calls[0].auth, "Bearer k");
     assert.equal(calls[0].body.messages[0].role, "system");
@@ -100,4 +101,13 @@ test("busy main model falls back once to the backup model", async () => {
   const llm = new LLM({ baseUrl: "https://x", model: "main", apiKey: "k", reasoningEffort: "none", fallbackModel: "backup", fetchImpl });
   assert.equal(await llm.chat([{ role: "user", content: "hi" }]), "Hi from backup");
   assert.deepEqual(seen, [["main", "none"], ["backup", undefined]]);
+});
+
+test("agency style settings change how the AI is told to write", async () => {
+  const { styleText } = await import("../src/prompt.js");
+  const custom = { ...agency, style: { tone: "Very formal", replyLength: "One sentence", extraRules: ["Always greet with 'Akwaaba'", ""] } };
+  const s = styleText(custom);
+  assert.match(s, /One sentence\. Tone: Very formal\./);
+  assert.match(s, /- Always greet with 'Akwaaba'/);
+  assert.match(styleText({}), /friendly, plain English/, "defaults when no style is set");
 });

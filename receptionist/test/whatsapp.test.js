@@ -15,7 +15,6 @@ function fakeWa() {
   const sent = [];
   return { sent, dryRun: false,
     sendText: async (to, body) => { sent.push({ to, text: body }); return { id: "o" + sent.length }; },
-    sendVideo: async (to, link) => { sent.push({ to, video: link }); return { id: "o" + sent.length }; },
     markReadTyping: async () => {} };
 }
 function fakeLlm(replies) {
@@ -30,11 +29,11 @@ function setup(replies) {
   return { wa, llm, chats, r };
 }
 
-test("answers in WhatsApp, sends the video, keeps the conversation", async () => {
+test("answers in WhatsApp, never sends video, keeps the conversation", async () => {
   const { wa, llm, chats, r } = setup(["Yes, it's available!\n[[VIDEO:east-legon-4bed]]", "Great, what's your name?"]);
   await r.handle(inbound("m1", "Is the East Legon house available?"));
   await r.handle(inbound("m2", "Yes please"));
-  assert.deepEqual(wa.sent.map((s) => s.text || "video"), ["Yes, it's available!", "video", "Great, what's your name?"]);
+  assert.deepEqual(wa.sent.map((s) => s.text), ["Yes, it's available!", "Great, what's your name?"], "stray tags are removed, nothing but text is sent");
   assert.equal(llm.calls[1][0].role, "system");
   assert.equal(llm.calls[1].filter((m) => m.role === "user").length, 2, "second call sees the whole chat");
   assert.equal(chats.get("233241234567").name, "Kofi");
@@ -106,9 +105,8 @@ test("WhatsApp client builds the right requests", async () => {
   const reqs = [];
   const wa = new WhatsApp({ token: "t", phoneNumberId: "123" }, { fetchImpl: async (url, o) => { reqs.push({ url, body: JSON.parse(o.body) }); return { ok: true, json: async () => ({ messages: [{ id: "x" }] }) }; } });
   await wa.sendText("233241234567", "hi");
-  await wa.sendVideo("233241234567", "https://v.mp4", "Tour");
   assert.equal(reqs[0].url, "https://graph.facebook.com/v23.0/123/messages");
-  assert.deepEqual(reqs[1].body.video, { link: "https://v.mp4", caption: "Tour" });
+  assert.equal(typeof wa.sendVideo, "undefined", "no video sending at all");
   assert.ok(validSignature(Buffer.from("x"), "sha256=" + crypto.createHmac("sha256", "s").update("x").digest("hex"), "s"));
   assert.equal(parseWebhook({}).length, 0);
 });

@@ -60,10 +60,6 @@ export class WhatsApp {
     return this.#post({ recipient_type: "individual", to, type: "text", text: { preview_url: false, body } });
   }
 
-  sendVideo(to, link, caption = "") {
-    return this.#post({ recipient_type: "individual", to, type: "video", video: { link, ...(caption ? { caption } : {}) } });
-  }
-
   /** Blue ticks plus a "typing…" bubble while the AI writes. Never fails the reply. */
   markReadTyping(messageId) {
     return this.#post({ status: "read", message_id: messageId, typing_indicator: { type: "text" } })

@@ -38,7 +38,6 @@ header { background: var(--head); color: var(--head-fg); display: flex; align-it
 .msg.out { background: var(--out); align-self: flex-end; border-top-right-radius: 2px; }
 .msg time { position: absolute; right: 8px; bottom: 3px; font-size: 11px; color: var(--muted); }
 .msg.out time::after { content: " ✓✓"; color: #34b7f1; }
-.msg video { display: block; width: 100%; max-width: 260px; border-radius: 8px; margin-bottom: 4px; background: #000; }
 .card { align-self: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13.5px; max-width: 92%; }
 .card h3 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
 .card.handoff h3 { color: var(--warn); }
@@ -82,7 +81,7 @@ textarea { flex: 1; resize: none; border: 0; border-radius: 22px; padding: 10px 
 const $ = (id) => document.getElementById(id);
 const DEMO = (location.pathname.match(/^\/d\/([a-z0-9-]+)/) || [])[1] || "";
 const KEY = "receptionist-demo-chat" + (DEMO ? "-" + DEMO : "");
-const STARTERS = ["Hi, what houses do you have for sale?", "Do you have a 2-bedroom for rent?", "Can I see a video of the 4-bedroom?", "Can I view a property this week?"];
+const STARTERS = ["Hi, what houses do you have for sale?", "Do you have a 2-bedroom for rent?", "How much is the 4-bedroom?", "Can I view a property this week?"];
 let history = [];     // what the AI sees: {role, content}
 let items = [];       // what the screen shows
 let busy = false;
@@ -98,7 +97,6 @@ function render() {
   for (const it of items) {
     if (it.kind === "msg") {
       const m = el("div", "msg " + it.dir);
-      if (it.video) { const v = el("video"); v.src = it.video; v.controls = true; v.playsInline = true; v.preload = "metadata"; m.append(v); }
       if (it.text) m.append(document.createTextNode(it.text));
       m.append(el("time", null, it.time));
       chat.append(m);
@@ -141,8 +139,7 @@ async function sendText(text) {
   try {
     const r = await post("/api/chat", { messages: history, demo: DEMO });
     history.push({ role: "assistant", content: r.text || "" });
-    const video = r.actions.find((a) => a.type === "video");
-    if (r.text || video) items.push({ kind: "msg", dir: "in", text: r.text, video: video && video.url, time: nowTime() });
+    if (r.text) items.push({ kind: "msg", dir: "in", text: r.text, time: nowTime() });
     for (const a of r.actions) {
       if (a.type === "booked") items.push({ kind: "booked", ...a });
       if (a.type === "handoff") items.push({ kind: "handoff" });

@@ -115,10 +115,7 @@ export class Receptionist {
   async #runActions(c, actions) {
     let booked = false;
     for (const a of actions) {
-      if (a.type === "video") {
-        await this.wa.sendVideo(c.waId, a.url, a.title).catch((e) => this.log.error("video failed:", e.message));
-        this.chats.add(c.waId, "assistant", `[shared the video tour of ${a.title}]`);
-      } else if (a.type === "booked") {
+      if (a.type === "booked") {
         c.booking = { listing: a.listing, slot: a.slot, name: a.name, at: slotTime(this.agencyFor(c), a.slot, this.now()), bookedAt: this.now(), reminded: false };
         c.needsHuman = true; // the agent should confirm the viewing
         booked = true;

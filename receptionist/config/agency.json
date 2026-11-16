@@ -1,17 +1,19 @@
 {
   "_note": "A made-up agency for demos. Every listing here is fictional. Leave a field empty (\"\") if unknown: the AI will say the agent will confirm it instead of guessing.",
-
-  "agencyName": "Nyansapo Homes (Demo)",
+  "agencyName": "Ivory Crest Realty (Demo)",
   "receptionistName": "Ama",
   "city": "Accra",
-  "officeAddress": "East Legon, Accra (demo agency, not a real office)",
-  "agentName": "our agent, Kwame",
+  "officeAddress": "Airport City, Accra (demo agency, not a real office)",
+  "agentName": "our property consultant, Kwame",
   "officeHours": "Monday to Saturday, 9am to 5pm",
-  "viewingTimes": ["10:00", "13:00", "16:00"],
+  "viewingTimes": [
+    "10:00",
+    "13:00",
+    "16:00"
+  ],
   "viewingDaysAhead": 3,
   "minNoticeHours": 2,
   "commission": "",
-
   "listings": [
     {
       "id": "east-legon-4bed",
@@ -26,8 +28,7 @@
       "parking": "3 cars",
       "furnished": "Unfurnished",
       "features": "Boys' quarters, walled and gated, fitted kitchen, water storage tank, tiled compound",
-      "terms": "",
-      "video": "https://d2ol7oe51mr4n9.cloudfront.net/user_3KkBqFbaM0LiPKOyC27sdIQIGf4/9acc17f7-1504-41e1-94c5-fd1238365a6d.mp4"
+      "terms": ""
     },
     {
       "id": "cantonments-2bed-apt",
@@ -42,8 +43,7 @@
       "parking": "1 car",
       "furnished": "Fully furnished",
       "features": "Swimming pool, gym, 24-hour security, backup generator, air conditioning in all rooms",
-      "terms": "6 months in advance, then monthly",
-      "video": ""
+      "terms": "6 months in advance, then monthly"
     },
     {
       "id": "airport-3bed-apt",
@@ -58,8 +58,7 @@
       "parking": "2 cars",
       "furnished": "Semi-furnished (kitchen appliances and wardrobes)",
       "features": "Swimming pool, gym, 24-hour security, backup generator and water, rooftop lounge",
-      "terms": "",
-      "video": ""
+      "terms": ""
     },
     {
       "id": "tema-c25-3bed",
@@ -74,8 +73,7 @@
       "parking": "2 cars",
       "furnished": "Unfurnished",
       "features": "Gated estate with security, small garden, fitted kitchen",
-      "terms": "",
-      "video": ""
+      "terms": ""
     },
     {
       "id": "oyarifa-2bed-rent",
@@ -90,8 +88,7 @@
       "parking": "2 cars",
       "furnished": "Unfurnished",
       "features": "Walled and gated, own meter, water storage tank, quiet neighbourhood",
-      "terms": "6 months in advance, then monthly",
-      "video": ""
+      "terms": "6 months in advance, then monthly"
     },
     {
       "id": "adenta-plot",
@@ -106,8 +103,13 @@
       "parking": "",
       "furnished": "",
       "features": "Registered with the Lands Commission, indenture available, close to the main road",
-      "terms": "",
-      "video": ""
+      "terms": ""
     }
-  ]
+  ],
+  "style": {
+    "_note": "Change how the receptionist answers. Edit these in plain English; leave a field empty to use the default.",
+    "tone": "Warm, polished and professional, like the front desk of a premium agency. Friendly but never too casual.",
+    "replyLength": "1 to 3 short sentences",
+    "extraRules": []
+  }
 }

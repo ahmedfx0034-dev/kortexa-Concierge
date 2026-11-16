@@ -9,7 +9,6 @@ When a buyer texts the WhatsApp number, the receptionist:
 
 - answers questions about the listings (only facts in `config/agency.json`, never guesses)
 - asks their name, budget, timeline and how they'll pay
-- sends the listing's video tour as a WhatsApp video
 - offers real viewing times for the next few days and books one
 - hands the chat to a person when it can't help (price negotiation, complaints…)
 - respects STOP (and START to opt back in)
