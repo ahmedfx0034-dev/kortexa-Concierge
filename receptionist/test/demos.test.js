@@ -89,3 +89,18 @@ test("web: /d/<code> page and API use the agency's demo", async () => {
     assert.match(prompts[0], /Ahodwo, Kumasi/);
   } finally { server.close(); }
 });
+
+test("privacy policy page is served for Meta app publishing", async () => {
+  const server = http.createServer(createApp({ agency, llm: null, log: quiet })).listen(0);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  try {
+    for (const p of ["/privacy", "/data-deletion"]) {
+      const r = await fetch(base + p);
+      assert.equal(r.status, 200);
+      const html = await r.text();
+      assert.match(html, /Privacy Policy/);
+      assert.match(html, /How to delete your data/);
+      assert.match(html, /Google \(Gemini AI\)/);
+    }
+  } finally { server.close(); }
+});

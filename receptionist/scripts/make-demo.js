@@ -2,7 +2,7 @@
 // Make a personalised receptionist demo for an agency.
 //
 //   npm run make-demo -- "Prime Homes Ltd" Accra
-//   npm run make-demo -- "Prime Homes Ltd" Kumasi --code primehomes --name Esi
+//   npm run make-demo -- "Prime Homes Ltd" Kumasi --code primehomes --name Abena
 //
 // Cities with sample listings: Accra, Tema, Kumasi, Takoradi (others use Accra).
 // Set PUBLIC_URL and DEMO_WHATSAPP_NUMBER to print ready-to-send links.

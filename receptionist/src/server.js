@@ -14,6 +14,7 @@ import { Chats } from "./chats.js";
 import { Receptionist } from "./receptionist.js";
 import { inboxPage } from "./inbox.js";
 import { Demos } from "./demos.js";
+import { privacyPage } from "./legal.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(here, "..", "public");
@@ -86,6 +87,12 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
     try {
       if (url.pathname === "/health") return send(res, 200, { ok: true, aiReady: !!llm, whatsapp: wa ? (wa.dryRun ? "dry-run" : "live") : "off" });
 
+      // Privacy policy (Meta needs this URL to publish the app; also the data deletion instructions).
+      if ((url.pathname === "/privacy" || url.pathname === "/data-deletion") && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        return res.end(privacyPage({ operator: process.env.PRIVACY_OPERATOR || "Kortexa", contactEmail: process.env.PRIVACY_CONTACT_EMAIL || "" }));
+      }
+
       // ---- WhatsApp webhook (Meta calls these) --------------------------------
       if (url.pathname === "/webhook" && req.method === "GET") {
         const ok = verifyToken && url.searchParams.get("hub.mode") === "subscribe" && url.searchParams.get("hub.verify_token") === verifyToken;
@@ -98,7 +105,9 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         send(res, 200, { ok: true }); // answer Meta right away, then work
         if (!receptionist) return;
         let body; try { body = JSON.parse(raw.toString("utf8")); } catch { return; }
-        for (const m of parseWebhook(body)) receptionist.handle(m);
+        const incoming = parseWebhook(body);
+        if (incoming.length) log.info?.(`WhatsApp: received ${incoming.length} message(s) from …${incoming.map((m) => String(m.from).slice(-4)).join(", …")}`);
+        for (const m of incoming) receptionist.handle(m);
         return;
       }
 

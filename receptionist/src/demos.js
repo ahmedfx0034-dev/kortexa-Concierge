@@ -18,7 +18,7 @@ export function demoCode(name) {
   return (base || fallback).slice(0, 24).replace(/-+$/, "") || "demo";
 }
 
-export function makeDemo({ name, city = "Accra", receptionistName = "Ama", code }, samples = JSON.parse(fs.readFileSync(SAMPLES_FILE, "utf8"))) {
+export function makeDemo({ name, city = "Accra", receptionistName = "Anna", code }, samples = JSON.parse(fs.readFileSync(SAMPLES_FILE, "utf8"))) {
   if (!name || !String(name).trim()) throw new Error("Agency name is required.");
   const cityKey = Object.keys(samples).find((k) => k.toLowerCase() === String(city).toLowerCase()) || "Accra";
   const listings = samples[cityKey].map((l) => ({ ...l }));

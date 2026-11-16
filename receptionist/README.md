@@ -139,7 +139,7 @@ Demo files are saved in `config/demos/` and are **not** uploaded to GitHub
 which agencies you're pitching. To deploy them, make the repository private on
 GitHub and remove the `config/demos/*.json` line from `.gitignore`.
 
-Options: `--code shortcode` to choose the code, `--name Esi` for a different
+Options: `--code shortcode` to choose the code, `--name Abena` for a different
 receptionist name. Restart or redeploy the server after making demos.
 
 ## Change the agency

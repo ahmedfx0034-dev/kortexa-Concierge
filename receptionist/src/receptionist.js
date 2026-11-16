@@ -106,7 +106,10 @@ export class Receptionist {
       return this.chats.save();
     }
 
-    if (parsed.text) await this.#reply(c, parsed.text);
+    if (parsed.text) {
+      try { await this.#reply(c, parsed.text); }
+      catch (e) { this.log.error("WhatsApp send failed:", e.message); c.needsHuman = true; return this.chats.save(); }
+    }
     const bookedNow = await this.#runActions(c, parsed.actions);
     await this.chats.save();
     if (bookedNow || c.aiPaused || c.buyerMessages % this.settings.extractEvery === 0) await this.updateLead(c);
