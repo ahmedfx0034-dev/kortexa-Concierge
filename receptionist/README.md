@@ -97,6 +97,7 @@ Now text the number from your phone. The AI should answer within a few seconds.
 | `WHATSAPP_TOKEN` | Permanent token from step 2 |
 | `WHATSAPP_PHONE_NUMBER_ID` | Phone number ID from step 2 |
 | `WHATSAPP_APP_SECRET` | App secret (proves messages really come from Meta) |
+| `WHATSAPP_BUSINESS_ACCOUNT_ID` | Messaging account ID from Meta's Step 1 page; lets /check confirm the WhatsApp account is connected to the app |
 | `WHATSAPP_VERIFY_TOKEN` | Any secret text you make up, also typed into Meta |
 | `ADMIN_PASSWORD` | Password for `/inbox` (username: `admin`) |
 | `DATA_FILE` | Optional: file to keep chats across restarts, e.g. `./data/chats.json` |
@@ -112,6 +113,14 @@ prints the replies instead of sending them. Useful for testing.
 | Google Gemini (default) | `https://generativelanguage.googleapis.com/v1beta/openai` |
 | Groq | `https://api.groq.com/openai/v1` |
 | OpenRouter (models ending in `:free`) | `https://openrouter.ai/api/v1` |
+
+## Checking that everything works
+
+1. Open `https://<your-server>/check` in your browser.
+2. Log in with username `admin` and your `ADMIN_PASSWORD`.
+3. Each line shows ✅ (working) or ❌ (not working). A ❌ line tells you how to fix it.
+4. If the WhatsApp account isn't connected to the app, tap the **Connect WhatsApp to this app** button. This needs `WHATSAPP_BUSINESS_ACCOUNT_ID`.
+5. The **Latest deliveries from Meta** list shows the last messages Meta sent. If you text the number and nothing shows up, Meta isn't reaching your server. Refresh the page after each test.
 
 ## Personalised demos (one per agency you pitch)
 

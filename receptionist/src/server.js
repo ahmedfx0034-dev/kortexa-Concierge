@@ -15,6 +15,7 @@ import { Receptionist } from "./receptionist.js";
 import { inboxPage } from "./inbox.js";
 import { Demos } from "./demos.js";
 import { privacyPage } from "./legal.js";
+import { runChecks, subscribeApp, checkPage } from "./check.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(here, "..", "public");
@@ -55,7 +56,10 @@ export function cleanMessages(input, { endWithUser = true } = {}) {
 }
 
 export function createApp({ agency, llm, limiter = new Limiter(), now = () => Date.now(), log = console,
-  wa = null, chats = null, receptionist = null, demos = null, verifyToken = "", appSecret = "", adminPassword = "" }) {
+  wa = null, chats = null, receptionist = null, demos = null, verifyToken = "", appSecret = "", adminPassword = "",
+  wabaId = "", version = "", fetchImpl = globalThis.fetch }) {
+  const events = []; // last webhook deliveries, shown on /check
+  const note = (ok, text) => { events.push({ at: now(), ok, text }); if (events.length > 15) events.shift(); };
   const agencyFor = (code) => (code && demos?.get(code)) || agency;
   const send = (res, code, body) => {
     res.writeHead(code, { "Content-Type": "application/json", "Cache-Control": "no-store" });
@@ -103,6 +107,7 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         const raw = await readRaw(req);
         if (!validSignature(raw, req.headers["x-hub-signature-256"], appSecret)) {
           log.warn?.("Webhook rejected: signature doesn't match WHATSAPP_APP_SECRET (check the App secret in Render)");
+          note(false, "Rejected: the signature didn't match WHATSAPP_APP_SECRET. Copy the App secret again, or delete it in Render.");
           return send(res, 401, { error: "Bad signature" });
         }
         send(res, 200, { ok: true }); // answer Meta right away, then work
@@ -110,11 +115,27 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         const incoming = parseWebhook(body);
         const statuses = parseStatuses(body);
         log.info?.(`Webhook: delivery received (${incoming.length} message(s), ${statuses.length} status update(s))`);
+        note(true, `Received ${incoming.length} message(s)${incoming.length ? ` from …${incoming.map((m) => String(m.from).slice(-4)).join(", …")}` : ""} and ${statuses.length} status update(s)` +
+          statuses.filter((s) => s.status === "failed").map((s) => `. Reply failed: ${s.error || "unknown error"}`).join(""));
         for (const s of statuses) if (s.status === "failed") log.warn?.(`WhatsApp delivery failed to …${String(s.to).slice(-4)}: ${s.error || "unknown error"}`);
         if (!receptionist) { if (incoming.length) log.warn?.("Message received but the AI isn't connected (LLM_API_KEY missing)."); return; }
         if (incoming.length) log.info?.(`WhatsApp: received ${incoming.length} message(s) from …${incoming.map((m) => String(m.from).slice(-4)).join(", …")}`);
         for (const m of incoming) receptionist.handle(m);
         return;
+      }
+
+      // ---- Self-check page (password protected) -----------------------------
+      if (url.pathname === "/check" || url.pathname === "/check/subscribe") {
+        if (!adminPassword) return send(res, 503, { error: "Set ADMIN_PASSWORD to use the check page." });
+        if (!authed(req)) { res.writeHead(401, { "WWW-Authenticate": 'Basic realm="Check", charset="UTF-8"' }); return res.end("Login required"); }
+        let notice = "";
+        if (url.pathname === "/check/subscribe" && req.method === "POST") {
+          try { await subscribeApp({ wa, wabaId, fetchImpl }); notice = "Done: the WhatsApp account is now connected to this app. Send a WhatsApp message to test."; }
+          catch (e) { notice = "Couldn't connect: " + e.message; }
+        }
+        const results = await runChecks({ llm, wa, appSecret, verifyToken, adminPassword, wabaId, version, fetchImpl });
+        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
+        return res.end(checkPage(results, events, { notice }));
       }
 
       // ---- Inbox for the agency (password protected) ------------------------
@@ -222,6 +243,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   http.createServer(createApp({
     agency, llm, limiter, wa, chats, receptionist, demos,
     verifyToken: env.WHATSAPP_VERIFY_TOKEN || "", appSecret: env.WHATSAPP_APP_SECRET || "", adminPassword: env.ADMIN_PASSWORD || "",
+    wabaId: env.WHATSAPP_BUSINESS_ACCOUNT_ID || "", version: (env.RENDER_GIT_COMMIT || "").slice(0, 7),
   })).listen(port, () => {
     console.log(`Receptionist running on http://localhost:${port} (${demos.list().length} personalised demos loaded)`);
     if (!llm) console.warn("LLM_API_KEY is not set: the AI won't answer.");
