@@ -13,7 +13,7 @@ async function graph(fetchImpl, { token, apiVersion }, path, method = "GET") {
 }
 
 /** Run every check. Each result: {name, ok: true|false|null, detail, fix?}. null = not checked. */
-export async function runChecks({ llm, wa, appSecret, verifyToken, adminPassword, wabaId, version, fetchImpl = globalThis.fetch }) {
+export async function runChecks({ llm, wa, appSecret, verifyToken, adminPassword, wabaId, appId = "", version, fetchImpl = globalThis.fetch }) {
   const out = [];
   out.push({ name: "Version running", ok: true, detail: version || "unknown (local)" });
 
@@ -46,12 +46,22 @@ export async function runChecks({ llm, wa, appSecret, verifyToken, adminPassword
 
   if (!wabaId) out.push({ name: "WhatsApp account connected to the app", ok: null, detail: "Can't check: WHATSAPP_BUSINESS_ACCOUNT_ID isn't set.", fix: "Add WHATSAPP_BUSINESS_ACCOUNT_ID in Render (Meta shows it as 'Messaging account ID' on Step 1)." });
   else if (wa && !wa.dryRun) {
+    let mine = null; // the Meta app this token belongs to
+    try { const a = await graph(fetchImpl, cfg, "app?fields=id,name"); mine = { id: String(a.id || ""), name: a.name || "" }; }
+    catch { if (appId) mine = { id: String(appId), name: "" }; }
     try {
       const r = await graph(fetchImpl, cfg, `${wabaId}/subscribed_apps`);
-      const apps = (r.data || []).map((a) => a.whatsapp_business_api_data?.name || a.whatsapp_business_api_data?.id || "an app");
-      out.push(apps.length
-        ? { name: "WhatsApp account connected to the app", ok: true, detail: `Connected: ${apps.join(", ")}.` }
-        : { name: "WhatsApp account connected to the app", ok: false, detail: "Not connected, so Meta won't send messages to the receptionist.", fix: "Tap the 'Connect WhatsApp to this app' button below.", action: "subscribe" });
+      const subs = (r.data || []).map((x) => ({ id: String(x.whatsapp_business_api_data?.id || ""), name: x.whatsapp_business_api_data?.name || "an app" }));
+      const label = mine?.name ? `your app "${mine.name}"` : "your app";
+      const connected = mine?.id ? subs.some((s) => s.id === mine.id) : false;
+      if (connected) out.push({ name: "WhatsApp account connected to the app", ok: true, detail: `Connected to ${label}.` });
+      else out.push({
+        name: "WhatsApp account connected to the app", ok: false,
+        detail: subs.length
+          ? `Meta is sending your WhatsApp messages to ${subs.map((s) => `"${s.name}"`).join(", ")}, not to ${label}. That's why Anna never sees them.`
+          : `Not connected to ${label}, so Meta won't send messages to the receptionist.`,
+        fix: "Tap the 'Connect WhatsApp to this app' button below.", action: "subscribe",
+      });
     } catch (e) {
       out.push({ name: "WhatsApp account connected to the app", ok: false, detail: e.message, fix: "Check WHATSAPP_BUSINESS_ACCOUNT_ID, and that the token has whatsapp_business_management permission." });
     }

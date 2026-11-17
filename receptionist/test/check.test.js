@@ -12,10 +12,11 @@ const wa = { token: "TOK", phoneNumberId: "555", apiVersion: "v23.0", dryRun: fa
 const llm = { chat: async () => "OK" };
 const reply = (body, ok = true, status = 200) => ({ ok, status, json: async () => body });
 
-function fakeFetch({ phone, subs } = {}) {
+function fakeFetch({ phone, subs, app } = {}) {
   const calls = [];
   const fn = async (url, opts = {}) => {
     calls.push({ url, ...opts });
+    if (url.includes("/app?fields=id,name")) return app ? app() : reply({ id: "1", name: "Concierge" });
     if (url.includes("/subscribed_apps")) return subs ? subs(opts) : reply({ data: [{ whatsapp_business_api_data: { name: "Concierge", id: "1" } }] });
     return phone ? phone() : reply({ display_phone_number: "+233 24 123 4567", verified_name: "Acme" });
   };
@@ -45,6 +46,38 @@ test("no subscribed apps offers the connect action; missing WABA id is 'not chec
   assert.equal(c.action, "subscribe");
   const n = find(await runChecks({ ...base, wabaId: "", fetchImpl: fakeFetch() }), "connected");
   assert.equal(n.ok, null);
+});
+
+const subsOf = (...apps) => () => reply({ data: apps.map(({ id, name }) => ({ whatsapp_business_api_data: { id, name } })) });
+
+test("connected to a different app (real-world WA DevX case) is not ok and offers subscribe", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ id: "1827405528502422", name: "Ivory Crest Demo Receptionist." }),
+    subs: subsOf({ id: "999", name: "WA DevX Webhook Events 1P App" }),
+  });
+  const c = find(await runChecks({ ...base, fetchImpl }), "connected");
+  assert.equal(c.ok, false);
+  assert.equal(c.action, "subscribe");
+  assert.match(c.detail, /WA DevX Webhook Events 1P App/);
+});
+
+test("if /app fails, the appId option identifies our app", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ error: { message: "nope" } }, false, 400),
+    subs: subsOf({ id: "999", name: "Other" }, { id: "1827405528502422", name: "Ours" }),
+  });
+  const c = find(await runChecks({ ...base, appId: "1827405528502422", fetchImpl }), "connected");
+  assert.equal(c.ok, true);
+});
+
+test("if /app fails and no appId is given, it cannot be confirmed: not ok, subscribe", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ error: { message: "nope" } }, false, 400),
+    subs: subsOf({ id: "999", name: "Other" }),
+  });
+  const c = find(await runChecks({ ...base, fetchImpl }), "connected");
+  assert.equal(c.ok, false);
+  assert.equal(c.action, "subscribe");
 });
 
 test("missing AI is reported", async () => {
