@@ -164,3 +164,22 @@ test("viewing reminder goes out 3 hours before, once", async () => {
   assert.match(wa.sent.at(-1).text, /reminder of your viewing of the 4-bedroom house in East Legon today at 1:00 pm/);
   assert.equal((await r.tick(Date.UTC(2026, 10, 16, 11))).sent, 0, "only once");
 });
+
+test("webhook logs bad signatures, deliveries and failed sends", async () => {
+  const { parseStatuses } = await import("../src/whatsapp.js");
+  const lines = [];
+  const log = { info: (m) => lines.push(m), warn: (m) => lines.push(m), error: (m) => lines.push(m) };
+  const app = createApp({ agency, llm: {}, receptionist: { handle() {} }, chats: new Chats(""), wa: fakeWa(), verifyToken: "vt", appSecret: "sec", log });
+  const server = http.createServer(app).listen(0);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  try {
+    const body = JSON.stringify({ entry: [{ changes: [{ value: { statuses: [{ id: "x", status: "failed", recipient_id: "233241234567", errors: [{ code: 131047, title: "Re-engagement message" }] }] } }] }] });
+    await fetch(base + "/webhook", { method: "POST", body, headers: { "x-hub-signature-256": "sha256=wrong" } });
+    assert.ok(lines.some((l) => /signature doesn't match WHATSAPP_APP_SECRET/.test(l)));
+    const sig = "sha256=" + crypto.createHmac("sha256", "sec").update(body).digest("hex");
+    await fetch(base + "/webhook", { method: "POST", body, headers: { "x-hub-signature-256": sig } });
+    assert.ok(lines.some((l) => l === "Webhook: delivery received (0 message(s), 1 status update(s))"));
+    assert.ok(lines.some((l) => /delivery failed to …4567: Re-engagement message \(code 131047\)/.test(l)));
+    assert.equal(parseStatuses({}).length, 0);
+  } finally { server.close(); }
+});

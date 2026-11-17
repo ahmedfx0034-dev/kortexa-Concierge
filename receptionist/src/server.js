@@ -9,7 +9,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { LLM, LLMError } from "./llm.js";
 import { systemPrompt, parseReply, SUMMARY_PROMPT, scoreLead } from "./prompt.js";
-import { WhatsApp, parseWebhook, validSignature } from "./whatsapp.js";
+import { WhatsApp, parseWebhook, parseStatuses, validSignature } from "./whatsapp.js";
 import { Chats } from "./chats.js";
 import { Receptionist } from "./receptionist.js";
 import { inboxPage } from "./inbox.js";
@@ -101,11 +101,17 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
       }
       if (url.pathname === "/webhook" && req.method === "POST") {
         const raw = await readRaw(req);
-        if (!validSignature(raw, req.headers["x-hub-signature-256"], appSecret)) return send(res, 401, { error: "Bad signature" });
+        if (!validSignature(raw, req.headers["x-hub-signature-256"], appSecret)) {
+          log.warn?.("Webhook rejected: signature doesn't match WHATSAPP_APP_SECRET (check the App secret in Render)");
+          return send(res, 401, { error: "Bad signature" });
+        }
         send(res, 200, { ok: true }); // answer Meta right away, then work
-        if (!receptionist) return;
-        let body; try { body = JSON.parse(raw.toString("utf8")); } catch { return; }
+        let body; try { body = JSON.parse(raw.toString("utf8")); } catch { log.warn?.("Webhook: delivery wasn't valid JSON"); return; }
         const incoming = parseWebhook(body);
+        const statuses = parseStatuses(body);
+        log.info?.(`Webhook: delivery received (${incoming.length} message(s), ${statuses.length} status update(s))`);
+        for (const s of statuses) if (s.status === "failed") log.warn?.(`WhatsApp delivery failed to …${String(s.to).slice(-4)}: ${s.error || "unknown error"}`);
+        if (!receptionist) { if (incoming.length) log.warn?.("Message received but the AI isn't connected (LLM_API_KEY missing)."); return; }
         if (incoming.length) log.info?.(`WhatsApp: received ${incoming.length} message(s) from …${incoming.map((m) => String(m.from).slice(-4)).join(", …")}`);
         for (const m of incoming) receptionist.handle(m);
         return;

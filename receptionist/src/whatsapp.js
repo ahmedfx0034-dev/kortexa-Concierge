@@ -31,6 +31,20 @@ export function parseWebhook(body) {
   return messages;
 }
 
+/** Delivery updates for messages we sent (sent / delivered / read / failed). */
+export function parseStatuses(body) {
+  const out = [];
+  for (const entry of body?.entry || []) {
+    for (const change of entry.changes || []) {
+      for (const s of change.value?.statuses || []) {
+        const err = s.errors?.[0];
+        out.push({ id: s.id, status: s.status, to: s.recipient_id, error: err ? `${err.title || err.message || "error"}${err.code ? ` (code ${err.code})` : ""}` : "" });
+      }
+    }
+  }
+  return out;
+}
+
 export class WhatsApp {
   constructor({ token, phoneNumberId, apiVersion = "v23.0" }, { fetchImpl = globalThis.fetch, log = console } = {}) {
     this.token = token;
