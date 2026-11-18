@@ -1,142 +1,110 @@
 // ---------------------------------------------------------------------------
-// Agency + listings data.
-// Everything the 3D site shows comes from this file. To add a real property,
-// copy one entry and edit it. Rooms are [name, type, width(m), depth(m)].
-// Room types: living, kitchen, dining, master, bedroom, bath, study
-// House styles: villa, bungalow, townhouse, apartment
+// MED Property listings: loaded LIVE from the same database that powers
+// medpropertygh.com, so the 3D site always shows exactly the agency's current
+// properties (title, price, photos, rooms, location). Nothing here is sample data.
 // ---------------------------------------------------------------------------
 
 export const AGENCY = {
   name: 'MED Property',
   short: 'MED',
-  tagline: 'Walk through every home before you visit.',
+  tagline: 'Walk through every MED Property home before you visit.',
   website: 'https://medpropertygh.com/',
-  whatsapp: '',  // e.g. '233200000000' — enables the WhatsApp button
-  phone: '',
-  email: '',
+  whatsapp: '233246415202',
+  phone: '+233 24 641 5202',
+  email: 'medproperty6@gmail.com',
 };
 
-export const LISTINGS = [
-  {
-    id: 'east-legon-villa',
-    title: '5-Bedroom Modern Villa',
-    area: 'East Legon, Accra',
-    price: '$650,000',
-    status: 'For Sale',
-    beds: 5, baths: 6, size: '540 m²',
-    style: 'villa',
-    wall: '#f3eee6', accent: '#1f3b57', trim: '#c9a227',
-    description: 'Contemporary two-storey villa with an open-plan living area, a fitted kitchen and a private pool, inside a gated compound.',
-    features: ['Swimming pool', 'Boys’ quarters', 'CCTV & electric fence', '4-car garage'],
-    rooms: [
-      ['Living Room', 'living', 6.5, 5.5],
-      ['Kitchen', 'kitchen', 4.5, 4.5],
-      ['Dining', 'dining', 4.2, 4.5],
-      ['Master Bedroom', 'master', 5.2, 5.0],
-      ['Bedroom 2', 'bedroom', 4.2, 4.5],
-      ['Bathroom', 'bath', 2.8, 3.2],
-      ['Study', 'study', 3.6, 3.6],
-    ],
-  },
-  {
-    id: 'airport-res-bungalow',
-    title: '3-Bedroom Family Bungalow',
-    area: 'Airport Residential, Accra',
-    price: '$3,500 / month',
-    status: 'For Rent',
-    beds: 3, baths: 3, size: '260 m²',
-    style: 'bungalow',
-    wall: '#efe4d2', accent: '#7a4b2a', trim: '#8a3b2e',
-    description: 'Single-level family home on a quiet street, with a large garden, a covered veranda and a fully fitted kitchen.',
-    features: ['Garden', 'Veranda', 'Standby generator', 'Borehole'],
-    rooms: [
-      ['Living Room', 'living', 5.8, 5.0],
-      ['Kitchen', 'kitchen', 4.2, 4.0],
-      ['Master Bedroom', 'master', 4.8, 4.6],
-      ['Bedroom 2', 'bedroom', 4.0, 4.2],
-      ['Bedroom 3', 'bedroom', 3.8, 4.0],
-      ['Bathroom', 'bath', 2.6, 3.0],
-    ],
-  },
-  {
-    id: 'cantonments-townhouse',
-    title: '4-Bedroom Townhouse',
-    area: 'Cantonments, Accra',
-    price: '$420,000',
-    status: 'For Sale',
-    beds: 4, baths: 4, size: '310 m²',
-    style: 'townhouse',
-    wall: '#e9e9e4', accent: '#35524a', trim: '#4b4b4b',
-    description: 'End-of-terrace townhouse in a secure gated community with a shared pool and gym.',
-    features: ['Gated community', 'Shared pool & gym', 'Rooftop terrace', '24h security'],
-    rooms: [
-      ['Living Room', 'living', 5.5, 5.0],
-      ['Kitchen', 'kitchen', 4.0, 4.0],
-      ['Dining', 'dining', 3.8, 4.0],
-      ['Master Bedroom', 'master', 4.8, 4.6],
-      ['Bedroom 2', 'bedroom', 3.8, 4.0],
-      ['Bathroom', 'bath', 2.6, 3.0],
-    ],
-  },
-  {
-    id: 'trasacco-mansion',
-    title: '6-Bedroom Luxury Mansion',
-    area: 'Trasacco Valley, Accra',
-    price: '$1,450,000',
-    status: 'For Sale',
-    beds: 6, baths: 7, size: '820 m²',
-    style: 'villa',
-    wall: '#fbfaf7', accent: '#111827', trim: '#b8892f',
-    description: 'Statement home with double-height living spaces, a home office and landscaped grounds in Accra’s most exclusive estate.',
-    features: ['Infinity pool', 'Home cinema', 'Smart-home system', 'Staff quarters'],
-    rooms: [
-      ['Grand Living', 'living', 7.5, 6.0],
-      ['Chef’s Kitchen', 'kitchen', 5.0, 5.0],
-      ['Dining', 'dining', 5.0, 5.0],
-      ['Master Suite', 'master', 6.0, 5.5],
-      ['Bedroom 2', 'bedroom', 4.5, 4.5],
-      ['Bedroom 3', 'bedroom', 4.5, 4.5],
-      ['Bathroom', 'bath', 3.0, 3.5],
-      ['Home Office', 'study', 4.0, 4.0],
-    ],
-  },
-  {
-    id: 'spintex-apartment',
-    title: '2-Bedroom Apartment',
-    area: 'Spintex Road, Accra',
-    price: '$1,200 / month',
-    status: 'For Rent',
-    beds: 2, baths: 2, size: '120 m²',
-    style: 'apartment',
-    wall: '#ece6dc', accent: '#5b3e8a', trim: '#2e2e2e',
-    description: 'Bright fully furnished apartment on the 3rd floor, with a balcony, an elevator and a backup water supply.',
-    features: ['Fully furnished', 'Balcony', 'Elevator', 'Backup water'],
-    rooms: [
-      ['Living Room', 'living', 5.0, 4.6],
-      ['Kitchen', 'kitchen', 3.4, 3.6],
-      ['Master Bedroom', 'master', 4.2, 4.2],
-      ['Bedroom 2', 'bedroom', 3.6, 3.8],
-      ['Bathroom', 'bath', 2.4, 2.8],
-    ],
-  },
-  {
-    id: 'tema-comm25-home',
-    title: '3-Bedroom Starter Home',
-    area: 'Community 25, Tema',
-    price: '$145,000',
-    status: 'For Sale',
-    beds: 3, baths: 2, size: '180 m²',
-    style: 'bungalow',
-    wall: '#f2e9dc', accent: '#2f6b4f', trim: '#a0522d',
-    description: 'Newly built home in a fast-growing community, a good first home or investment property.',
-    features: ['New build', 'Walled & gated', 'Parking for 2', 'Title registered'],
-    rooms: [
-      ['Living Room', 'living', 5.0, 4.6],
-      ['Kitchen', 'kitchen', 3.6, 3.8],
-      ['Master Bedroom', 'master', 4.4, 4.2],
-      ['Bedroom 2', 'bedroom', 3.6, 3.8],
-      ['Bedroom 3', 'bedroom', 3.4, 3.6],
-      ['Bathroom', 'bath', 2.4, 2.8],
-    ],
-  },
+// Public, read-only ("anon") key — the same one medpropertygh.com ships to every visitor.
+const SUPABASE_URL = 'https://opdcvhgryhanqcknkztr.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZGN2aGdyeWhhbnFja25renRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NDE4MzIsImV4cCI6MjA3NTUxNzgzMn0.0mH-FYtdgi1rOMZpb10t1f6jT-aayJ30k4Uk9ZNGKz8';
+const FIELDS = 'id,title,description,category,listing_type,price,currency,location,region,bedrooms,bathrooms,area_sqm,image_urls,video_url,features,property_subtype,published_at';
+
+export async function loadListings() {
+  const url = `${SUPABASE_URL}/rest/v1/properties?select=${FIELDS}&status=eq.approved&order=published_at.desc.nullslast`;
+  const res = await fetch(url, { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } });
+  if (!res.ok) throw new Error(`Listings request failed (${res.status})`);
+  const rows = await res.json();
+  return rows.map(toListing);
+}
+
+// ---------------------------------------------------------------------------
+// Turn a database row into what the 3D scene needs
+// ---------------------------------------------------------------------------
+const PALETTES = [
+  { wall: '#f3eee6', accent: '#1f3b57', trim: '#c9a227' },
+  { wall: '#efe4d2', accent: '#7a4b2a', trim: '#8a3b2e' },
+  { wall: '#e9e9e4', accent: '#35524a', trim: '#4b4b4b' },
+  { wall: '#fbfaf7', accent: '#111827', trim: '#b8892f' },
+  { wall: '#ece6dc', accent: '#5b3e8a', trim: '#2e2e2e' },
+  { wall: '#f2e9dc', accent: '#2f6b4f', trim: '#a0522d' },
 ];
+const hash = (s) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+const titleCase = (s) => s.toLowerCase().replace(/(^|[\s(–-])([a-z])/g, (m, a, b) => a + b.toUpperCase()).replace(/\bEn-Suite\b/g, 'En-suite');
+
+function fmtPrice(p, cur, type) {
+  if (p == null) return 'Price on request';
+  const n = Number(p).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  const s = cur === 'GHS' ? `GH₵ ${n}` : cur === 'USD' ? `$${n}` : `${cur || ''} ${n}`.trim();
+  return type === 'buy' ? s : `${s} / month`;
+}
+
+function styleFor(r) {
+  const t = (r.title || '').toLowerCase();
+  if (r.category === 'commercial' || /apartment|units|flat|studio|office|warehouse|plaza/.test(t)) return 'apartment';
+  if (/townhouse|town house|terrace/.test(t)) return 'townhouse';
+  const beds = r.bedrooms || 0;
+  if (beds >= 5 || /luxury|mansion|villa|pool|smart/.test(t)) return 'villa';
+  return beds >= 4 ? 'villa' : 'bungalow';
+}
+
+// A believable floor plan from the bedroom/bathroom counts (MED's database
+// doesn't store room sizes, so sizes scale with the home's size class).
+function roomsFor(r) {
+  const beds = Math.max(0, Math.min(r.bedrooms || 0, 6));
+  const baths = Math.max(1, Math.min(r.bathrooms || 1, 3));
+  const big = beds >= 4 ? 1.15 : beds <= 1 ? 0.85 : 1;
+  const z = (w, d) => [+(w * big).toFixed(1), +(d * big).toFixed(1)];
+  if (r.category === 'commercial') {
+    const offices = Math.max(2, Math.min(beds || 3, 6));
+    return [
+      ['Reception', 'living', ...z(5.5, 5)],
+      ['Conference Room', 'dining', ...z(4.5, 4.5)],
+      ...Array.from({ length: offices }, (_, i) => [`Office ${i + 1}`, 'study', ...z(3.6, 3.8)]),
+      ['Washroom', 'bath', ...z(2.6, 3)],
+    ];
+  }
+  const out = [['Living Room', 'living', ...z(5.8, 5)], ['Kitchen', 'kitchen', ...z(4, 4)]];
+  if (beds >= 3) out.push(['Dining', 'dining', ...z(4, 4.2)]);
+  if (beds >= 1) out.push([beds > 1 ? 'Master Bedroom' : 'Bedroom', 'master', ...z(4.8, 4.6)]);
+  for (let i = 2; i <= beds; i++) out.push([`Bedroom ${i}`, 'bedroom', ...z(3.9, 4.1)]);
+  for (let i = 1; i <= baths; i++) out.push([baths > 1 ? `Bathroom ${i}` : 'Bathroom', 'bath', ...z(2.6, 3)]);
+  if (beds === 0 && r.category !== 'commercial') out.push(['Bedroom', 'master', ...z(4.2, 4.2)]);
+  return out;
+}
+
+function toListing(r) {
+  const pal = PALETTES[hash(r.id) % PALETTES.length];
+  const feats = [...new Set((r.features || []).map((f) => titleCase(String(f).trim())).filter(Boolean))];
+  const status = r.category === 'short-stay' ? 'Short Stay' : r.listing_type === 'buy' ? 'For Sale' : 'For Rent';
+  return {
+    id: r.id,
+    title: titleCase((r.title || 'Property').trim()),
+    area: [r.location, r.region].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', '),
+    shortArea: (r.location || r.region || '').split(',')[0],
+    region: r.region || 'Other',
+    price: fmtPrice(r.price, r.currency, r.listing_type),
+    status,
+    kind: r.category === 'commercial' ? 'commercial' : r.category === 'short-stay' ? 'short-stay' : r.listing_type,
+    beds: r.bedrooms ?? '–',
+    baths: r.bathrooms ?? '–',
+    size: r.area_sqm ? `${r.area_sqm} m²` : '—',
+    style: styleFor(r),
+    ...pal,
+    description: (r.description || '').trim(),
+    features: feats.slice(0, 8),
+    images: r.image_urls || [],
+    video: r.video_url || null,
+    link: AGENCY.website,
+    rooms: roomsFor(r),
+  };
+}

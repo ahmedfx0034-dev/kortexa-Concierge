@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { AGENCY, LISTINGS } from './listings.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { AGENCY, loadListings } from './listings.js';
+let LISTINGS = [];
 
 // ============================================================================
 // Setup
@@ -240,7 +242,7 @@ function buildExterior(L) {
 
   const style = L.style;
   if (style === 'villa') {
-    const big = L.id.includes('mansion');
+    const big = L.beds >= 6 || /luxury|mansion/i.test(L.title);
     const w1 = big ? 15 : 13, d1 = big ? 10 : 9;
     box(w1, 3.3, d1, wallM, 0, 0, -2, g);
     windowsOn(g, w1, 3.3, d1, 1, 3.3, wallM, 2.4);
@@ -341,52 +343,96 @@ function addSun(scene, extent, pos = [40, 60, 30]) {
   return sun;
 }
 
-function buildEstate() {
+// Merge a house's many small meshes into one mesh per material (keeps 60 homes fast on phones)
+function flatten(group) {
+  group.updateMatrixWorld(true);
+  const inv = group.matrixWorld.clone().invert();
+  const buckets = new Map();
+  group.traverse((o) => {
+    if (!o.isMesh) return;
+    let g = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry.clone();
+    for (const k of Object.keys(g.attributes)) if (!['position', 'normal', 'uv'].includes(k)) g.deleteAttribute(k);
+    if (!g.attributes.uv) g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(g.attributes.position.count * 2), 2));
+    g.applyMatrix4(new THREE.Matrix4().multiplyMatrices(inv, o.matrixWorld));
+    const key = o.material.uuid;
+    if (!buckets.has(key)) buckets.set(key, { mat: o.material, geos: [], cast: false });
+    const b = buckets.get(key); b.geos.push(g); b.cast = b.cast || o.castShadow;
+  });
+  const out = new THREE.Group();
+  for (const b of buckets.values()) {
+    const m = new THREE.Mesh(mergeGeometries(b.geos, false), b.mat);
+    m.castShadow = b.cast; m.receiveShadow = true;
+    out.add(m);
+    b.geos.forEach((g) => g.dispose());
+  }
+  out.position.copy(group.position); out.rotation.copy(group.rotation);
+  return out;
+}
+
+let estateSun;
+function buildEstateBase() {
   const s = estate.scene;
   makeSky(s);
-  addSun(s, 75, [50, 80, 40]);
-  const ground = plane(600, 600, M.grass, 0, 0, 0, s);
-  ground.material.map.repeat.set(120, 120);
-
-  // roads: main avenue + cross street
-  const roadM = texMat(TEX.road, 160, 9, { scale: 6, roughness: .95 });
-  plane(160, 9, roadM, 0, 0.03, 0, s);
-  plane(9, 140, texMat(TEX.road, 9, 140, { scale: 6, roughness: .95 }), -62, 0.03, 0, s);
-  const dash = mat('#f1f1e6');
-  for (let x = -76; x < 80; x += 6) plane(2.6, 0.18, dash, x, 0.05, 0, s);
-  // sidewalks
-  for (const z of [-5.4, 5.4]) box(160, 0.15, 1.8, M.concrete, 0, 0, z, s, false);
-
-  const cols = [-30, 0, 30];
-  LISTINGS.forEach((L, i) => {
-    const row = i < 3 ? -1 : 1;
-    const x = cols[i % 3];
-    const z = row * 18;
-    const h = buildExterior(L);
-    h.position.set(x, 0, z);
-    h.rotation.y = row === -1 ? 0 : Math.PI;
-    s.add(h);
-    estate.houses.set(L.id, { group: h, pos: new THREE.Vector3(x, 0, z), L });
-    // street palms
-    palm(s, x - 13, row * 7.4, 0.9); palm(s, x + 13, row * 7.4, 0.9);
-  });
-  // background greenery & neighbouring plots
-  for (let i = 0; i < 70; i++) {
-    const x = (rand() - .5) * 280, z = (rand() - .5) * 220;
-    if (Math.abs(z) < 34 && Math.abs(x) < 50) continue;
-    if (Math.abs(x + 62) < 8 || Math.abs(z) < 6) continue;
-    rand() > .5 ? treeRound(s, x, z, 0.8 + rand() * 0.8) : palm(s, x, z, 0.8 + rand() * 0.5);
-  }
-  for (let i = 0; i < 10; i++) { // simple neighbour blocks
-    const x = -110 + i * 24 + (rand() - .5) * 6, z = (i % 2 ? 1 : -1) * (52 + rand() * 10);
-    const h = 3 + rand() * 6;
-    box(10 + rand() * 4, h, 9, mat(['#e8dfd0', '#efe9df', '#d9d3c7'][i % 3]), x, 0, z, s);
-    box(11 + rand() * 4, 0.3, 10, M.roofDark, x, h, z, s);
-  }
-  // selection ring
+  estateSun = addSun(s, 75, [50, 80, 40]);
+  const ground = plane(900, 900, M.grass, 0, 0, 0, s);
+  ground.material.map.repeat.set(180, 180);
   const ring = new THREE.Mesh(new THREE.RingGeometry(13.5, 14.3, 64), new THREE.MeshBasicMaterial({ color: '#c9a227', transparent: true, opacity: .9 }));
   ring.rotation.x = -Math.PI / 2; ring.position.y = 0.08; ring.visible = false; s.add(ring);
   estate.ring = ring;
+}
+
+// Lay the (filtered) listings out on a street grid: 2 rows of lots face each street
+const LOT_X = 30, STREET = 58;
+function buildEstate(list) {
+  const s = estate.scene;
+  if (estate.lots) { s.remove(estate.lots); estate.lots.traverse((o) => { if (o.isMesh) o.geometry.dispose(); }); }
+  clearLabels(estate.pins); estate.houses.clear();
+  const lots = new THREE.Group(); estate.lots = lots; s.add(lots);
+  const n = list.length;
+  const cols = n <= 4 ? Math.max(1, n) : n <= 9 ? 3 : n <= 24 ? 4 : 5;
+  const rows = Math.max(1, Math.ceil(n / cols));
+  const streets = Math.ceil(rows / 2);
+  const width = cols * LOT_X;
+  const x0 = -width / 2 + LOT_X / 2;
+  const roadLen = width + 26;
+  for (let k = 0; k < streets; k++) {
+    const z = k * STREET;
+    plane(roadLen, 9, texMat(TEX.road, roadLen, 9, { scale: 6, roughness: .95 }), 0, 0.03, z, lots);
+    for (let x = -roadLen / 2 + 2; x < roadLen / 2 - 2; x += 6) plane(2.6, 0.18, mat('#f1f1e6'), x, 0.05, z, lots);
+    for (const dz of [-5.4, 5.4]) box(roadLen, 0.15, 1.8, M.concrete, 0, 0, z + dz, lots, false);
+  }
+  const zLen = (streets - 1) * STREET + 60;
+  plane(9, zLen, texMat(TEX.road, 9, zLen, { scale: 6, roughness: .95 }), -roadLen / 2 - 4.5, 0.03, (streets - 1) * STREET / 2, lots);
+  list.forEach((L, i) => {
+    const r = Math.floor(i / cols), c = i % cols;
+    const street = Math.floor(r / 2), side = r % 2 === 0 ? -1 : 1;
+    const x = x0 + c * LOT_X, z = street * STREET + side * 18;
+    const raw = buildExterior(L);
+    raw.position.set(x, 0, z); raw.rotation.y = side === -1 ? 0 : Math.PI;
+    const h = flatten(raw);
+    h.traverse((o) => { if (o.isMesh) o.userData.listingId = L.id; });
+    lots.add(h);
+    estate.houses.set(L.id, { group: h, pos: new THREE.Vector3(x, 0, z), L });
+  });
+  // street palms + surrounding greenery, merged into one mesh
+  const deco = new THREE.Group();
+  for (let k = 0; k < streets; k++) for (let c = 0; c <= cols; c++) for (const side of [-1, 1]) palm(deco, x0 - LOT_X / 2 + c * LOT_X, k * STREET + side * 7.4, 0.9);
+  const zMin = -40, zMax = (streets - 1) * STREET + 40;
+  for (let i = 0; i < 90; i++) {
+    const x = (rand() - .5) * (width + 220), z = zMin - 60 + rand() * (zMax - zMin + 120);
+    if (x > -roadLen / 2 - 14 && x < roadLen / 2 + 6 && z > zMin + 8 && z < zMax - 8) continue;
+    rand() > .5 ? treeRound(deco, x, z, 0.8 + rand() * 0.8) : palm(deco, x, z, 0.8 + rand() * 0.5);
+  }
+  lots.add(flatten(deco));
+  // centre everything on the origin
+  const cz = (streets - 1) * STREET / 2;
+  lots.position.z = -cz;
+  for (const h of estate.houses.values()) h.pos.z -= cz;
+  estate.extent = Math.max(width + 30, streets * STREET + 30) / 2;
+  Object.assign(estateSun.shadow.camera, { left: -estate.extent - 20, right: estate.extent + 20, top: estate.extent + 20, bottom: -estate.extent - 20, far: 400 });
+  estateSun.shadow.camera.updateProjectionMatrix();
+  s.fog.near = estate.extent * 2.2; s.fog.far = estate.extent * 5 + 200;
+  buildPins();
 }
 
 // ============================================================================
@@ -697,13 +743,15 @@ function hint(text, ms = 4500) {
   clearTimeout(hintTimer); hintTimer = setTimeout(() => (h.style.opacity = 0), ms);
 }
 
-function buildStrip() {
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function buildStrip(list) {
   const strip = $('strip');
   strip.innerHTML = '';
-  for (const L of LISTINGS) {
+  for (const L of list) {
     const b = document.createElement('button');
     b.className = 'card'; b.dataset.id = L.id;
-    b.innerHTML = `<div class="st">${L.status}</div><div class="t">${L.title}</div><div class="a">${L.area}</div><div class="p">${L.price}<small>${L.beds} bd · ${L.baths} ba</small></div>`;
+    const img = L.images[0] ? `<img class="thumb" loading="lazy" alt="" src="${esc(L.images[0])}">` : '';
+    b.innerHTML = `${img}<div class="cbody"><div class="st">${L.status}</div><div class="t">${esc(L.title)}</div><div class="a">${esc(L.area)}</div><div class="p">${esc(L.price)}<small>${L.beds} bd · ${L.baths} ba</small></div></div>`;
     b.onclick = () => selectListing(L.id);
     strip.appendChild(b);
   }
@@ -711,28 +759,66 @@ function buildStrip() {
 function buildPins() {
   for (const [id, h] of estate.houses) {
     const L = h.L;
-    const el = makeLabel(`<div class="bubble"><b>${L.price}</b><span>${L.beds} bd · ${L.area.split(',')[0]}</span></div><div class="stem"></div>`, 'pin', () => selectListing(id));
+    const el = makeLabel(`<div class="bubble"><b>${esc(L.price)}</b><span>${L.beds} bd · ${esc(L.shortArea)}</span></div><div class="stem"></div>`, 'pin', () => selectListing(id));
     const height = L.style === 'apartment' ? 17.5 : L.style === 'townhouse' ? 10 : 8;
-    estate.pins.push({ el, pos: new THREE.Vector3(h.pos.x, height, h.pos.z), id });
+    estate.pins.push({ el, pos: new THREE.Vector3(h.pos.x, height, h.pos.z), id, maxDist: 150 });
   }
 }
 
+// ---- filters ----
+const filter = { kind: 'all', region: 'all' };
+function filtered() {
+  return LISTINGS.filter((L) => (filter.kind === 'all' || L.kind === filter.kind) && (filter.region === 'all' || L.region === filter.region));
+}
+function buildFilters() {
+  const kinds = [['all', 'All'], ['buy', 'For Sale'], ['rent', 'For Rent'], ['short-stay', 'Short Stay'], ['commercial', 'Commercial']]
+    .filter(([k]) => k === 'all' || LISTINGS.some((L) => L.kind === k));
+  const regions = ['all', ...new Set(LISTINGS.map((L) => L.region))];
+  const count = (k) => LISTINGS.filter((L) => k === 'all' || L.kind === k).length;
+  $('filters').innerHTML =
+    kinds.map(([k, t]) => `<button data-kind="${k}" class="${filter.kind === k ? 'on' : ''}">${t} <i>${count(k)}</i></button>`).join('') +
+    `<select id="regionSel" aria-label="Region">${regions.map((r) => `<option value="${esc(r)}" ${filter.region === r ? 'selected' : ''}>${r === 'all' ? 'All regions' : esc(r)}</option>`).join('')}</select>`;
+  $('filters').querySelectorAll('button').forEach((b) => (b.onclick = () => { filter.kind = b.dataset.kind; applyFilter(); }));
+  $('regionSel').onchange = (e) => { filter.region = e.target.value; applyFilter(); };
+}
+function applyFilter() {
+  const list = filtered();
+  closePanel(); deselect();
+  buildEstate(list); buildStrip(list); buildFilters();
+  $('emptyMsg').style.display = list.length ? 'none' : '';
+  overviewEstate();
+}
+function overviewEstate() {
+  const e = estate.extent || 60, mobile = innerWidth < 761;
+  controls.maxDistance = Math.max(150, e * 4);
+  flyTo(new THREE.Vector3(0, e * (mobile ? 1.9 : 1.05) + 20, e * (mobile ? 1.9 : 1.3) + 30), new THREE.Vector3(0, 0, mobile ? 6 : 0), 1.2);
+  controls.autoRotate = true;
+}
+
 function panelHTML(L) {
-  const wa = AGENCY.whatsapp ? `<a class="btn ghost" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/${AGENCY.whatsapp}?text=${encodeURIComponent('Hello, I am interested in: ' + L.title + ' — ' + L.area)}">Chat on WhatsApp</a>` : '';
-  return `<div class="st">${L.status}</div><h2>${L.title}</h2><div class="area">${L.area}</div>
-    <div class="price">${L.price}</div>
-    <div class="facts"><div><b>${L.beds}</b><span>Bedrooms</span></div><div><b>${L.baths}</b><span>Bathrooms</span></div><div><b>${L.size}</b><span>Size</span></div></div>
-    <p>${L.description}</p>
-    <div class="chips">${L.features.map((f) => `<span>${f}</span>`).join('')}</div>
+  const wa = AGENCY.whatsapp ? `<a class="btn ghost" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/${AGENCY.whatsapp}?text=${encodeURIComponent('Hello MED Property, I am interested in: ' + L.title + ' (' + L.area + ')')}">Chat on WhatsApp</a>` : '';
+  const imgs = L.images;
+  const gallery = imgs.length ? `<div class="gallery"><img id="galMain" alt="${esc(L.title)}" src="${esc(imgs[0])}"><span class="gcount" id="galCount">1 / ${imgs.length}</span>
+      ${imgs.length > 1 ? '<button class="gnav prev" id="galPrev" aria-label="Previous photo">‹</button><button class="gnav next" id="galNext" aria-label="Next photo">›</button>' : ''}</div>` : '';
+  const desc = L.description.length > 320 ? `<p id="descP">${esc(L.description.slice(0, 300))}… <a href="#" id="moreBtn">more</a></p>` : `<p>${esc(L.description)}</p>`;
+  return `${gallery}<div class="st">${L.status}</div><h2>${esc(L.title)}</h2><div class="area">${esc(L.area)}</div>
+    <div class="price">${esc(L.price)}</div>
+    <div class="facts"><div><b>${L.beds}</b><span>Bedrooms</span></div><div><b>${L.baths}</b><span>Bathrooms</span></div><div><b>${esc(L.size)}</b><span>Size</span></div></div>
+    ${desc}
+    ${L.features.length ? `<div class="chips">${L.features.map((f) => `<span>${esc(f)}</span>`).join('')}</div>` : ''}
     ${view === 'estate' ? `<button class="btn primary" id="enterBtn">Step inside in 3D</button>` : ''}
     <button class="btn gold" id="bookBtn">Book a viewing</button>${wa}
-    <div class="demo-note">Sample listing for preview purposes.</div>`;
+    ${L.video ? `<a class="btn ghost" style="text-decoration:none" target="_blank" rel="noopener" href="${esc(L.video)}">▶ Watch the video tour</a>` : ''}
+    <div class="demo-note">3D layout is an illustration based on the listing's room count. Photos and details from MED Property.</div>`;
 }
 function openPanel(L) {
   $('panelBody').innerHTML = panelHTML(L);
   $('panel').classList.remove('hidden');
   const eb = $('enterBtn'); if (eb) eb.onclick = () => enterTour(L.id);
   $('bookBtn').onclick = () => openBooking(L);
+  let gi = 0; const show = (d) => { gi = (gi + d + L.images.length) % L.images.length; $('galMain').src = L.images[gi]; $('galCount').textContent = `${gi + 1} / ${L.images.length}`; };
+  if ($('galPrev')) { $('galPrev').onclick = () => show(-1); $('galNext').onclick = () => show(1); }
+  const mb = $('moreBtn'); if (mb) mb.onclick = (e) => { e.preventDefault(); $('descP').textContent = L.description; };
   if (matchMedia('(max-width: 760px)').matches) $('strip').style.display = 'none';
 }
 function closePanel() {
@@ -787,13 +873,13 @@ function showEstate() {
   setWalk(false);
   estate.pins.forEach((p) => (p.el.style.display = ''));
   $('backBtn').style.display = 'none'; $('modeSeg').style.display = 'none'; $('infoBtn').style.display = 'none';
-  $('tourbar').classList.remove('show'); $('strip').style.display = '';
+  $('tourbar').classList.remove('show'); $('strip').style.display = ''; $('filters').style.display = '';
   closePanel();
-  controls.enabled = true; controls.minDistance = 12; controls.maxDistance = 150; controls.maxPolarAngle = 1.38; controls.enablePan = true;
+  controls.enabled = true; controls.minDistance = 12; controls.maxDistance = Math.max(150, (estate.extent || 60) * 4); controls.maxPolarAngle = 1.38; controls.enablePan = true;
   camera.near = 0.5; camera.fov = 50; camera.updateProjectionMatrix();
   document.body.classList.remove('touring');
   const id = estate.selected;
-  if (id) selectListing(id); else { flyTo(new THREE.Vector3(0, 62, 82), new THREE.Vector3(0, 0, 0), 1.2); controls.autoRotate = true; }
+  if (id && estate.houses.has(id)) selectListing(id); else overviewEstate();
   hint(isTouch ? 'Drag to rotate · Pinch to zoom · Tap a house' : 'Drag to rotate · Scroll to zoom · Click a house');
 }
 
@@ -804,7 +890,7 @@ function enterTour(id) {
   document.body.classList.add('touring');
   closePanel();
   estate.pins.forEach((p) => (p.el.style.display = 'none'));
-  $('strip').style.display = 'none';
+  $('strip').style.display = 'none'; $('filters').style.display = 'none';
   buildTour(L);
   $('backBtn').style.display = ''; $('modeSeg').style.display = ''; $('infoBtn').style.display = '';
   $('tourbar').classList.add('show');
@@ -1022,8 +1108,9 @@ function placeLabels(list) {
   const w = innerWidth, h = innerHeight;
   for (const l of list) {
     if (l.el.style.display === 'none') continue;
+    const far = l.maxDist && !l.el.classList.contains('sel') && camera.position.distanceTo(l.pos) > l.maxDist;
     v.copy(l.pos).project(camera);
-    const vis = v.z < 1 && v.x > -1.2 && v.x < 1.2 && v.y > -1.2 && v.y < 1.2;
+    const vis = !far && v.z < 1 && v.x > -1.2 && v.x < 1.2 && v.y > -1.2 && v.y < 1.2;
     l.el.style.visibility = vis ? 'visible' : 'hidden';
     if (vis) l.el.style.transform = `translate(${(v.x * 0.5 + 0.5) * w}px, ${(-v.y * 0.5 + 0.5) * h}px) translate(-50%, ${l.el.classList.contains('pin') ? '-100%' : '-50%'})`;
   }
@@ -1056,18 +1143,25 @@ addEventListener('resize', () => {
 // ============================================================================
 // Boot
 // ============================================================================
-buildEstate();
-buildStrip();
-buildPins();
+buildEstateBase();
 controls.autoRotateSpeed = 0.35;
 camera.position.set(90, 120, 160); controls.target.set(0, 0, 0);
 requestAnimationFrame(loop);
-setTimeout(() => {
-  $('loader').classList.add('done');
+(async () => {
+  try {
+    LISTINGS = await loadListings();
+  } catch (e) {
+    $('loaderMsg').outerHTML = `<div class="err">Couldn't load MED Property's listings right now. Please check your connection and <a href="" style="color:#e3c25a">try again</a>.</div>`;
+    return;
+  }
   const hash = decodeURIComponent(location.hash.slice(1));
-  if (hash.startsWith('tour=')) { const id = hash.slice(5); estate.selected = id; enterTour(id); }
-  else if (estate.houses.has(hash)) { selectListing(hash); }
+  const target = hash.startsWith('tour=') ? hash.slice(5) : hash;
+  buildFilters();
+  buildEstate(filtered()); buildStrip(filtered());
+  $('loader').classList.add('done');
+  if (hash.startsWith('tour=') && estate.houses.has(target)) { estate.selected = target; enterTour(target); }
+  else if (estate.houses.has(target)) { view = 'estate'; selectListing(target); }
   else showEstate();
-}, 350);
+})();
 // expose for debugging
-window.__app = { enterTour, showEstate, setMode, selectListing, goToRoom, tour, estate, camera };
+window.__app = { applyFilter, filter, get listings() { return LISTINGS; }, enterTour, showEstate, setMode, selectListing, goToRoom, tour, estate, camera };

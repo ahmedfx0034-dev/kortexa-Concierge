@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>MED Property — 3D Homes</title>
-<meta name="description" content="Explore every MED Property listing in 3D: walk the estate, then step inside each home room by room.">
+<meta name="description" content="Explore MED Property's current listings in 3D: browse every home on the estate map, see the real photos, then step inside room by room.">
 <meta name="theme-color" content="#0f1b2a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
   .seg button.on { background: var(--navy); color: #fff; }
 
   /* ---------- hint ---------- */
-  .hint { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); background: rgba(15,27,42,.85); color: #fff; font-size: 12.5px; padding: 8px 14px; border-radius: 999px; z-index: 15; pointer-events: none; transition: opacity .6s; white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis; }
+  .hint { position: fixed; left: 50%; top: 116px; transform: translateX(-50%); background: rgba(15,27,42,.85); color: #fff; font-size: 12.5px; padding: 8px 14px; border-radius: 999px; z-index: 15; pointer-events: none; transition: opacity .6s; white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis; }
 
   /* ---------- 3D labels ---------- */
   #labels { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
@@ -68,6 +68,29 @@
   .card .a { font-size: 12px; color: var(--muted); }
   .card .p { font-weight: 700; color: var(--navy); margin-top: 6px; display: flex; justify-content: space-between; align-items: baseline; }
   .card .p small { font-weight: 500; color: var(--muted); font-size: 11.5px; }
+  .card { display: flex; gap: 10px; padding: 8px; align-items: stretch; flex-basis: 300px; }
+  .card .thumb { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; flex: 0 0 84px; background: #dde3ea; }
+  .card .cbody { min-width: 0; padding: 2px 4px 0 0; flex: 1; }
+  .card .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13.5px; }
+  .card .a { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---------- filters ---------- */
+  .filters { position: fixed; left: 16px; right: 16px; bottom: calc(132px + var(--safe-b)); z-index: 10; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; pointer-events: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button, .filters select { pointer-events: auto; flex: 0 0 auto; background: var(--card); backdrop-filter: blur(10px); border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--ink); box-shadow: var(--shadow); border: 0; font-family: inherit; }
+  .filters button i { font-style: normal; color: var(--muted); font-weight: 500; margin-left: 2px; }
+  .filters button.on { background: var(--navy); color: #fff; }
+  .filters button.on i { color: var(--gold-2); }
+  .empty { position: fixed; left: 50%; top: 45%; transform: translate(-50%, -50%); background: var(--card); padding: 14px 18px; border-radius: 14px; box-shadow: var(--shadow); z-index: 9; font-size: 14px; }
+
+  /* ---------- gallery ---------- */
+  .gallery { position: relative; margin: -18px -18px 14px; aspect-ratio: 4 / 3; background: #dde3ea; overflow: hidden; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery .gcount { position: absolute; left: 12px; bottom: 10px; background: rgba(15,23,42,.7); color: #fff; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+  .gallery .gnav { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.9); font-size: 22px; line-height: 1; color: var(--navy); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  .gallery .gnav.prev { left: 10px; } .gallery .gnav.next { right: 10px; }
+  @media (min-width: 761px) { .panel .gallery { border-radius: 20px 20px 0 0; } }
+  @media (max-width: 760px) { .panel .gallery { border-radius: 20px 20px 0 0; aspect-ratio: 16 / 10; } .filters { top: 64px; bottom: auto; } }
 
   /* ---------- detail panel ---------- */
   .panel { position: fixed; z-index: 12; background: var(--card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--shadow); transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s; }
@@ -167,8 +190,10 @@
   <button class="pill hide-sm" id="infoBtn" style="display:none">Details</button>
 </div>
 
-<div class="hint" id="hint">Drag to look around · Tap a house to see details</div>
+<div class="hint" id="hint" style="opacity:0"></div>
 
+<div class="filters" id="filters"></div>
+<div class="empty" id="emptyMsg" style="display:none">No MED Property listings match this filter.</div>
 <div class="strip" id="strip"></div>
 
 <aside class="panel hidden" id="panel">
@@ -191,11 +216,11 @@
     <label for="bDate">Preferred date</label><input id="bDate" type="date">
     <button class="btn primary" style="margin-top:16px" type="submit">Request viewing</button>
     <button class="btn ghost" type="button" id="bookCancel">Cancel</button>
-    <div class="demo-note">Demo: requests aren't sent anywhere yet.</div>
+    <div class="demo-note">Preview: requests aren't sent to MED Property yet. Use WhatsApp to reach the team now.</div>
   </form>
 </div>
 
-<div class="loader" id="loader"><div class="mark">MED</div><div class="msg" id="loaderMsg">Building the estate…</div></div>
+<div class="loader" id="loader"><div class="mark">MED</div><div class="msg" id="loaderMsg">Loading MED Property listings…</div></div>
 
 <script type="module" src="./app.js"></script>
 </body>
