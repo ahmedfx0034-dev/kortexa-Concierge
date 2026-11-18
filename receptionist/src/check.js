@@ -44,6 +44,24 @@ export async function runChecks({ llm, wa, appSecret, verifyToken, adminPassword
   out.push(verifyToken ? { name: "Webhook verify phrase", ok: true, detail: "Set." } : { name: "Webhook verify phrase", ok: false, detail: "Not set.", fix: "Add WHATSAPP_VERIFY_TOKEN in Render." });
   out.push(adminPassword ? { name: "Admin password", ok: true, detail: "Set." } : { name: "Admin password", ok: false, detail: "Not set." });
 
+  if (wabaId && wa && !wa.dryRun) {
+    try {
+      const w = await graph(fetchImpl, cfg, `${wabaId}?fields=name,account_review_status,health_status`);
+      const h = w.health_status || {};
+      const problems = (h.entities || []).flatMap((e) => (e.errors || []).map((er) =>
+        `${e.entity_type || "account"}: ${er.error_description || "problem"}${er.error_code ? ` (code ${er.error_code})` : ""}${er.possible_solution ? `. Meta suggests: ${er.possible_solution}` : ""}`));
+      const status = h.can_send_message || "unknown";
+      out.push({
+        name: "Meta allows sending messages",
+        ok: status === "AVAILABLE" ? true : status === "unknown" ? null : false,
+        detail: `Status: ${status}${w.account_review_status ? ` · account review: ${w.account_review_status}` : ""}${problems.length ? `. ${problems.join(" | ")}` : ""}`,
+        fix: status === "AVAILABLE" || status === "unknown" ? undefined : "Follow Meta's suggestion above, or ask Meta support with this exact text.",
+      });
+    } catch (e) {
+      out.push({ name: "Meta allows sending messages", ok: null, detail: `Couldn't read the account's health: ${e.message}` });
+    }
+  }
+
   if (!wabaId) out.push({ name: "WhatsApp account connected to the app", ok: null, detail: "Can't check: WHATSAPP_BUSINESS_ACCOUNT_ID isn't set.", fix: "Add WHATSAPP_BUSINESS_ACCOUNT_ID in Render (Meta shows it as 'Messaging account ID' on Step 1)." });
   else if (wa && !wa.dryRun) {
     let mine = null; // the Meta app this token belongs to

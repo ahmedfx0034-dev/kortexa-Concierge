@@ -113,3 +113,19 @@ test("/check needs the admin login, records bad signatures, and can connect What
     assert.ok(fetchImpl.calls.slice(before).some((c) => c.method === "POST" && c.url.endsWith("/waba1/subscribed_apps")));
   } finally { server.close(); }
 });
+
+test("health status shows Meta's reason when sending is blocked", async () => {
+  const { runChecks } = await import("../src/check.js");
+  const fetchImpl = async (url) => {
+    const json = url.includes("fields=name,account_review_status,health_status")
+      ? { account_review_status: "APPROVED", health_status: { can_send_message: "BLOCKED", entities: [{ entity_type: "WABA", errors: [{ error_code: 131031, error_description: "Account locked", possible_solution: "Request a review" }] }] } }
+      : url.includes("subscribed_apps") ? { data: [{ whatsapp_business_api_data: { id: "1", name: "Mine" } }] }
+      : url.includes("/app?") ? { id: "1", name: "Mine" }
+      : { display_phone_number: "+1 555", verified_name: "Test" };
+    return { ok: true, status: 200, json: async () => json };
+  };
+  const out = await runChecks({ llm: { chat: async () => "OK" }, wa: { token: "t", phoneNumberId: "p", apiVersion: "v23.0", dryRun: false }, wabaId: "w", fetchImpl });
+  const h = out.find((r) => r.name === "Meta allows sending messages");
+  assert.equal(h.ok, false);
+  assert.match(h.detail, /BLOCKED.*Account locked \(code 131031\)\. Meta suggests: Request a review/);
+});
