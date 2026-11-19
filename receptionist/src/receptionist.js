@@ -51,7 +51,7 @@ export class Receptionist {
       return;
     }
     Object.assign(c, { demo: code, messages: [], lead: null, booking: null, score: 0, temperature: "", missing: [], aiPaused: false, needsHuman: false, buyerMessages: 0 });
-    await this.#reply(c, `Hello! 👋 This is ${demo.receptionistName}, the AI receptionist for ${demo.agencyName}. (This is a demo with sample listings.) Pretend you're a buyer or tenant: ask me about a property, prices, or booking a viewing.`, "welcome");
+    await this.#reply(c, `Hello! 👋 Welcome to ${demo.agencyName}. I'm ${demo.receptionistName}, the AI assistant. How can I help you today?`, "welcome");
   }
 
   async #reply(c, text, kind = "reply") {

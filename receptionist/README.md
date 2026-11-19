@@ -140,8 +140,9 @@ It prints two links to send the agency:
 - **Web:** `https://your-app.onrender.com/d/prime`, the same chat in a browser.
 
 All demos share one WhatsApp number. Without a code, people get the default
-demo agency in `config/agency.json`. Each demo says it's a demo with sample
-listings, and the AI admits the listings are samples if asked.
+demo agency in `config/agency.json`. The chat looks like a normal business
+chat (a small notice says the replies come from an AI assistant), and the AI
+admits the listings are samples if asked.
 
 Demo files are saved in `config/demos/` and are **not** uploaded to GitHub
 (see `.gitignore`), because this repository is public and they would reveal
@@ -159,9 +160,11 @@ The AI will say the agent will confirm it.
 
 ## The web demo page
 
-The server also still serves a browser version of the chat at `/` (same AI,
-no WhatsApp needed). You can ignore it or use it as a backup when showing
-agencies.
+The server also serves a browser version of the chat at `/` (same AI, no
+WhatsApp needed), styled like a WhatsApp chat with a business. Each visitor's
+chat is saved only in their own browser, so everyone who opens the link starts
+fresh. The ⋮ menu has **Lead summary** (what the agent would receive) and
+**Clear chat**.
 
 ## Run locally and test
 

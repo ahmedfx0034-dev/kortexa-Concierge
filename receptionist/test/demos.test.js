@@ -59,7 +59,7 @@ test("WhatsApp: DEMO code switches the chat to that agency and starts fresh", as
   await r.handle(msg("a", "Hello"));
   assert.match(prompts[0], /Ivory Crest Realty/, "no code: the default demo agency");
   await r.handle(msg("b", "DEMO prime"));
-  assert.match(sent.at(-1), /AI receptionist for Prime Homes Ltd/);
+  assert.match(sent.at(-1), /Welcome to Prime Homes Ltd\. I'm Anna/);
   const c = chats.get("233241234567");
   assert.equal(c.demo, "prime");
   assert.equal(c.messages.length, 1, "history cleared, only the welcome");
