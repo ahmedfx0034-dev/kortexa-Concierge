@@ -249,7 +249,7 @@ def test_generate_and_revise_background(client, monkeypatch):
     called = {}
     gen = types.ModuleType("carousel_studio.generate")
     gen.create_drafts = lambda style, n=3, theme=None: called.setdefault("gen", (style, n, theme)) and []
-    gen.revise_draft = lambda did, fb: (called.setdefault("rev", (did, fb)), store.load_draft(did))[1]
+    gen.revise_draft = lambda did, fb, render=True: (called.setdefault("rev", (did, fb)), store.load_draft(did))[1]
     rnd = types.ModuleType("carousel_studio.render")
     rnd.render_draft = lambda d: d
     monkeypatch.setitem(sys.modules, "carousel_studio.generate", gen)

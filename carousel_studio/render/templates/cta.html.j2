@@ -1,0 +1,31 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-cta .h { font-size: calc(var(--k) * var(--hs) * 104px); }
+.layout-cta .body { font-size: calc(var(--kb) * 40px); margin-top: calc(var(--k) * 40px); max-width: 820px; }
+.layout-cta .cta-btn { margin-top: calc(var(--k) * 64px); display: inline-flex; align-items: center; gap: .6em;
+   background: var(--accent); color: var(--on-accent); font-family: var(--bfont); font-weight: 700;
+   font-size: calc(var(--k) * 36px); padding: .7em 1.4em; border-radius: 999px; max-width: 100%; text-align: center; }
+.layout-cta .cta-btn svg { width: 1em; height: 1em; stroke: var(--on-accent); flex: 0 0 auto; }
+.layout-cta .who { margin-top: calc(var(--k) * 48px); display: flex; align-items: center; gap: 18px;
+   font-family: var(--bfont); font-weight: 700; font-size: calc(var(--k) * 34px); color: var(--text); }
+.layout-cta .avatar { width: calc(var(--k) * 76px); height: calc(var(--k) * 76px); border-radius: 50%;
+   background: linear-gradient(135deg, var(--accent), var(--accent2)); display: grid; place-items: center;
+   color: var(--on-accent); font-family: var(--hfont); font-weight: 800; font-size: calc(var(--k) * 34px); }
+.layout-cta .icons { display: flex; gap: 36px; margin-top: calc(var(--k) * 56px); color: var(--muted);
+   font-family: var(--bfont); font-size: calc(var(--k) * 24px); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+.layout-cta .icons span { display: flex; align-items: center; gap: 12px; }
+.layout-cta .icons svg { width: 1.6em; height: 1.6em; stroke: var(--muted); }
+{% endblock %}
+{% block inner_class %}v-center {{ 'align-center' if align == 'center' else 'align-left' }}{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if deco.underline %}<div class="rule"></div>{% endif %}
+  {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}
+  {% if cta_text %}<div class="cta-btn">{{ cta_text }}<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>{% endif %}
+  {% if handle %}<div class="who"><div class="avatar">{{ initial }}</div>{{ handle }}</div>{% endif %}
+  <div class="icons">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>Save</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg>Share</span>
+  </div>
+{% endblock %}

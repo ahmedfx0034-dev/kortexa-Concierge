@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+{{ font_css | safe }}
+:root {
+  --bg: {{ c.bg }}; --surface: {{ c.surface }}; --text: {{ c.text }}; --muted: {{ c.muted }};
+  --accent: {{ c.accent }}; --accent2: {{ c.accent2 }}; --on-accent: {{ c.on_accent }};
+  --hl: {{ c.hl }}; --line: {{ c.line }}; --card-text: {{ c.card_text }};
+  --hfont: {{ fonts.heading | safe }}; --bfont: {{ fonts.body | safe }};
+  --hweight: {{ t.weight }}; --hs: {{ t.scale }}; --k: 1;
+  --kb: calc(0.5 + 0.5 * var(--k)); /* body text shrinks slower than headings */
+  --pad: 90px; --chrome: 44px;
+  --content-top: {{ geo.top }}px; --content-bottom: {{ geo.bottom }}px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); }
+body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: antialiased;
+       text-rendering: geometricPrecision; font-kerning: normal; }
+.slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); }
+
+/* ---------- background decorations */
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.glow { background:
+  radial-gradient(900px 700px at 105% -5%, {{ c.accent_a18 }} 0%, transparent 60%),
+  radial-gradient(800px 700px at -10% 110%, {{ c.accent2_a14 }} 0%, transparent 60%); }
+.dots { background-image: radial-gradient({{ c.line }} 1.6px, transparent 1.8px); background-size: 36px 36px;
+        -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.25)); }
+.gridlines { background-image: linear-gradient({{ c.line }} 1px, transparent 1px),
+   linear-gradient(90deg, {{ c.line }} 1px, transparent 1px); background-size: 90px 90px; opacity: .6; }
+.blob { position: absolute; width: 760px; height: 760px; right: -300px; top: -280px; border-radius: 50%;
+        background: var(--accent); opacity: .14; }
+.blob2 { position: absolute; width: 420px; height: 420px; left: -180px; bottom: -160px; border-radius: 50%;
+         border: 3px solid var(--accent2); opacity: .35; }
+.bgimg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.scrim { position: absolute; inset: 0; background: linear-gradient(180deg, {{ c.bg_a55 }} 0%, {{ c.bg_a80 }} 45%, {{ c.bg_a96 }} 100%); }
+.frame { position: absolute; inset: 34px; z-index: 3; border: {{ deco.frame_w }}px solid {{ deco.frame_color }};
+         border-radius: {{ deco.frame_radius }}px; }
+.bar { position: absolute; background: var(--accent); }
+.bar.left { left: 0; top: 0; bottom: 0; width: 18px; }
+.bar.top { left: 0; right: 0; top: 0; height: 18px; }
+.bar.bottom { left: 0; right: 0; bottom: 0; height: 18px; }
+.grain { position: absolute; inset: 0; opacity: {{ deco.grain_opacity }}; mix-blend-mode: {{ 'screen' if c.is_dark else 'multiply' }};
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 {{ '1' if c.is_dark else '0' }} 0 0 0 0 {{ '1' if c.is_dark else '0' }} 0 0 0 0 {{ '1' if c.is_dark else '0' }} 0 0 0 1.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 300px 300px; }
+.progress { position: absolute; left: 0; bottom: 0; height: 10px; background: var(--accent); }
+.progress-track { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: {{ c.line }}; }
+
+/* ---------- chrome (counter, handle, swipe) */
+.chrome { position: absolute; left: var(--pad); right: var(--pad); height: var(--chrome);
+          display: flex; align-items: center; justify-content: space-between; z-index: 5; }
+.chrome.top { top: 64px; }
+.chrome.bottom { bottom: 64px; }
+.slot { display: flex; align-items: center; gap: 22px; }
+.chip { font-family: var(--bfont); font-size: 26px; font-weight: 600; letter-spacing: .04em; color: var(--muted);
+        white-space: nowrap; display: flex; align-items: center; gap: 12px; }
+.chip.counter { font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+.chip.pill { padding: 8px 20px; border-radius: 999px; border: 2px solid var(--line); }
+.chip.brand { font-family: var(--hfont); font-weight: var(--hweight); color: var(--text); letter-spacing: .02em; font-size: 28px; }
+.chip.swipe { color: var(--text); text-transform: uppercase; letter-spacing: .14em; font-size: 22px; font-weight: 700; }
+.chip .arrow { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; }
+.chip .arrow svg { width: 30px; height: 30px; stroke: var(--on-accent); }
+.chrome.on-image .chip { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+.chrome.on-image .chip.pill, .chrome.on-image .chip.handle, .chrome.on-image .chip.brand {
+   padding: 8px 20px; border-radius: 999px; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.32); }
+.handle-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+
+/* ---------- content box (auto-fit) */
+#fit { position: absolute; left: var(--pad); right: var(--pad); top: var(--content-top); bottom: var(--content-bottom);
+       overflow: hidden; z-index: 4; }
+.inner { min-height: 100%; display: flex; flex-direction: column; }
+.v-center { justify-content: center; }
+.v-start { justify-content: flex-start; }
+.v-end { justify-content: flex-end; }
+.align-center { align-items: center; text-align: center; }
+.align-left { align-items: flex-start; text-align: left; }
+
+.kicker { font-family: var(--bfont); font-weight: 700; text-transform: uppercase; letter-spacing: .16em;
+          font-size: calc(var(--k) * 26px); color: var(--hl); margin-bottom: calc(var(--k) * 34px); }
+.kicker.tag { background: var(--accent); color: var(--on-accent); padding: .5em 1em; border-radius: 999px; letter-spacing: .12em; }
+.h { font-family: var(--hfont); font-weight: var(--hweight); color: var(--text); line-height: {{ t.line_height }};
+     letter-spacing: {{ t.tracking }}; {{ 'text-transform: uppercase;' if t.upper else '' }}
+     text-wrap: balance; overflow-wrap: break-word; hyphens: manual; font-variant-numeric: lining-nums; }
+.body { font-family: var(--bfont); color: var(--muted); line-height: 1.42; text-wrap: pretty; font-weight: 400; }
+.body p + p { margin-top: .7em; }
+.body strong, .h strong { font-weight: inherit; }
+.hl { color: var(--hl); }
+.nw { white-space: nowrap; }
+{% if deco.marker %}
+.hl { color: var(--on-accent); background: var(--accent); padding: 0 .14em; border-radius: .08em;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+{% endif %}
+.rule { width: 140px; height: {{ deco.rule_h }}px; background: var(--accent); border-radius: 99px;
+        margin-top: calc(var(--k) * 40px); margin-bottom: calc(var(--k) * 4px); }
+.align-center .rule { margin-left: auto; margin-right: auto; }
+.card { background: var(--surface); border-radius: 36px; padding: calc(var(--k) * 64px); width: 100%;
+        border: 1.5px solid var(--line); }
+.card .body { color: var(--card-text); }
+{% block css %}{% endblock %}
+</style>
+</head>
+<body>
+<div class="slide layout-{{ s.layout }}">
+  {% if deco.glow %}<div class="layer glow"></div>{% endif %}
+  {% if deco.dots %}<div class="layer dots"></div>{% endif %}
+  {% if deco.grid %}<div class="layer gridlines"></div>{% endif %}
+  {% if deco.blob %}<div class="blob"></div><div class="blob2"></div>{% endif %}
+  {% block background %}
+  {% if image_uri %}<div class="bgimg" style="background-image:url('{{ image_uri }}')"></div><div class="scrim"></div>{% endif %}
+  {% endblock %}
+  {% if deco.frame %}<div class="frame"></div>{% endif %}
+  {% if deco.bar %}<div class="bar {{ deco.bar }}"></div>{% endif %}
+
+  <div class="chrome top {{ 'on-image' if chrome_on_image else '' }}">
+    <div class="slot">{% for it in chrome.tl %}{{ it | safe }}{% endfor %}</div>
+    <div class="slot">{% for it in chrome.tr %}{{ it | safe }}{% endfor %}</div>
+  </div>
+
+  <div id="fit"><div class="inner {% block inner_class %}v-center align-left{% endblock %}">
+    {% block content %}{% endblock %}
+  </div></div>
+
+  <div class="chrome bottom">
+    <div class="slot">{% for it in chrome.bl %}{{ it | safe }}{% endfor %}</div>
+    <div class="slot">{% for it in chrome.br %}{{ it | safe }}{% endfor %}</div>
+  </div>
+
+  {% if deco.progress %}<div class="progress-track"></div><div class="progress" style="width: {{ (100 * s.index / total) | round(2) }}%"></div>{% endif %}
+  {% if deco.grain %}<div class="grain"></div>{% endif %}
+</div>
+<script>
+(async () => {
+  try {
+    await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 4000))]);
+  } catch (e) {}
+  const box = document.getElementById('fit');
+  const inner = box.firstElementChild;
+  const root = document.documentElement;
+  const wide = () => [...box.querySelectorAll('.h, .body, .kicker, li, .num, .cta-btn')]
+      .some(el => el.scrollWidth > el.clientWidth + 2);
+  const fits = () => inner.scrollHeight <= box.clientHeight + 1 && inner.scrollWidth <= box.clientWidth + 1 && !wide();
+  const set = k => root.style.setProperty('--k', k);
+  set(1);
+  let k = 1;
+  const grow = {{ geo.grow }};
+  if (fits() && grow > 1) {          // sparse slide: let the type breathe a little bigger
+    set(grow);
+    if (fits()) k = grow; else {
+      let lo = 1, hi = grow;
+      for (let i = 0; i < 8; i++) { const mid = (lo + hi) / 2; set(mid); if (fits()) lo = mid; else hi = mid; }
+      k = lo;
+    }
+    set(k);
+  } else if (!fits()) {
+    let lo = 0.2, hi = 1;
+    for (let i = 0; i < 14; i++) {
+      const mid = (lo + hi) / 2; set(mid);
+      if (fits()) lo = mid; else hi = mid;
+    }
+    k = lo; set(k);
+  }
+  window.__fit = k;
+  window.__overflow = !fits();
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

@@ -31,18 +31,18 @@ DEFAULT_BRAND = {
 
 @dataclass
 class Settings:
-    model: str = os.getenv("STUDIO_MODEL", "claude-opus-5-5")
-    effort: str = os.getenv("STUDIO_EFFORT", "high")
-    apify_token: str | None = os.getenv("APIFY_TOKEN")
-    ig_user_id: str | None = os.getenv("IG_USER_ID")
-    ig_access_token: str | None = os.getenv("IG_ACCESS_TOKEN")
-    graph_api_version: str = os.getenv("IG_GRAPH_VERSION", "v23.0")
+    model: str = field(default_factory=lambda: os.getenv("STUDIO_MODEL", "claude-opus-5-5"))
+    effort: str = field(default_factory=lambda: os.getenv("STUDIO_EFFORT", "high"))
+    apify_token: str | None = field(default_factory=lambda: os.getenv("APIFY_TOKEN"))
+    ig_user_id: str | None = field(default_factory=lambda: os.getenv("IG_USER_ID"))
+    ig_access_token: str | None = field(default_factory=lambda: os.getenv("IG_ACCESS_TOKEN"))
+    graph_api_version: str = field(default_factory=lambda: os.getenv("IG_GRAPH_VERSION", "v23.0"))
     # Public hosting for slide images (Instagram fetches them by URL).
-    image_host: str = os.getenv("IMAGE_HOST", "s3")  # "s3" (S3/R2/etc) or "local" (PUBLIC_BASE_URL)
-    s3_bucket: str | None = os.getenv("S3_BUCKET")
-    s3_endpoint_url: str | None = os.getenv("S3_ENDPOINT_URL")
-    s3_public_base_url: str | None = os.getenv("S3_PUBLIC_BASE_URL")
-    public_base_url: str | None = os.getenv("PUBLIC_BASE_URL")
+    image_host: str = field(default_factory=lambda: os.getenv("IMAGE_HOST", "s3"))  # "s3" (S3/R2/etc) or "local" (PUBLIC_BASE_URL)
+    s3_bucket: str | None = field(default_factory=lambda: os.getenv("S3_BUCKET"))
+    s3_endpoint_url: str | None = field(default_factory=lambda: os.getenv("S3_ENDPOINT_URL"))
+    s3_public_base_url: str | None = field(default_factory=lambda: os.getenv("S3_PUBLIC_BASE_URL"))
+    public_base_url: str | None = field(default_factory=lambda: os.getenv("PUBLIC_BASE_URL"))
     brand: dict = field(default_factory=dict)
 
 

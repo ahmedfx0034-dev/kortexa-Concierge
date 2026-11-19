@@ -197,8 +197,7 @@ def create_app() -> FastAPI:
                 from carousel_studio.generate import revise_draft
                 from carousel_studio.render import render_draft
 
-                new = revise_draft(draft_id, feedback)
-                store.save_draft(render_draft(new))
+                revise_draft(draft_id, feedback, render=True)  # saves + re-renders
                 _job_end(key)
             except Exception as e:  # noqa: BLE001
                 _job_end(key, f"Revision failed: {e}")

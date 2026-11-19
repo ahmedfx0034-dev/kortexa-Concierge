@@ -1,0 +1,25 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-numbered .num { font-family: var(--hfont); font-weight: 900; font-size: calc(var(--k) * 230px); line-height: .82;
+   letter-spacing: -.04em; font-variant-numeric: lining-nums tabular-nums; margin-bottom: calc(var(--k) * 56px);
+   {% if deco.outline_numbers %}color: transparent; -webkit-text-stroke: 4px var(--accent);{% else %}color: var(--accent);{% endif %} }
+.layout-numbered .h { font-size: calc(var(--k) * var(--hs) * 82px); }
+.layout-numbered .body { font-size: calc(var(--kb) * 42px); margin-top: calc(var(--k) * 40px); }
+.layout-numbered ul { list-style: none; margin-top: calc(var(--k) * 30px); }
+.layout-numbered li { position: relative; padding-left: 1.1em; margin-top: .5em; }
+.layout-numbered li::before { content: ""; position: absolute; left: 0; top: .55em; width: .42em; height: .42em; border-radius: 50%; background: var(--accent); }
+.layout-numbered .head-row { display: flex; align-items: flex-end; gap: 28px; }
+{% endblock %}
+{% block inner_class %}v-center align-left{% endblock %}
+{% block content %}
+  <div class="num">{{ number }}</div>
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if deco.underline %}<div class="rule"></div>{% endif %}
+  {% if s.body or s.bullets %}
+  <div class="body">
+    {% if s.body %}{{ s.body }}{% endif %}
+    {% if s.bullets %}<ul>{% for b in s.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+  {% endif %}
+{% endblock %}

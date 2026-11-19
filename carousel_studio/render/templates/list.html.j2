@@ -1,0 +1,23 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-list .h { font-size: calc(var(--k) * var(--hs) * 78px); }
+.layout-list ol { list-style: none; margin-top: calc(var(--k) * 56px); width: 100%; }
+.layout-list li { display: flex; gap: calc(var(--k) * 30px); align-items: flex-start;
+   font-family: var(--bfont); font-size: calc(var(--kb) * 40px); line-height: 1.32; color: var(--text);
+   padding: calc(var(--k) * 26px) 0; border-top: 2px solid var(--line); }
+.layout-list li:last-child { border-bottom: 2px solid var(--line); }
+.layout-list .mk { flex: 0 0 auto; width: 1.45em; height: 1.45em; border-radius: 50%; background: var(--accent);
+   color: var(--on-accent); display: grid; place-items: center; font-size: .62em; font-weight: 800; margin-top: -.06em; }
+.layout-list .mk svg { width: 58%; height: 58%; stroke: var(--on-accent); }
+.layout-list .lt { flex: 1 1 auto; min-width: 0; text-wrap: pretty; }
+.layout-list .body { font-size: calc(var(--kb) * 36px); margin-top: calc(var(--k) * 36px); }
+{% endblock %}
+{% block inner_class %}v-center align-left{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if bullets %}
+  <ol>{% for b in bullets %}<li><span class="mk">{% if deco.numbered_marks %}{{ loop.index }}{% else %}<svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{% endif %}</span><span class="lt">{{ b }}</span></li>{% endfor %}</ol>
+  {% endif %}
+  {% if list_body %}<div class="body">{{ list_body }}</div>{% endif %}
+{% endblock %}

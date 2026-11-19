@@ -1,0 +1,24 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-top_heading_body .h { font-size: calc(var(--k) * var(--hs) * 86px); }
+.layout-top_heading_body .body { font-size: calc(var(--kb) * 42px); margin-top: calc(var(--k) * 48px); }
+.layout-top_heading_body .card .body { margin-top: 0; }
+.layout-top_heading_body .card { margin-top: calc(var(--k) * 56px); }
+.layout-top_heading_body ul { list-style: none; margin-top: calc(var(--k) * 36px); }
+.layout-top_heading_body li { position: relative; padding-left: 1.1em; margin-top: .55em; }
+.layout-top_heading_body li::before { content: ""; position: absolute; left: 0; top: .55em; width: .42em; height: .42em; border-radius: 50%; background: var(--accent); }
+{% endblock %}
+{% block inner_class %}v-start align-left{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if deco.underline %}<div class="rule"></div>{% endif %}
+  {% if s.body or s.bullets %}
+  <div class="{{ 'card' if deco.card else '' }}">
+    <div class="body">
+      {% if s.body %}{{ s.body }}{% endif %}
+      {% if s.bullets %}<ul>{% for b in s.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

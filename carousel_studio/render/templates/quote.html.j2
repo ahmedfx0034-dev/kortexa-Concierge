@@ -1,0 +1,20 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-quote .qm { font-family: {{ fonts.quote_mark | safe }}; font-weight: 700; color: var(--accent); font-size: calc(var(--k) * 300px);
+   line-height: .7; height: .42em; margin-bottom: calc(var(--k) * 40px); }
+.layout-quote .h { font-size: calc(var(--k) * var(--hs) * 76px); line-height: 1.16; text-transform: none; letter-spacing: -.01em;
+   {% if t.quote_italic %}font-style: italic;{% endif %} font-weight: {{ t.quote_weight }}; }
+.layout-quote .attr { display: flex; align-items: center; gap: 20px; margin-top: calc(var(--k) * 56px);
+   font-family: var(--bfont); font-size: calc(var(--k) * 28px); letter-spacing: .14em; text-transform: uppercase;
+   color: var(--muted); font-weight: 600; }
+.layout-quote .attr::before { content: ""; width: 56px; height: 3px; background: var(--accent); }
+.layout-quote .body.extra { font-size: calc(var(--kb) * 36px); margin-top: calc(var(--k) * 28px); }
+{% endblock %}
+{% block inner_class %}v-center align-left{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <div class="qm">&ldquo;</div>
+  <blockquote class="h">{{ s.heading }}</blockquote>
+  {% if attribution %}<div class="attr">{{ attribution }}</div>{% endif %}
+  {% if quote_body %}<div class="body extra">{{ quote_body }}</div>{% endif %}
+{% endblock %}

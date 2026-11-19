@@ -1,0 +1,13 @@
+{% extends "base.html.j2" %}
+{% block css %}
+.layout-center_statement .h { font-size: calc(var(--k) * var(--hs) * 118px); }
+.layout-center_statement .body { font-size: calc(var(--kb) * 40px); margin-top: calc(var(--k) * 44px); max-width: 820px; }
+{% endblock %}
+{% block inner_class %}v-center {{ 'align-center' if align == 'center' else 'align-left' }}{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker {{ 'tag' if is_first else '' }}">{{ s.kicker }}</div>{% endif %}
+  <h1 class="h">{{ s.heading }}</h1>
+  {% if deco.underline %}<div class="rule"></div>{% endif %}
+  {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}
+  {% if s.bullets %}<div class="body">{% for b in s.bullets %}<p>{{ b }}</p>{% endfor %}</div>{% endif %}
+{% endblock %}
