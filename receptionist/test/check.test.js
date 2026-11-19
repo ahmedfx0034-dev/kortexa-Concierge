@@ -1,0 +1,131 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import http from "node:http";
+import fs from "node:fs";
+import { Chats } from "../src/chats.js";
+import { createApp } from "../src/server.js";
+import { runChecks, subscribeApp } from "../src/check.js";
+
+const agency = JSON.parse(fs.readFileSync(new URL("../config/agency.json", import.meta.url)));
+const quiet = { error() {}, warn() {}, info() {} };
+const wa = { token: "TOK", phoneNumberId: "555", apiVersion: "v23.0", dryRun: false, sendText: async () => ({ id: "x" }), markReadTyping: async () => {} };
+const llm = { chat: async () => "OK" };
+const reply = (body, ok = true, status = 200) => ({ ok, status, json: async () => body });
+
+function fakeFetch({ phone, subs, app } = {}) {
+  const calls = [];
+  const fn = async (url, opts = {}) => {
+    calls.push({ url, ...opts });
+    if (url.includes("/app?fields=id,name")) return app ? app() : reply({ id: "1", name: "Concierge" });
+    if (url.includes("/subscribed_apps")) return subs ? subs(opts) : reply({ data: [{ whatsapp_business_api_data: { name: "Concierge", id: "1" } }] });
+    return phone ? phone() : reply({ display_phone_number: "+233 24 123 4567", verified_name: "Acme" });
+  };
+  fn.calls = calls;
+  return fn;
+}
+const find = (results, part) => results.find((r) => r.name.includes(part));
+const base = { llm, wa, appSecret: "s", verifyToken: "v", adminPassword: "pw", wabaId: "waba1", version: "t" };
+
+test("all good: nothing is failing and the token detail shows the phone number", async () => {
+  const results = await runChecks({ ...base, fetchImpl: fakeFetch() });
+  assert.ok(results.every((r) => r.ok !== false), JSON.stringify(results));
+  assert.match(find(results, "token").detail, /\+233 24 123 4567/);
+});
+
+test("expired token shows Meta's message", async () => {
+  const fetchImpl = fakeFetch({ phone: () => reply({ error: { message: "Session has expired" } }, false, 401) });
+  const t = find(await runChecks({ ...base, fetchImpl }), "token");
+  assert.equal(t.ok, false);
+  assert.match(t.detail, /Session has expired/);
+});
+
+test("no subscribed apps offers the connect action; missing WABA id is 'not checked'", async () => {
+  const empty = fakeFetch({ subs: () => reply({ data: [] }) });
+  const c = find(await runChecks({ ...base, fetchImpl: empty }), "connected");
+  assert.equal(c.ok, false);
+  assert.equal(c.action, "subscribe");
+  const n = find(await runChecks({ ...base, wabaId: "", fetchImpl: fakeFetch() }), "connected");
+  assert.equal(n.ok, null);
+});
+
+const subsOf = (...apps) => () => reply({ data: apps.map(({ id, name }) => ({ whatsapp_business_api_data: { id, name } })) });
+
+test("connected to a different app (real-world WA DevX case) is not ok and offers subscribe", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ id: "1827405528502422", name: "Ivory Crest Demo Receptionist." }),
+    subs: subsOf({ id: "999", name: "WA DevX Webhook Events 1P App" }),
+  });
+  const c = find(await runChecks({ ...base, fetchImpl }), "connected");
+  assert.equal(c.ok, false);
+  assert.equal(c.action, "subscribe");
+  assert.match(c.detail, /WA DevX Webhook Events 1P App/);
+});
+
+test("if /app fails, the appId option identifies our app", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ error: { message: "nope" } }, false, 400),
+    subs: subsOf({ id: "999", name: "Other" }, { id: "1827405528502422", name: "Ours" }),
+  });
+  const c = find(await runChecks({ ...base, appId: "1827405528502422", fetchImpl }), "connected");
+  assert.equal(c.ok, true);
+});
+
+test("if /app fails and no appId is given, it cannot be confirmed: not ok, subscribe", async () => {
+  const fetchImpl = fakeFetch({
+    app: () => reply({ error: { message: "nope" } }, false, 400),
+    subs: subsOf({ id: "999", name: "Other" }),
+  });
+  const c = find(await runChecks({ ...base, fetchImpl }), "connected");
+  assert.equal(c.ok, false);
+  assert.equal(c.action, "subscribe");
+});
+
+test("missing AI is reported", async () => {
+  const a = find(await runChecks({ ...base, llm: null, fetchImpl: fakeFetch() }), "AI");
+  assert.equal(a.ok, false);
+});
+
+test("subscribeApp POSTs to the right URL with the Bearer token", async () => {
+  const f = fakeFetch();
+  await subscribeApp({ wa, wabaId: "waba1", fetchImpl: f });
+  assert.equal(f.calls[0].method, "POST");
+  assert.equal(f.calls[0].url, "https://graph.facebook.com/v23.0/waba1/subscribed_apps");
+  assert.equal(f.calls[0].headers.Authorization, "Bearer TOK");
+});
+
+test("/check needs the admin login, records bad signatures, and can connect WhatsApp", async () => {
+  const fetchImpl = fakeFetch();
+  const app = createApp({ agency, llm, chats: new Chats(""), wa, log: quiet, appSecret: "secret", verifyToken: "v", adminPassword: "pw", wabaId: "waba1", fetchImpl });
+  const server = http.createServer(app).listen(0);
+  const url = `http://127.0.0.1:${server.address().port}`;
+  const auth = { Authorization: "Basic " + Buffer.from("admin:pw").toString("base64") };
+  const text = async (res) => (await res.text()).replaceAll("&#39;", "'");
+  try {
+    assert.equal((await fetch(url + "/check")).status, 401);
+    assert.equal((await fetch(url + "/check", { headers: auth })).status, 200);
+
+    await fetch(url + "/webhook", { method: "POST", body: "{}", headers: { "x-hub-signature-256": "sha256=bad" } });
+    assert.match(await text(await fetch(url + "/check", { headers: auth })), /signature didn't match/);
+
+    const before = fetchImpl.calls.length;
+    const res = await fetch(url + "/check/subscribe", { method: "POST", headers: auth });
+    assert.match(await text(res), /Done: the WhatsApp account is now connected/);
+    assert.ok(fetchImpl.calls.slice(before).some((c) => c.method === "POST" && c.url.endsWith("/waba1/subscribed_apps")));
+  } finally { server.close(); }
+});
+
+test("health status shows Meta's reason when sending is blocked", async () => {
+  const { runChecks } = await import("../src/check.js");
+  const fetchImpl = async (url) => {
+    const json = url.includes("fields=name,account_review_status,health_status")
+      ? { account_review_status: "APPROVED", health_status: { can_send_message: "BLOCKED", entities: [{ entity_type: "WABA", errors: [{ error_code: 131031, error_description: "Account locked", possible_solution: "Request a review" }] }] } }
+      : url.includes("subscribed_apps") ? { data: [{ whatsapp_business_api_data: { id: "1", name: "Mine" } }] }
+      : url.includes("/app?") ? { id: "1", name: "Mine" }
+      : { display_phone_number: "+1 555", verified_name: "Test" };
+    return { ok: true, status: 200, json: async () => json };
+  };
+  const out = await runChecks({ llm: { chat: async () => "OK" }, wa: { token: "t", phoneNumberId: "p", apiVersion: "v23.0", dryRun: false }, wabaId: "w", fetchImpl });
+  const h = out.find((r) => r.name === "Meta allows sending messages");
+  assert.equal(h.ok, false);
+  assert.match(h.detail, /BLOCKED.*Account locked \(code 131031\)\. Meta suggests: Request a review/);
+});
