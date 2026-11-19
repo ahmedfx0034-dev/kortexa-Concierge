@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ d.idea.title }} - Carousel Studio{% endblock %}
+{% block head %}
+{% if busy %}<meta http-equiv="refresh" content="6">{% endif %}
+<style>
+.layout{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:24px;align-items:start}
+.phone{width:100%;max-width:420px;margin:0 auto}
+.strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px;border:1px solid var(--line);background:#000;-webkit-overflow-scrolling:touch}
+.strip img{flex:0 0 100%;width:100%;aspect-ratio:4/5;object-fit:contain;scroll-snap-align:center;display:block}
+.dots{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+.panel{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row form{margin:0}
+.sub{color:var(--muted);font-size:.85rem}
+.txt{font-size:.85rem;color:var(--muted);margin:0}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+</style>
+{% endblock %}
+{% block body %}
+<p class="sub"><a href="/" style="color:inherit">&larr; All drafts</a></p>
+<h1>{{ d.idea.title }} <span class="badge {{ d.status.value }}">{{ d.status.value }}</span></h1>
+<div class="layout">
+  <div class="phone">
+    <div class="strip" id="strip">
+      {% for s in d.slides %}{% set u = slide_url(d, s) %}{% if u %}<img src="{{ u }}" alt="Slide {{ s.index }}">{% endif %}{% endfor %}
+    </div>
+    <div class="dots" id="dots">Swipe &middot; {{ d.slides|length }} slides</div>
+  </div>
+  <div class="panel">
+    {% if busy %}<div class="notice">&#8987; {{ busy }}&hellip; this page refreshes automatically.</div>{% endif %}
+    {% if job_error %}<div class="notice err">{{ job_error }}</div>{% endif %}
+    {% if d.status.value == 'published' %}
+      <div class="notice ok">Published{% if d.ig_permalink %}: <a href="{{ d.ig_permalink }}" target="_blank" rel="noopener">{{ d.ig_permalink }}</a>{% endif %}</div>
+    {% endif %}
+    {% if d.error %}<div class="notice err">{{ d.error }}</div>{% endif %}
+    <p class="sub">Style: {{ d.style }} &middot; Angle: {{ d.idea.angle }}</p>
+
+    <form class="card" method="post" action="/drafts/{{ d.id }}/caption">
+      <label for="caption">Caption and hashtags (trailing #tags are saved as hashtags)</label>
+      <textarea id="caption" name="caption">{{ full_text }}</textarea>
+      <div class="row" style="margin-top:10px"><button type="submit">Save caption</button></div>
+    </form>
+
+    {% if d.status.value != 'published' %}
+    <div class="row">
+      {% if d.status.value != 'approved' %}<form method="post" action="/drafts/{{ d.id }}/approve"><button class="good" type="submit">{% if d.status.value in ('failed','rejected') %}Re-approve{% else %}Approve{% endif %}</button></form>{% endif %}
+      {% if d.status.value != 'rejected' %}<form method="post" action="/drafts/{{ d.id }}/reject"><button class="danger" type="submit">Reject</button></form>{% endif %}
+      {% if d.status.value == 'approved' %}
+      <form method="post" action="/drafts/{{ d.id }}/publish" onsubmit="return confirm('Publish this carousel to Instagram now? This cannot be undone.')">
+        <button class="primary" type="submit">Publish to Instagram</button></form>
+      {% endif %}
+    </div>
+    <form class="card" method="post" action="/drafts/{{ d.id }}/revise">
+      <label for="feedback">Revise with feedback</label>
+      <textarea id="feedback" name="feedback" required placeholder="e.g. punchier hook, fewer words on slide 4"></textarea>
+      <div class="row" style="margin-top:10px"><button type="submit">Revise</button></div>
+    </form>
+    {% endif %}
+  </div>
+</div>
+<script>
+(function(){var s=document.getElementById('strip'),d=document.getElementById('dots');if(!s)return;
+var n=s.children.length;s.addEventListener('scroll',function(){var i=Math.round(s.scrollLeft/s.clientWidth)+1;d.textContent=i+' / '+n});})();
+</script>
+{% endblock %}

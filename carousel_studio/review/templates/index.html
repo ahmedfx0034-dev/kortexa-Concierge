@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block head %}
+{% if jobs %}<meta http-equiv="refresh" content="6">{% endif %}
+<style>
+.gen{display:grid;grid-template-columns:2fr 1fr 3fr auto;gap:12px;align-items:end}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.thumb{aspect-ratio:4/5;background:var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.meta{padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.title{font-weight:600;font-size:.92rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sub{font-size:.78rem;color:var(--muted)}
+@media(max-width:700px){.gen{grid-template-columns:1fr 1fr}.gen .wide{grid-column:1/-1}.gen button{grid-column:1/-1}
+.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+{% endblock %}
+{% block body %}
+<h1>Drafts</h1>
+{% for j in jobs %}<div class="notice">&#8987; {{ j }}&hellip; this page refreshes automatically.</div>{% endfor %}
+{% for e in errors %}<div class="notice err">{{ e }}</div>{% endfor %}
+<form class="card gen" method="post" action="/generate">
+  <div class="wide"><label for="style">Style</label>
+    <select id="style" name="style" required>
+      {% for s in styles %}<option>{{ s }}</option>{% else %}<option value="" disabled selected>No styles yet - run studio analyze</option>{% endfor %}
+    </select></div>
+  <div><label for="count">How many</label><input id="count" name="count" type="number" min="1" max="10" value="3"></div>
+  <div class="wide"><label for="theme">Theme (optional)</label><input id="theme" name="theme" placeholder="e.g. productivity myths"></div>
+  <button class="primary" type="submit"{% if not styles %} disabled{% endif %}>Generate new drafts</button>
+</form>
+{% if not total %}<p class="sub" style="margin-top:20px">No drafts yet.</p>{% endif %}
+{% for status, items in groups %}
+<h2>{{ status }} ({{ items|length }})</h2>
+<div class="grid">
+{% for d in items %}
+  <a class="item" href="/drafts/{{ d.id }}">
+    <div class="thumb">{% set u = slide_url(d, d.slides[0]) if d.slides else None %}{% if u %}<img src="{{ u }}" alt="" loading="lazy">{% else %}not rendered{% endif %}</div>
+    <div class="meta"><span class="badge {{ status }}" style="align-self:flex-start">{{ status }}</span>
+      <span class="title">{{ d.idea.title }}</span>
+      <span class="sub">{{ d.style }} &middot; {{ d.slides|length }} slides</span></div>
+  </a>
+{% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

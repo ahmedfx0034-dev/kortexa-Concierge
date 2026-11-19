@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Carousel Studio{% endblock %}</title>
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--text:#16161a;--muted:#6b6b76;--line:#e4e4e0;--accent:#5b3df5;
+--draft:#8a6d00;--draft-bg:#fff4cc;--approved:#0a6b3a;--approved-bg:#d9f5e5;--rejected:#777;--rejected-bg:#eee;
+--published:#1b4fd8;--published-bg:#dde7ff;--failed:#b3261e;--failed-bg:#fde2e0}
+@media(prefers-color-scheme:dark){:root{--bg:#121214;--card:#1c1c20;--text:#f0f0f3;--muted:#9a9aa6;--line:#2c2c33;--accent:#8f7bff;
+--draft:#f2d36b;--draft-bg:#3a3110;--approved:#6fe0a3;--approved-bg:#10301f;--rejected:#aaa;--rejected-bg:#2a2a2e;
+--published:#8fb0ff;--published-bg:#182545;--failed:#ff9a92;--failed-bg:#3b1715}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:14px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:5}
+header a{color:var(--text);text-decoration:none;font-weight:700;letter-spacing:-.01em}
+main{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:.2rem 0 1rem}h2{font-size:1rem;text-transform:capitalize;margin:1.6rem 0 .6rem;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.75rem;font-weight:600;text-transform:capitalize}
+.badge.draft{color:var(--draft);background:var(--draft-bg)}.badge.approved{color:var(--approved);background:var(--approved-bg)}
+.badge.rejected{color:var(--rejected);background:var(--rejected-bg)}.badge.published{color:var(--published);background:var(--published-bg)}
+.badge.failed{color:var(--failed);background:var(--failed-bg)}
+button,.btn{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--text);
+padding:10px 16px;border-radius:10px;cursor:pointer;min-height:44px}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.good{background:var(--approved);color:var(--approved-bg);border-color:var(--approved)}
+button.danger{color:var(--failed)}
+input,select,textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
+textarea{min-height:140px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:0 0 4px}
+.notice{padding:12px 14px;border-radius:10px;margin:0 0 12px;background:var(--draft-bg);color:var(--draft)}
+.notice.err{background:var(--failed-bg);color:var(--failed)}.notice.ok{background:var(--approved-bg);color:var(--approved)}
+.notice a{color:inherit;font-weight:700}
+</style>
+{% block head %}{% endblock %}
+</head>
+<body>
+<header><a href="/">&#9638; Carousel Studio</a></header>
+<main>{% block body %}{% endblock %}</main>
+</body>
+</html>
