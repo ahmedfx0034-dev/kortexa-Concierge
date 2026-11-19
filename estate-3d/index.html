@@ -83,6 +83,29 @@
   .filters button.on i { color: var(--gold-2); }
   .empty { position: fixed; left: 50%; top: 45%; transform: translate(-50%, -50%); background: var(--card); padding: 14px 18px; border-radius: 14px; box-shadow: var(--shadow); z-index: 9; font-size: 14px; }
 
+  /* ---------- cinematic photo walkthrough ---------- */
+  .ptour { position: fixed; inset: 0; z-index: 8; background: #05080d; display: none; overflow: hidden; }
+  .ptour.show { display: block; }
+  .pslide { position: absolute; inset: -2%; background: center / cover no-repeat; opacity: 0; transition: opacity 1.4s ease; will-change: transform, opacity; }
+  .pslide.kb { animation: kb 7.5s ease-out forwards; }
+  @keyframes kb { from { transform: scale(1); } to { transform: scale(var(--kb, 1.12)); } }
+  .pshade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 62%, rgba(0,0,0,.7) 100%); }
+  .pinfo { position: absolute; left: 22px; bottom: calc(118px + var(--safe-b)); color: #fff; max-width: min(640px, calc(100vw - 44px)); text-shadow: 0 2px 16px rgba(0,0,0,.5); }
+  .pinfo .pt { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3.2vw, 38px); font-weight: 700; line-height: 1.15; }
+  .pinfo .psub { font-size: 14px; opacity: .9; margin-top: 6px; }
+  .pnav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.18); backdrop-filter: blur(8px); color: #fff; font-size: 28px; line-height: 1; border: 1px solid rgba(255,255,255,.35); }
+  .pnav:hover { background: rgba(255,255,255,.3); }
+  .pnav.prev { left: 18px; } .pnav.next { right: 18px; }
+  .pbar { position: absolute; right: 22px; bottom: calc(126px + var(--safe-b)); display: flex; gap: 10px; align-items: center; color: #fff; font-size: 13px; font-weight: 600; }
+  .pbar button { background: rgba(255,255,255,.18); color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; }
+  .pthumbs { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(14px + var(--safe-b)); display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .pthumbs::-webkit-scrollbar { display: none; }
+  .pthumbs button { flex: 0 0 auto; width: 92px; height: 64px; border-radius: 10px; overflow: hidden; padding: 0; border: 2px solid transparent; opacity: .65; background: #222; }
+  .pthumbs button.on { border-color: var(--gold); opacity: 1; }
+  .pthumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pin .pimg { display: block; width: 120px; height: 76px; object-fit: cover; border-radius: 8px; margin: -2px -4px 5px; background: #dde3ea; }
+  @media (max-width: 760px) { .pnav { width: 40px; height: 40px; font-size: 24px; } .pinfo { bottom: calc(132px + var(--safe-b)); } .pbar { top: 64px; bottom: auto; right: 14px; } .pthumbs button { width: 74px; height: 52px; } .pin .pimg { width: 96px; height: 60px; } }
+
   /* ---------- gallery ---------- */
   .gallery { position: relative; margin: -18px -18px 14px; aspect-ratio: 4 / 3; background: #dde3ea; overflow: hidden; }
   .gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -184,8 +207,9 @@
   <button class="pill dark" id="backBtn" style="display:none">← All homes</button>
   <div class="spacer"></div>
   <div class="seg" id="modeSeg" style="display:none">
-    <button data-mode="dollhouse" class="on">Floor plan</button>
-    <button data-mode="walk">Walk inside</button>
+    <button data-mode="photos">Photos</button>
+    <button data-mode="dollhouse" class="on">3D<span class="hide-sm"> plan</span></button>
+    <button data-mode="walk">Walk<span class="hide-sm"> inside</span></button>
   </div>
   <button class="pill hide-sm" id="infoBtn" style="display:none">Details</button>
 </div>
@@ -201,6 +225,14 @@
   <div class="in" id="panelBody"></div>
 </aside>
 
+<div class="ptour" id="photoTour">
+  <div class="pslide" id="ps0"></div><div class="pslide" id="ps1"></div>
+  <div class="pshade"></div>
+  <div class="pinfo"><div class="pt" id="pTitle"></div><div class="psub" id="pSub"></div></div>
+  <button class="pnav prev" id="pPrev" aria-label="Previous photo">‹</button><button class="pnav next" id="pNext" aria-label="Next photo">›</button>
+  <div class="pbar"><span id="pCount"></span><button id="pPlay">❚❚ Pause</button></div>
+  <div class="pthumbs" id="pThumbs"></div>
+</div>
 <div class="tourbar" id="tourbar">
   <div class="now" id="nowRoom"></div>
   <div class="rooms" id="roomChips"></div>

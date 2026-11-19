@@ -759,7 +759,8 @@ function buildStrip(list) {
 function buildPins() {
   for (const [id, h] of estate.houses) {
     const L = h.L;
-    const el = makeLabel(`<div class="bubble"><b>${esc(L.price)}</b><span>${L.beds} bd · ${esc(L.shortArea)}</span></div><div class="stem"></div>`, 'pin', () => selectListing(id));
+    const photo = L.images[0] ? `<img class="pimg" alt="" data-src="${esc(L.images[0])}">` : '';
+    const el = makeLabel(`<div class="bubble">${photo}<b>${esc(L.price)}</b><span>${L.beds} bd · ${esc(L.shortArea)}</span></div><div class="stem"></div>`, 'pin', () => selectListing(id));
     const height = L.style === 'apartment' ? 17.5 : L.style === 'townhouse' ? 10 : 8;
     estate.pins.push({ el, pos: new THREE.Vector3(h.pos.x, height, h.pos.z), id, maxDist: 150 });
   }
@@ -806,10 +807,10 @@ function panelHTML(L) {
     <div class="facts"><div><b>${L.beds}</b><span>Bedrooms</span></div><div><b>${L.baths}</b><span>Bathrooms</span></div><div><b>${esc(L.size)}</b><span>Size</span></div></div>
     ${desc}
     ${L.features.length ? `<div class="chips">${L.features.map((f) => `<span>${esc(f)}</span>`).join('')}</div>` : ''}
-    ${view === 'estate' ? `<button class="btn primary" id="enterBtn">Step inside in 3D</button>` : ''}
+    ${view === 'estate' ? `<button class="btn primary" id="enterBtn">${L.images.length ? 'Walk through this home' : 'Step inside in 3D'}</button>` : ''}
     <button class="btn gold" id="bookBtn">Book a viewing</button>${wa}
     ${L.video ? `<a class="btn ghost" style="text-decoration:none" target="_blank" rel="noopener" href="${esc(L.video)}">▶ Watch the video tour</a>` : ''}
-    <div class="demo-note">3D layout is an illustration based on the listing's room count. Photos and details from MED Property.</div>`;
+    <div class="demo-note">Photos and details from MED Property. The 3D plan is an illustration based on the room count.</div>`;
 }
 function openPanel(L) {
   $('panelBody').innerHTML = panelHTML(L);
@@ -868,6 +869,7 @@ $('bookForm').onsubmit = (e) => {
 // ---- view switching ----
 function showEstate() {
   view = 'estate';
+  stopPhotoTour();
   clearLabels(tour.labels);
   if (tour.scene) { tour.scene.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); } }); tour.scene = null; }
   setWalk(false);
@@ -900,7 +902,8 @@ function enterTour(id) {
     const b = document.createElement('button'); b.textContent = r.name; b.onclick = () => goToRoom(r); b.dataset.room = r.name; chips.appendChild(b);
   }
   controls.autoRotate = false;
-  setMode('dollhouse', true);
+  $('modeSeg').querySelector('[data-mode="photos"]').style.display = L.images.length ? '' : 'none';
+  if (L.images.length) { setMode('dollhouse', true); setMode('photos'); } else setMode('dollhouse', true);
   history.replaceState(null, '', `#tour=${id}`);
 }
 function markChip(name) {
@@ -929,6 +932,15 @@ function goToRoom(r) {
 function setMode(mode, initial = false) {
   tour.mode = mode;
   document.querySelectorAll('#modeSeg button').forEach((b) => b.classList.toggle('on', b.dataset.mode === mode));
+  if (mode === 'photos') {
+    setWalk(false); controls.enabled = false;
+    tour.labels.forEach((l) => (l.el.style.display = 'none'));
+    $('tourbar').classList.remove('show');
+    startPhotoTour(tour.listing);
+    return;
+  }
+  stopPhotoTour();
+  $('tourbar').classList.add('show');
   if (mode === 'dollhouse') {
     setWalk(false);
     tour.ceiling.forEach((c) => (c.visible = false));
@@ -958,6 +970,48 @@ document.querySelectorAll('#modeSeg button').forEach((b) => (b.onclick = () => s
 $('backBtn').onclick = () => showEstate();
 $('infoBtn').onclick = () => ($('panel').classList.contains('hidden') ? openPanel(tour.listing) : closePanel());
 $('brand').onclick = (e) => { e.preventDefault(); if (view === 'tour') showEstate(); else { closePanel(); deselect(); showEstate(); } };
+
+// ============================================================================
+// Cinematic photo walkthrough (the real listing photos, full screen)
+// ============================================================================
+const pt = { L: null, i: 0, front: 0, timer: null, playing: true, DUR: 6000 };
+const KB = [['20% 30%', 1.14], ['80% 30%', 1.14], ['50% 80%', 1.12], ['30% 70%', 1.16], ['70% 60%', 1.12], ['50% 50%', 1.1]];
+function startPhotoTour(L) {
+  pt.L = L; pt.i = -1; pt.playing = true;
+  $('photoTour').classList.add('show');
+  $('pThumbs').innerHTML = L.images.map((u, k) => `<button data-k="${k}" aria-label="Photo ${k + 1}"><img loading="lazy" alt="" src="${esc(u)}"></button>`).join('');
+  $('pThumbs').querySelectorAll('button').forEach((b) => (b.onclick = () => photoGo(+b.dataset.k, true)));
+  $('pTitle').textContent = L.title; $('pSub').textContent = `${L.area} · ${L.price}`;
+  photoGo(0);
+  hint(isTouch ? 'Swipe or tap the arrows · Switch to “3D plan” for the layout' : 'Use ← → or the arrows · Switch to “3D plan” for the layout', 5000);
+}
+function stopPhotoTour() { clearTimeout(pt.timer); $('photoTour').classList.remove('show'); }
+function photoGo(i, user = false) {
+  const n = pt.L.images.length; if (!n) return;
+  i = (i + n) % n; if (i === pt.i) return; pt.i = i;
+  const back = $('ps' + (1 - pt.front)), front = $('ps' + pt.front);
+  const [origin, scale] = KB[i % KB.length];
+  back.style.backgroundImage = `url("${pt.L.images[i].replace(/"/g, '%22')}")`;
+  back.style.transformOrigin = origin; back.style.setProperty('--kb', scale);
+  back.classList.remove('kb'); void back.offsetWidth; back.classList.add('kb');
+  back.style.opacity = 1; front.style.opacity = 0;
+  pt.front = 1 - pt.front;
+  $('pCount').textContent = `${i + 1} / ${n}`;
+  $('pThumbs').querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
+  const cur = $('pThumbs').children[i]; cur && cur.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  new Image().src = pt.L.images[(i + 1) % n]; // preload next
+  if (user) setPlaying(false); else schedule();
+}
+function schedule() { clearTimeout(pt.timer); if (pt.playing) pt.timer = setTimeout(() => photoGo(pt.i + 1), pt.DUR); }
+function setPlaying(on) { pt.playing = on; $('pPlay').textContent = on ? '❚❚ Pause' : '▶ Play'; schedule(); }
+$('pPrev').onclick = () => photoGo(pt.i - 1, true);
+$('pNext').onclick = () => photoGo(pt.i + 1, true);
+$('pPlay').onclick = () => setPlaying(!pt.playing);
+addEventListener('keydown', (e) => { if (view !== 'tour' || tour.mode !== 'photos') return; if (e.key === 'ArrowRight') photoGo(pt.i + 1, true); if (e.key === 'ArrowLeft') photoGo(pt.i - 1, true); if (e.key === ' ') setPlaying(!pt.playing); });
+(() => { let sx = null; const el = $('photoTour');
+  el.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  el.addEventListener('touchend', (e) => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 40) photoGo(pt.i + (dx < 0 ? 1 : -1), true); });
+})();
 
 // ============================================================================
 // Walk mode (first person)
@@ -1112,6 +1166,7 @@ function placeLabels(list) {
     v.copy(l.pos).project(camera);
     const vis = !far && v.z < 1 && v.x > -1.2 && v.x < 1.2 && v.y > -1.2 && v.y < 1.2;
     l.el.style.visibility = vis ? 'visible' : 'hidden';
+    if (vis && !l.loaded) { l.loaded = true; const im = l.el.querySelector('img[data-src]'); if (im) im.src = im.dataset.src; }
     if (vis) l.el.style.transform = `translate(${(v.x * 0.5 + 0.5) * w}px, ${(-v.y * 0.5 + 0.5) * h}px) translate(-50%, ${l.el.classList.contains('pin') ? '-100%' : '-50%'})`;
   }
 }
