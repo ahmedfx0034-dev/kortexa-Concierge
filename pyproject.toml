@@ -1,0 +1,32 @@
+[project]
+name = "carousel-studio"
+version = "0.1.0"
+description = "Learn the Instagram carousel styles you like, generate new carousels in them, and post after you approve."
+requires-python = ">=3.10"
+dependencies = [
+  "anthropic>=2.11",
+  "pydantic>=2.7",
+  "python-dotenv>=1.0",
+  "httpx>=0.27",
+  "jinja2>=3.1",
+  "pillow>=10",
+  "playwright>=1.45",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "python-multipart>=0.0.9",
+  "typer>=0.12",
+  "boto3>=1.34",
+]
+
+[project.scripts]
+studio = "carousel_studio.cli:app"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["carousel_studio*"]
+
+[tool.setuptools.package-data]
+carousel_studio = ["render/templates/*", "review/templates/*"]
