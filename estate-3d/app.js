@@ -736,7 +736,7 @@ function stepCamAnim(now) {
 // ============================================================================
 // App state & UI
 // ============================================================================
-let view = 'estate';
+let view = 'showcase';
 let hintTimer;
 function hint(text, ms = 4500) {
   const h = $('hint'); h.textContent = text; h.style.opacity = 1;
@@ -752,7 +752,7 @@ function buildStrip(list) {
     b.className = 'card'; b.dataset.id = L.id;
     const img = L.images[0] ? `<img class="thumb" loading="lazy" alt="" src="${esc(L.images[0])}">` : '';
     b.innerHTML = `${img}<div class="cbody"><div class="st">${L.status}</div><div class="t">${esc(L.title)}</div><div class="a">${esc(L.area)}</div><div class="p">${esc(L.price)}<small>${L.beds} bd · ${L.baths} ba</small></div></div>`;
-    b.onclick = () => selectListing(L.id);
+    b.onclick = () => (view === 'showcase' ? showcaseTo(L.id) : selectListing(L.id));
     strip.appendChild(b);
   }
 }
@@ -787,7 +787,7 @@ function applyFilter() {
   closePanel(); deselect();
   buildEstate(list); buildStrip(list); buildFilters();
   $('emptyMsg').style.display = list.length ? 'none' : '';
-  overviewEstate();
+  if (view === 'showcase') { estate.pins.forEach((p) => (p.el.style.display = 'none')); startShowcase(); } else overviewEstate();
 }
 function overviewEstate() {
   const e = estate.extent || 60, mobile = innerWidth < 761;
@@ -807,7 +807,7 @@ function panelHTML(L) {
     <div class="facts"><div><b>${L.beds}</b><span>Bedrooms</span></div><div><b>${L.baths}</b><span>Bathrooms</span></div><div><b>${esc(L.size)}</b><span>Size</span></div></div>
     ${desc}
     ${L.features.length ? `<div class="chips">${L.features.map((f) => `<span>${esc(f)}</span>`).join('')}</div>` : ''}
-    ${view === 'estate' ? `<button class="btn primary" id="enterBtn">${L.images.length ? 'Walk through this home' : 'Step inside in 3D'}</button>` : ''}
+    ${view !== 'tour' ? `<button class="btn primary" id="enterBtn">${L.images.length ? 'Walk through this home' : 'Step inside in 3D'}</button>` : ''}
     <button class="btn gold" id="bookBtn">Book a viewing</button>${wa}
     ${L.video ? `<a class="btn ghost" style="text-decoration:none" target="_blank" rel="noopener" href="${esc(L.video)}">▶ Watch the video tour</a>` : ''}
     <div class="demo-note">Photos and details from MED Property. The 3D plan is an illustration based on the room count.</div>`;
@@ -815,7 +815,7 @@ function panelHTML(L) {
 function openPanel(L) {
   $('panelBody').innerHTML = panelHTML(L);
   $('panel').classList.remove('hidden');
-  const eb = $('enterBtn'); if (eb) eb.onclick = () => enterTour(L.id);
+  const eb = $('enterBtn'); if (eb) eb.onclick = () => { if (view !== 'tour') homeView = view; enterTour(L.id); };
   $('bookBtn').onclick = () => openBooking(L);
   let gi = 0; const show = (d) => { gi = (gi + d + L.images.length) % L.images.length; $('galMain').src = L.images[gi]; $('galCount').textContent = `${gi + 1} / ${L.images.length}`; };
   if ($('galPrev')) { $('galPrev').onclick = () => show(-1); $('galNext').onclick = () => show(1); }
@@ -824,7 +824,7 @@ function openPanel(L) {
 }
 function closePanel() {
   $('panel').classList.add('hidden');
-  if (view === 'estate') $('strip').style.display = '';
+  if (view !== 'tour') $('strip').style.display = '';
 }
 $('panelClose').onclick = () => { closePanel(); if (view === 'estate') deselect(); };
 
@@ -867,9 +867,29 @@ $('bookForm').onsubmit = (e) => {
 };
 
 // ---- view switching ----
+let homeView = 'showcase';
+function leaveTour() {
+  clearLabels(tour.labels);
+  if (tour.scene) { tour.scene.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); } }); tour.scene = null; }
+  setWalk(false);
+  $('backBtn').style.display = 'none'; $('modeSeg').style.display = 'none'; $('infoBtn').style.display = 'none';
+  $('tourbar').classList.remove('show'); $('strip').style.display = ''; $('filters').style.display = '';
+  document.body.classList.remove('touring');
+  closePanel();
+}
+function showShowcase() {
+  view = 'showcase'; homeView = 'showcase';
+  leaveTour();
+  estate.pins.forEach((p) => (p.el.style.display = 'none'));
+  controls.autoRotate = false;
+  $('viewToggle').innerHTML = '🗺 <span class="hide-sm">3D </span>Map'; $('viewToggle').style.display = '';
+  startShowcase();
+  history.replaceState(null, '', location.pathname);
+}
 function showEstate() {
-  view = 'estate';
+  view = 'estate'; homeView = 'estate';
   stopPhotoTour();
+  $('viewToggle').innerHTML = '▶ Photos'; $('viewToggle').style.display = '';
   clearLabels(tour.labels);
   if (tour.scene) { tour.scene.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); } }); tour.scene = null; }
   setWalk(false);
@@ -889,6 +909,7 @@ function enterTour(id) {
   const L = LISTINGS.find((l) => l.id === id); if (!L) return;
   view = 'tour';
   estate.selected = id;
+  stopPhotoTour(); $('viewToggle').style.display = 'none';
   document.body.classList.add('touring');
   closePanel();
   estate.pins.forEach((p) => (p.el.style.display = 'none'));
@@ -967,47 +988,67 @@ function setMode(mode, initial = false) {
   }
 }
 document.querySelectorAll('#modeSeg button').forEach((b) => (b.onclick = () => setMode(b.dataset.mode)));
-$('backBtn').onclick = () => showEstate();
+$('backBtn').onclick = () => (homeView === 'showcase' ? showShowcase() : showEstate());
+$('viewToggle').onclick = () => (view === 'showcase' ? showEstate() : showShowcase());
 $('infoBtn').onclick = () => ($('panel').classList.contains('hidden') ? openPanel(tour.listing) : closePanel());
-$('brand').onclick = (e) => { e.preventDefault(); if (view === 'tour') showEstate(); else { closePanel(); deselect(); showEstate(); } };
+$('brand').onclick = (e) => { e.preventDefault(); closePanel(); if (view === 'estate') deselect(); showShowcase(); };
 
 // ============================================================================
 // Cinematic photo walkthrough (the real listing photos, full screen)
 // ============================================================================
-const pt = { L: null, i: 0, front: 0, timer: null, playing: true, DUR: 6000 };
+const pt = { slides: [], kind: 'tour', i: 0, front: 0, timer: null, playing: true, DUR: 6000 };
 const KB = [['20% 30%', 1.14], ['80% 30%', 1.14], ['50% 80%', 1.12], ['30% 70%', 1.16], ['70% 60%', 1.12], ['50% 50%', 1.1]];
 function startPhotoTour(L) {
-  pt.L = L; pt.i = -1; pt.playing = true;
-  $('photoTour').classList.add('show');
+  pt.kind = 'tour'; pt.slides = L.images.map((u) => ({ u, L })); pt.i = -1; pt.playing = true;
+  $('photoTour').classList.add('show'); $('photoTour').classList.remove('showcase');
   $('pThumbs').innerHTML = L.images.map((u, k) => `<button data-k="${k}" aria-label="Photo ${k + 1}"><img loading="lazy" alt="" src="${esc(u)}"></button>`).join('');
   $('pThumbs').querySelectorAll('button').forEach((b) => (b.onclick = () => photoGo(+b.dataset.k, true)));
-  $('pTitle').textContent = L.title; $('pSub').textContent = `${L.area} · ${L.price}`;
+  $('pAct').innerHTML = '';
   photoGo(0);
-  hint(isTouch ? 'Swipe or tap the arrows · Switch to “3D plan” for the layout' : 'Use ← → or the arrows · Switch to “3D plan” for the layout', 5000);
+  hint(isTouch ? 'Swipe or tap the arrows to see every room' : 'Use ← → or the arrows to see every room', 5000);
+}
+// Home screen: a cinematic reel of every listing's real cover photo
+function startShowcase() {
+  const list = filtered().filter((L) => L.images.length);
+  pt.kind = 'showcase'; pt.slides = list.map((L) => ({ u: L.images[0], L })); pt.i = -1; pt.playing = true;
+  $('photoTour').classList.add('show', 'showcase');
+  $('pThumbs').innerHTML = '';
+  if (pt.slides.length) photoGo(0); else { $('pTitle').textContent = ''; $('pSub').textContent = ''; $('pAct').innerHTML = ''; }
 }
 function stopPhotoTour() { clearTimeout(pt.timer); $('photoTour').classList.remove('show'); }
 function photoGo(i, user = false) {
-  const n = pt.L.images.length; if (!n) return;
+  const n = pt.slides.length; if (!n) return;
   i = (i + n) % n; if (i === pt.i) return; pt.i = i;
+  const { u, L } = pt.slides[i];
   const back = $('ps' + (1 - pt.front)), front = $('ps' + pt.front);
   const [origin, scale] = KB[i % KB.length];
-  back.style.backgroundImage = `url("${pt.L.images[i].replace(/"/g, '%22')}")`;
+  back.style.backgroundImage = `url("${u.replace(/"/g, '%22')}")`;
   back.style.transformOrigin = origin; back.style.setProperty('--kb', scale);
   back.classList.remove('kb'); void back.offsetWidth; back.classList.add('kb');
   back.style.opacity = 1; front.style.opacity = 0;
   pt.front = 1 - pt.front;
   $('pCount').textContent = `${i + 1} / ${n}`;
-  $('pThumbs').querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
-  const cur = $('pThumbs').children[i]; cur && cur.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  new Image().src = pt.L.images[(i + 1) % n]; // preload next
+  $('pTitle').textContent = L.title; $('pSub').textContent = `${L.status} · ${L.area} · ${L.price}`;
+  if (pt.kind === 'tour') {
+    $('pThumbs').querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
+    const cur = $('pThumbs').children[i]; cur && cur.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  } else {
+    $('pAct').innerHTML = `<button class="btn primary" id="pWalk">Walk through this home</button><button class="btn ghost" id="pDetails">Details & price</button>`;
+    $('pWalk').onclick = () => { homeView = 'showcase'; enterTour(L.id); };
+    $('pDetails').onclick = () => { setPlaying(false); openPanel(L); };
+    document.querySelectorAll('.card').forEach((c) => c.classList.toggle('sel', c.dataset.id === L.id));
+    const card = document.querySelector(`.card[data-id="${L.id}"]`); card && card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+  const nx = pt.slides[(i + 1) % n]; new Image().src = nx.u; // preload next
   if (user) setPlaying(false); else schedule();
 }
+function showcaseTo(id) { const k = pt.slides.findIndex((s) => s.L.id === id); if (k >= 0) photoGo(k, true); const L = LISTINGS.find((l) => l.id === id); if (L) openPanel(L); }
 function schedule() { clearTimeout(pt.timer); if (pt.playing) pt.timer = setTimeout(() => photoGo(pt.i + 1), pt.DUR); }
 function setPlaying(on) { pt.playing = on; $('pPlay').textContent = on ? '❚❚ Pause' : '▶ Play'; schedule(); }
 $('pPrev').onclick = () => photoGo(pt.i - 1, true);
 $('pNext').onclick = () => photoGo(pt.i + 1, true);
 $('pPlay').onclick = () => setPlaying(!pt.playing);
-addEventListener('keydown', (e) => { if (view !== 'tour' || tour.mode !== 'photos') return; if (e.key === 'ArrowRight') photoGo(pt.i + 1, true); if (e.key === 'ArrowLeft') photoGo(pt.i - 1, true); if (e.key === ' ') setPlaying(!pt.playing); });
+addEventListener('keydown', (e) => { if (!(view === 'showcase' || (view === 'tour' && tour.mode === 'photos'))) return; if (e.key === 'ArrowRight') photoGo(pt.i + 1, true); if (e.key === 'ArrowLeft') photoGo(pt.i - 1, true); if (e.key === ' ') setPlaying(!pt.playing); });
 (() => { let sx = null; const el = $('photoTour');
   el.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
   el.addEventListener('touchend', (e) => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 40) photoGo(pt.i + (dx < 0 ? 1 : -1), true); });
@@ -1178,7 +1219,8 @@ const clock = new THREE.Clock();
 function loop(now) {
   const dt = Math.min(0.05, clock.getDelta());
   stepCamAnim(now);
-  if (view === 'estate') {
+  if (view === 'showcase') { /* full-screen photos; 3D paused */ }
+  else if (view === 'estate') {
     if (estate.ring.visible) { const s = 1 + Math.sin(now / 350) * 0.025; estate.ring.scale.set(s, s, s); }
     controls.update();
     renderer.render(estate.scene, camera);
@@ -1215,8 +1257,9 @@ requestAnimationFrame(loop);
   buildEstate(filtered()); buildStrip(filtered());
   $('loader').classList.add('done');
   if (hash.startsWith('tour=') && estate.houses.has(target)) { estate.selected = target; enterTour(target); }
-  else if (estate.houses.has(target)) { view = 'estate'; selectListing(target); }
-  else showEstate();
+  else if (estate.houses.has(target)) { showEstate(); selectListing(target); }
+  else if (hash === 'map') showEstate();
+  else showShowcase();
 })();
 // expose for debugging
-window.__app = { applyFilter, filter, get listings() { return LISTINGS; }, enterTour, showEstate, setMode, selectListing, goToRoom, tour, estate, camera };
+window.__app = { showShowcase, showcaseTo, applyFilter, filter, get listings() { return LISTINGS; }, enterTour, showEstate, setMode, selectListing, goToRoom, tour, estate, camera };
