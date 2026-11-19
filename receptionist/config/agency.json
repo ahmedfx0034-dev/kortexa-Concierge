@@ -4,7 +4,7 @@
   "isDemo": true,
   "receptionistName": "Anna",
   "city": "Accra",
-  "officeAddress": "",
+  "officeAddress": "Ivory Crest House, 2nd Floor, 12 Sunbird Close, Airport City, Accra",
   "agentName": "our property consultant, Kwame",
   "officeHours": "Monday to Saturday, 9am to 5pm",
   "viewingTimes": [
@@ -14,7 +14,7 @@
   ],
   "viewingDaysAhead": 3,
   "minNoticeHours": 2,
-  "commission": "",
+  "commission": "5% of the sale price on purchases; one month's rent on rentals",
   "listings": [
     {
       "id": "east-legon-4bed",
@@ -29,7 +29,7 @@
       "parking": "3 cars",
       "furnished": "Unfurnished",
       "features": "Boys' quarters, walled and gated, fitted kitchen, water storage tank, tiled compound",
-      "terms": ""
+      "terms": "10% deposit to secure it, balance within 60 days. Mortgage buyers welcome."
     },
     {
       "id": "cantonments-2bed-apt",
@@ -40,7 +40,7 @@
       "price": "$2,200 per month",
       "bedrooms": 2,
       "bathrooms": "2 (both en-suite)",
-      "landSize": "",
+      "landSize": "Apartment, about 120 sq m floor area",
       "parking": "1 car",
       "furnished": "Fully furnished",
       "features": "Swimming pool, gym, 24-hour security, backup generator, air conditioning in all rooms",
@@ -55,11 +55,11 @@
       "price": "$410,000",
       "bedrooms": 3,
       "bathrooms": "3",
-      "landSize": "",
+      "landSize": "Apartment, about 165 sq m floor area",
       "parking": "2 cars",
       "furnished": "Semi-furnished (kitchen appliances and wardrobes)",
       "features": "Swimming pool, gym, 24-hour security, backup generator and water, rooftop lounge",
-      "terms": ""
+      "terms": "10% deposit to secure it, balance within 60 days. Mortgage buyers welcome."
     },
     {
       "id": "tema-c25-3bed",
@@ -70,11 +70,11 @@
       "price": "$145,000",
       "bedrooms": 3,
       "bathrooms": "3",
-      "landSize": "",
+      "landSize": "Quarter plot",
       "parking": "2 cars",
       "furnished": "Unfurnished",
       "features": "Gated estate with security, small garden, fitted kitchen",
-      "terms": ""
+      "terms": "Cash or mortgage: 20% deposit, balance within 90 days."
     },
     {
       "id": "oyarifa-2bed-rent",
@@ -85,7 +85,7 @@
       "price": "GH₵6,500 per month",
       "bedrooms": 2,
       "bathrooms": "2",
-      "landSize": "",
+      "landSize": "Half plot",
       "parking": "2 cars",
       "furnished": "Unfurnished",
       "features": "Walled and gated, own meter, water storage tank, quiet neighbourhood",
@@ -98,13 +98,13 @@
       "type": "Residential land",
       "forSaleOrRent": "For sale",
       "price": "GH₵450,000",
-      "bedrooms": "",
-      "bathrooms": "",
+      "bedrooms": "Not applicable (land)",
+      "bathrooms": "Not applicable (land)",
       "landSize": "One plot (70 x 100 ft)",
-      "parking": "",
-      "furnished": "",
+      "parking": "Not applicable (land)",
+      "furnished": "Not applicable (land)",
       "features": "Registered with the Lands Commission, indenture available, close to the main road",
-      "terms": ""
+      "terms": "10% deposit to secure it, balance within 60 days. Mortgage buyers welcome."
     }
   ],
   "style": {

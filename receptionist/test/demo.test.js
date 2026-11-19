@@ -21,7 +21,9 @@ test("prompt lists only known facts and marks unknowns", () => {
   assert.match(p, /Price: \$320,000/);
   assert.ok(!/video tour/i.test(p), "no video instructions");
   assert.match(p, /Tone: Warm, polished and professional/);
-  assert.match(p, /Commission or agency fees: NOT KNOWN/);
+  assert.match(p, /Office: Ivory Crest House/);
+  assert.ok(!/: NOT KNOWN/.test(p), "demo agency has an answer for every detail");
+  assert.match(systemPrompt({ ...agency, commission: "" }, THU), /Commission or agency fees: NOT KNOWN/);
   assert.ok(!/Bedrooms: \n/.test(p));
   assert.match(p, /Today is Thursday,? 12 November 2026/);
   assert.match(p, /you are the agency's AI assistant/);
