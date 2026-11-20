@@ -11,3 +11,4 @@ data/styles/*/refs/
 data/styles/*/preview*
 review_page/slides/
 review_page/data.json
+plan_page/plan.json

@@ -1,28 +1,28 @@
 <title>Kortexa Content Review</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 /* Layout: phone-first review queue. Sticky summary bar, day tabs, one card per scheduled carousel with swipeable slides and three decisions. */
 :root{
-  --bg:#f3f5f2; --surface:#ffffff; --fg:#15201a; --muted:#5f6c64; --line:#dde3dc;
-  --accent:#1f7a52; --accent-soft:#e2f1e9; --ok:#1f7a52; --ok-soft:#e2f1e9;
-  --warn:#9a5b00; --warn-soft:#fff2d6; --bad:#b3261e; --bad-soft:#fde7e5; --chip:#eceff0;
-  --display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --bg:#f5f6f2; --surface:#ffffff; --fg:#030305; --muted:#5c6157; --line:#e1e4dc;
+  --accent:#6FA00B; --accent-soft:#eef6da; --ok:#5f8a09; --ok-soft:#eef6da;
+  --warn:#9a5b00; --warn-soft:#fff2d6; --bad:#b3261e; --bad-soft:#fde7e5; --chip:#eceee8;
+  --display:"Montserrat","Inter",system-ui,sans-serif;
   --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1411; --surface:#171e1a; --fg:#e7eee9; --muted:#97a69d; --line:#29332d;
-  --accent:#5fcf98; --accent-soft:#16301f; --ok:#5fcf98; --ok-soft:#16301f;
-  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#222b26; color-scheme:dark}}
+  --bg:#030305; --surface:#101113; --fg:#f2f3ef; --muted:#9a9f95; --line:#24262a;
+  --accent:#98CC13; --accent-soft:#1a2309; --ok:#98CC13; --ok-soft:#1a2309;
+  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#1b1d20; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1411; --surface:#171e1a; --fg:#e7eee9; --muted:#97a69d; --line:#29332d;
-  --accent:#5fcf98; --accent-soft:#16301f; --ok:#5fcf98; --ok-soft:#16301f;
-  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#222b26; color-scheme:dark}
+  --bg:#030305; --surface:#101113; --fg:#f2f3ef; --muted:#9a9f95; --line:#24262a;
+  --accent:#98CC13; --accent-soft:#1a2309; --ok:#98CC13; --ok-soft:#1a2309;
+  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#1b1d20; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
 .wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 80px;display:flex;flex-direction:column;gap:18px}
-h1{font:800 clamp(1.7rem,5vw,2.3rem)/1.1 var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font:800 clamp(1.6rem,5vw,2.2rem)/1.1 var(--display);text-transform:uppercase;margin:0;letter-spacing:-.01em;text-wrap:balance}
 h2{font:700 1.15rem/1.25 var(--display);margin:0;text-wrap:balance}
 p{margin:0}
 .muted{color:var(--muted)}
@@ -52,7 +52,7 @@ summary{cursor:pointer;font-weight:600;font-size:.9rem}
 textarea{width:100%;min-height:110px;margin-top:8px;font:14px/1.5 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .btn{flex:1 1 auto;min-width:96px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:10px 12px;font:600 .9rem var(--body);cursor:pointer}
-.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.btn.ok{background:#98CC13;border-color:#98CC13;color:#030305}
 .btn.warn{color:var(--warn);border-color:var(--warn)}
 .btn.bad{color:var(--bad)}
 .btn:disabled{opacity:.5;cursor:default}
