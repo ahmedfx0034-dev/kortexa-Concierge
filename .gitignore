@@ -9,3 +9,5 @@ data/drafts/**/*.jpg
 data/drafts/**/*.jpeg
 data/styles/*/refs/
 data/styles/*/preview*
+review_page/slides/
+review_page/data.json

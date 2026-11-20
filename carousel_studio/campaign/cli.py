@@ -77,3 +77,12 @@ def publish_due_cmd(dry_run: bool = typer.Option(False, "--dry-run"),
 def apply_reviews_cmd(path: str):
     """Apply a JSON export of review decisions to drafts."""
     typer.echo(json.dumps(_apply_reviews(path), indent=2))
+
+
+@campaign_app.command("review-bundle")
+def review_bundle_cmd(week_start: str, out: str = typer.Option("review_page", help="Output folder")):
+    """Export a week's scheduled carousels (preview JPEGs + data.json) for the review page."""
+    from .review_bundle import build_review_bundle
+
+    data = build_review_bundle(week_start, out)
+    typer.echo(f"{len(data['items'])} carousels exported to {out}/")

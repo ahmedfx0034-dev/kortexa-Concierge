@@ -1,0 +1,179 @@
+<title>Kortexa Content Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: phone-first review queue. Sticky summary bar, day tabs, one card per scheduled carousel with swipeable slides and three decisions. */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --fg:#15201a; --muted:#5f6c64; --line:#dde3dc;
+  --accent:#1f7a52; --accent-soft:#e2f1e9; --ok:#1f7a52; --ok-soft:#e2f1e9;
+  --warn:#9a5b00; --warn-soft:#fff2d6; --bad:#b3261e; --bad-soft:#fde7e5; --chip:#eceff0;
+  --display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1411; --surface:#171e1a; --fg:#e7eee9; --muted:#97a69d; --line:#29332d;
+  --accent:#5fcf98; --accent-soft:#16301f; --ok:#5fcf98; --ok-soft:#16301f;
+  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#222b26; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1411; --surface:#171e1a; --fg:#e7eee9; --muted:#97a69d; --line:#29332d;
+  --accent:#5fcf98; --accent-soft:#16301f; --ok:#5fcf98; --ok-soft:#16301f;
+  --warn:#f0b459; --warn-soft:#33270f; --bad:#ff8a80; --bad-soft:#3a1a18; --chip:#222b26; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 80px;display:flex;flex-direction:column;gap:18px}
+h1{font:800 clamp(1.7rem,5vw,2.3rem)/1.1 var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font:700 1.15rem/1.25 var(--display);margin:0;text-wrap:balance}
+p{margin:0}
+.muted{color:var(--muted)}
+.eyebrow{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.counts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.count{font:500 .8rem var(--mono);padding:4px 10px;border-radius:999px;background:var(--chip);font-variant-numeric:tabular-nums}
+.count.ok{background:var(--ok-soft);color:var(--ok)} .count.warn{background:var(--warn-soft);color:var(--warn)} .count.bad{background:var(--bad-soft);color:var(--bad)}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.days button{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;font:500 .85rem var(--body);cursor:pointer}
+.days button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card[data-state="approve"]{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+.card[data-state="revise"]{border-color:var(--warn);box-shadow:inset 4px 0 0 var(--warn)}
+.card[data-state="reject"]{opacity:.62;box-shadow:inset 4px 0 0 var(--bad)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.8rem}
+.tag{font:500 .74rem var(--mono);padding:2px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
+.tag.style{background:var(--accent-soft);color:var(--accent)}
+.when{font:600 .85rem var(--body);font-variant-numeric:tabular-nums}
+.status{margin-left:auto;font:600 .78rem var(--body)}
+.status.approve{color:var(--ok)} .status.revise{color:var(--warn)} .status.reject{color:var(--bad)} .status.pending{color:var(--muted)}
+.slides{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:10px;padding-bottom:4px}
+.slides img{flex:none;width:min(72%,300px);aspect-ratio:4/5;max-width:100%;object-fit:cover;border-radius:10px;scroll-snap-align:start;background:var(--chip);border:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:600;font-size:.9rem}
+textarea{width:100%;min-height:110px;margin-top:8px;font:14px/1.5 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{flex:1 1 auto;min-width:96px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:10px 12px;font:600 .9rem var(--body);cursor:pointer}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.btn.warn{color:var(--warn);border-color:var(--warn)}
+.btn.bad{color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:default}
+.fb{display:flex;flex-direction:column;gap:8px}
+.notice{border-radius:10px;padding:10px 12px;font-size:.9rem;background:var(--warn-soft)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:999px;font-weight:600;font-size:.88rem;z-index:20}
+.confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--accent-soft);border-radius:10px;padding:10px 12px}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:6px">
+    <span class="eyebrow" id="weekLabel">Kortexa · content review</span>
+    <h1>This week's carousels</h1>
+    <p class="muted">Swipe the slides, then approve, ask for changes or reject. Only approved carousels get posted, at the time shown on each card.</p>
+  </header>
+
+  <div class="bar">
+    <div class="counts" id="counts"></div>
+    <div class="days" id="days" role="toolbar" aria-label="Filter by day"></div>
+  </div>
+
+  <div id="notice" class="notice" hidden></div>
+  <div id="bulk"></div>
+  <div id="list" style="display:flex;flex-direction:column;gap:14px"><div class="empty">Loading carousels…</div></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(async function(){
+  const $ = s => document.querySelector(s);
+  const LABEL = {approve:"Approved", revise:"Changes asked", reject:"Rejected", pending:"Waiting for you"};
+  let items = [], reviews = {}, day = "all", db = null, writable = false, confirmBulk = false;
+
+  function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2200)}
+  function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+  function state(id){return reviews[id]?.decision || "pending"}
+  function fmtDay(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"Africa/Accra"})}
+  function fmtTime(iso){return new Date(iso).toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",timeZone:"Africa/Accra"})}
+  function dayKey(iso){return new Date(iso).toLocaleDateString("en-CA",{timeZone:"Africa/Accra"})}
+
+  try{ const r = await fetch("data.json"); const d = await r.json(); items = d.items||[]; if(d.week) $("#weekLabel").textContent = "Kortexa · week of "+d.week; }
+  catch(e){ $("#list").innerHTML='<div class="empty">No carousels to review yet.</div>'; return; }
+  items.sort((a,b)=>(a.scheduled_at||"").localeCompare(b.scheduled_at||""));
+
+  function render(){
+    const counts={pending:0,approve:0,revise:0,reject:0}; items.forEach(i=>counts[state(i.id)]++);
+    $("#counts").innerHTML = `<span class="count">${items.length} carousels</span>
+      <span class="count">${counts.pending} waiting</span><span class="count ok">${counts.approve} approved</span>
+      <span class="count warn">${counts.revise} changes</span><span class="count bad">${counts.reject} rejected</span>`;
+    const days=[...new Set(items.map(i=>dayKey(i.scheduled_at)))];
+    $("#days").innerHTML = [`<button data-day="all" aria-pressed="${day==="all"}">All</button>`]
+      .concat(days.map(k=>{const it=items.find(i=>dayKey(i.scheduled_at)===k);return `<button data-day="${k}" aria-pressed="${day===k}">${fmtDay(it.scheduled_at)}</button>`})).join("");
+    const shown = items.filter(i=>day==="all"||dayKey(i.scheduled_at)===day);
+    const pend = shown.filter(i=>state(i.id)==="pending").length;
+    $("#bulk").innerHTML = (writable && pend>1) ? (confirmBulk
+      ? `<div class="confirm"><span>Approve all ${pend} waiting carousels${day==="all"?"":" for this day"}?</span><button class="btn ok" data-bulk="yes">Yes, approve</button><button class="btn" data-bulk="no">Cancel</button></div>`
+      : `<button class="btn" data-bulk="ask" style="width:100%">Approve all ${pend} waiting${day==="all"?"":" for this day"}</button>`) : "";
+    $("#list").innerHTML = shown.length ? shown.map(card).join("") : '<div class="empty">Nothing scheduled for this day.</div>';
+  }
+
+  function card(i){
+    const st=state(i.id), rv=reviews[i.id]||{};
+    const cap = rv.caption ?? i.caption; const tags=(rv.hashtags ?? i.hashtags ?? []).join(" ");
+    return `<article class="card" data-id="${i.id}" data-state="${st}">
+      <div class="meta"><span class="when">${fmtDay(i.scheduled_at)} · ${fmtTime(i.scheduled_at)}</span>
+        <span class="tag style">${esc(i.style)}</span>${i.pillar?`<span class="tag">${esc(i.pillar)}</span>`:""}
+        <span class="status ${st}">${LABEL[st]}</span></div>
+      <h2>${esc(i.title)}</h2>
+      <div class="slides">${i.slides.map((s,n)=>`<img src="${s}" alt="Slide ${n+1} of ${i.slides.length}" loading="lazy">`).join("")}</div>
+      <details><summary>Caption and hashtags</summary>
+        <textarea id="cap-${i.id}" aria-label="Caption" ${writable?"":"readonly"}>${esc(cap)}\n\n${esc(tags)}</textarea></details>
+      ${st==="revise"&&rv.feedback?`<p class="muted">Your note: ${esc(rv.feedback)}</p>`:""}
+      <div class="fb" id="fb-${i.id}" hidden><textarea id="note-${i.id}" placeholder="What should change? e.g. punchier hook, fewer words on slide 3"></textarea>
+        <button class="btn warn" data-act="send-revise">Send changes</button></div>
+      <div class="actions">
+        <button class="btn ok" data-act="approve" ${writable?"":"disabled"}>${st==="approve"?"Approved ✓":"Approve"}</button>
+        <button class="btn warn" data-act="revise" ${writable?"":"disabled"}>Ask for changes</button>
+        <button class="btn bad" data-act="reject" ${writable?"":"disabled"}>Reject</button>
+      </div></article>`;
+  }
+
+  function splitCaption(text){
+    const lines=text.trim().split("\n"); const tags=[];
+    while(lines.length && /^\s*(#\w+\s*)+$/.test(lines[lines.length-1])){ tags.unshift(...lines.pop().trim().split(/\s+/)); }
+    return {caption:lines.join("\n").trim(), hashtags:tags};
+  }
+
+  async function save(id, decision, extra={}){
+    if(!db){toast("Can't save here. Open this page in the Claude app while signed in.");return}
+    const ta=document.getElementById("cap-"+id); const cap=ta?splitCaption(ta.value):{};
+    const doc={decision, caption:cap.caption, hashtags:cap.hashtags, updated_at:new Date().toISOString(), ...extra};
+    reviews[id]=doc; render();
+    try{ await db.doc("reviews/"+id).set(doc); toast(LABEL[decision]); }
+    catch(e){ toast("Not saved: "+(e?.message||"try again")); }
+  }
+
+  document.addEventListener("click", async e=>{
+    const d=e.target.closest("[data-day]"); if(d){day=d.dataset.day;confirmBulk=false;render();return}
+    const b=e.target.closest("[data-bulk]");
+    if(b){ if(b.dataset.bulk==="ask"){confirmBulk=true;render()} else if(b.dataset.bulk==="no"){confirmBulk=false;render()}
+      else { confirmBulk=false; for(const i of items.filter(i=>(day==="all"||dayKey(i.scheduled_at)===day)&&state(i.id)==="pending")) await save(i.id,"approve"); }
+      return }
+    const a=e.target.closest("[data-act]"); if(!a) return;
+    const id=a.closest(".card").dataset.id;
+    if(a.dataset.act==="revise"){ const f=document.getElementById("fb-"+id); f.hidden=!f.hidden; if(!f.hidden) document.getElementById("note-"+id).focus(); return }
+    if(a.dataset.act==="send-revise"){ const note=document.getElementById("note-"+id).value.trim(); if(!note){toast("Write what should change first");return} return save(id,"revise",{feedback:note}) }
+    save(id, a.dataset.act);
+  });
+
+  render();
+  db = await (window.claude?.use ? claude.use("db") : null);
+  if(!db){ $("#notice").hidden=false; $("#notice").textContent="Read-only view. Open this page in the Claude app while signed in to approve carousels."; return }
+  writable = true; render();
+  const timer=setTimeout(()=>{$("#notice").hidden=false;$("#notice").textContent="Still loading your earlier decisions…"},10000);
+  db.collection("reviews").onSnapshot(snap=>{
+    clearTimeout(timer); $("#notice").hidden=true;
+    const next={}; (snap.docs||snap).forEach(d=>{ next[d.id]=typeof d.data==="function"?d.data():d.data; });
+    reviews=next; render();
+  }, err=>{ clearTimeout(timer); $("#notice").hidden=false; $("#notice").textContent="Couldn't load decisions: "+(err?.message||"unknown error"); });
+})();
+</script>
