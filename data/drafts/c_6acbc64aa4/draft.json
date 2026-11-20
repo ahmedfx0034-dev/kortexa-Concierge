@@ -1,0 +1,116 @@
+{
+  "id": "c_6acbc64aa4",
+  "style": "night-shift",
+  "idea": {
+    "title": "Why we'll never post fake results",
+    "angle": "Proof over promises: we're early and we'll share real numbers as they come",
+    "hook": "We have no client results to show you yet."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": null,
+      "heading": "We have no client **results** yet.",
+      "body": "So we won't fake any. Here's why.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "You've seen it",
+      "heading": "Fake proof is everywhere",
+      "body": "Big claims. Cropped screenshots. No names, no context. You don't trust them either.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "Where we are",
+      "heading": "Small team. **Early.**",
+      "body": "Kortexa is building AI systems for real estate agents, and sharing the whole process in public.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Real numbers only",
+      "body": "When we have results, we'll post them. With context. Good or bad.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Show the work",
+      "body": "What we build, what breaks, and what agents in Accra and Lagos tell us.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Ask for proof",
+      "body": "If a claim sounds too good, ask to see it. From us or from anyone.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Watch us **build it.**",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6acbc64aa4/slide_07.png"
+    }
+  ],
+  "caption": "We have no client results to show you yet.\n\nAnd we're not going to pretend we do.\nWe're a small, early team building AI systems for real estate agents in Ghana and Nigeria.\nInstead of fake screenshots, we'll show the work: what we build, what breaks, what agents tell us.\nWhen real numbers come, you'll see them here. With context.\n\nWhat would you want to see from us first? 👇\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#buildinginpublic",
+    "#realestateghana",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#accrarealestate",
+    "#ghanarealestate"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:20+00:00",
+  "updated_at": "2026-11-20T08:42:23+00:00"
+}

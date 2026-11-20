@@ -1,0 +1,122 @@
+{
+  "id": "c_efc922c3c8",
+  "style": "sunrise-bold",
+  "idea": {
+    "title": "Why plug-and-play chatbots annoy buyers",
+    "angle": "Generic bots vs a properly built assistant that knows your listings",
+    "hook": "Why buyers hate your chatbot (and what a well-built one does instead)"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": null,
+      "heading": "Why Buyers **Hate** Your Chatbot",
+      "body": "The AI isn't the problem. The setup is.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "list",
+      "layout": "list",
+      "kicker": "Sound familiar?",
+      "heading": "What Buyers **Actually** Want",
+      "body": null,
+      "bullets": [
+        "Real prices, not old ones",
+        "A straight answer to 'Is it available?'",
+        "No 'Reply 1, 2 or 3' menus",
+        "A human when it matters"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "tip",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Feed It **Your Listings**",
+      "body": "Real prices, areas and availability. Not guesses.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "tip",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Ask Like **An Agent**",
+      "body": "Budget, area, move-in date. One question at a time, like you would on WhatsApp.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "tip",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Book **The Viewing**",
+      "body": "The goal is a date in your diary, not a long chat.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "tip",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Hand Over **To You**",
+      "body": "Serious buyer or tricky question? It passes the chat to a real person.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Want A Chatbot Built **Properly**?",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_efc922c3c8/slide_07.png"
+    }
+  ],
+  "caption": "Buyers don't hate chatbots. They hate badly built ones.\n\nA plug-and-play bot doesn't know your listings, your prices or your areas.\nA proper assistant is fed your real listings and FAQs.\nIt asks budget, area and move-in date, one question at a time.\nIt books the viewing, then hands serious buyers to you.\nThe AI isn't smart on its own. The system around it is.\n\nWhat's the worst chatbot reply you've ever seen? 😅\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#aiforrealestate",
+    "#realestatetech",
+    "#chatbots"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:40+00:00",
+  "updated_at": "2026-11-20T08:42:42+00:00"
+}

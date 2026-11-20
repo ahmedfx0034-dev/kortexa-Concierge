@@ -1,0 +1,117 @@
+{
+  "id": "c_a02db08424",
+  "style": "night-shift",
+  "idea": {
+    "title": "The first reply wins the client",
+    "angle": "Buyers message several agents at once; the one who replies first usually gets the viewing",
+    "hook": "The first reply wins the client."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": null,
+      "heading": "The first reply **wins** the client.",
+      "body": "Not the best agent. Not the best listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "The reality",
+      "heading": "Buyers don't wait",
+      "body": "A buyer in Accra sends the same DM to several agents. Whoever answers first starts the conversation.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "How it feels",
+      "heading": "Slow sounds like **no**",
+      "body": "A reply three hours later reads like you're not interested. By then they're chatting with someone else.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Reply in minutes",
+      "body": "Even a short holding message beats silence: \"Hi! Yes, it's available. Sending details now.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Ask one question",
+      "body": "\"Are you buying or renting, and which area works for you?\" Now you're in a conversation.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": null,
+      "heading": "Offer two times",
+      "body": "\"Can you view on Saturday at 10am or Monday at 4pm?\" Don't wait for them to suggest.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Be first. **Every time.**",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a02db08424/slide_07.png"
+    }
+  ],
+  "caption": "The first reply wins the client.\n\nBuyers don't message one agent. They message several, on WhatsApp and Instagram, at the same time.\nThe one who answers first gets the conversation. And usually the viewing.\nReply fast, even if it's a short holding message.\nAsk one question to get them talking.\nOffer two viewing times instead of \"when are you free?\"\n\nHonest question: how long does a new enquiry usually wait for your first reply? 👇\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#ghanarealestate",
+    "#nigeriarealestate",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:15+00:00",
+  "updated_at": "2026-11-20T08:42:18+00:00"
+}
