@@ -9,12 +9,36 @@
    color: var(--muted); font-weight: 600; }
 .layout-quote .attr::before { content: ""; width: 56px; height: 3px; background: var(--accent); }
 .layout-quote .body.extra { font-size: calc(var(--kb) * 36px); margin-top: calc(var(--k) * 28px); }
+{% if quote_card %}
+.layout-quote .card { padding: calc(var(--k) * 56px) calc(var(--k) * 60px); box-shadow: 0 18px 50px {{ c.shadow }}; position: relative; }
+.layout-quote .card .qm { font-size: calc(var(--k) * 240px); margin-bottom: calc(var(--k) * 28px); }
+.layout-quote .card .attr { margin-top: calc(var(--k) * 36px); }
+.layout-quote .card .body.extra { color: var(--card-text); }
+{% endif %}
+{% if deco.message %}
+/* chat bubble: squarer tail corner, no big quote mark, plain upright message text */
+.layout-quote .card { border-radius: 52px 52px 52px 12px; padding: calc(var(--k) * 52px) calc(var(--k) * 56px); border-width: 0; }
+.layout-quote .card .h { font-style: normal; font-weight: {{ [t.weight, 600] | min }}; font-size: calc(var(--k) * var(--hs) * 64px); line-height: 1.28; }
+.layout-quote .msg-note { margin-top: calc(var(--k) * 34px); padding-left: 18px; font-family: var(--bfont); color: var(--muted);
+   font-size: calc(var(--kb) * 34px); line-height: 1.4; text-wrap: pretty; }
+.layout-quote .msg-note p + p { margin-top: .5em; }
+{% endif %}
 {% endblock %}
 {% block inner_class %}v-center align-left{% endblock %}
 {% block content %}
   {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  {% if deco.message %}
+  <div class="card">
+    <blockquote class="h">{{ s.heading }}</blockquote>
+  </div>
+  {% if attribution %}<div class="msg-note"><p>{{ attribution }}</p></div>{% endif %}
+  {% if quote_body %}<div class="msg-note">{{ quote_body }}</div>{% endif %}
+  {% else %}
+  {% if quote_card %}<div class="card">{% endif %}
   <div class="qm">&ldquo;</div>
   <blockquote class="h">{{ s.heading }}</blockquote>
   {% if attribution %}<div class="attr">{{ attribution }}</div>{% endif %}
   {% if quote_body %}<div class="body extra">{{ quote_body }}</div>{% endif %}
+  {% if quote_card %}</div>{% endif %}
+  {% endif %}
 {% endblock %}

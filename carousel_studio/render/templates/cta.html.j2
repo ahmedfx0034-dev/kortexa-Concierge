@@ -2,10 +2,11 @@
 {% block css %}
 .layout-cta .h { font-size: calc(var(--k) * var(--hs) * 104px); }
 .layout-cta .body { font-size: calc(var(--kb) * 40px); margin-top: calc(var(--k) * 40px); max-width: 820px; }
-.layout-cta .cta-btn { margin-top: calc(var(--k) * 64px); display: inline-flex; align-items: center; gap: .6em;
-   background: var(--accent); color: var(--on-accent); font-family: var(--bfont); font-weight: 700;
-   font-size: calc(var(--k) * 36px); padding: .7em 1.4em; border-radius: 999px; max-width: 100%; text-align: center; }
-.layout-cta .cta-btn svg { width: 1em; height: 1em; stroke: var(--on-accent); flex: 0 0 auto; }
+.layout-cta .cta-btn { margin-top: calc(var(--k) * 56px); display: inline-flex; align-items: center; gap: .6em;
+   background: var(--accent); color: var(--on-accent); font-family: var(--bfont); font-weight: 700; line-height: 1.25;
+   font-size: calc(var(--k) * 46px); padding: .7em 1.4em; border-radius: 56px; max-width: 100%; text-align: center; }
+.layout-cta .cta-btn .t { text-wrap: balance; }
+.layout-cta .cta-btn svg { width: 1.1em; height: 1.1em; stroke: var(--on-accent); flex: 0 0 auto; }
 .layout-cta .who { margin-top: calc(var(--k) * 48px); display: flex; align-items: center; gap: 18px;
    font-family: var(--bfont); font-weight: 700; font-size: calc(var(--k) * 34px); color: var(--text); }
 .layout-cta .avatar { width: calc(var(--k) * 76px); height: calc(var(--k) * 76px); border-radius: 50%;
@@ -22,7 +23,7 @@
   <h2 class="h">{{ s.heading }}</h2>
   {% if deco.underline %}<div class="rule"></div>{% endif %}
   {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}
-  {% if cta_text %}<div class="cta-btn">{{ cta_text }}<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>{% endif %}
+  {% if cta_text %}<div class="cta-btn"><span class="t">{{ cta_text }}</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>{% endif %}
   {% if handle %}<div class="who"><div class="avatar">{{ initial }}</div>{{ handle }}</div>{% endif %}
   <div class="icons">
     <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>Save</span>

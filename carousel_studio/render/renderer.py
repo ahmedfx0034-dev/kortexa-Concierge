@@ -7,6 +7,7 @@ import html
 import logging
 import mimetypes
 import re
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Iterable, List, Optional, Sequence
 
@@ -264,11 +265,47 @@ def _chrome(deco: dict, brand: dict, index: int, total: int, layout: str, on_ima
 # ------------------------------------------------------------------- text
 
 
+_OPEN_PREV = set(" \t\n\r([{\u2014\u2013-\u201c\u2018\u00a0")
+
+
 def smart_quotes(t: str) -> str:
-    t = re.sub(r'(^|[\s(\[{\u2014\u2013-])"', "\\1\u201c", t)
-    t = t.replace('"', "\u201d")
-    t = re.sub(r"(^|[\s(\[{\u2014\u2013-])'", "\\1\u2018", t)
-    return t.replace("'", "\u2019")
+    """Curly quotes/apostrophes. ** emphasis markers are transparent when deciding
+    whether a quote opens or closes (so `**'the` still opens)."""
+    out: list[str] = []
+    prev = ""  # previous significant char (skipping ** markers)
+    i = 0
+    while i < len(t):
+        ch = t[i]
+        if t.startswith("**", i):
+            out.append("**")
+            i += 2
+            continue
+        if ch in "\"'":
+            opening = (not prev) or prev in _OPEN_PREV
+            if ch == "'" and opening and re.match(r"'\d\ds?\b", t[i:]):
+                opening = False  # '90s -> ’90s
+            if ch == '"':
+                ch = "\u201c" if opening else "\u201d"
+            else:
+                ch = "\u2018" if opening else "\u2019"
+        out.append(ch)
+        prev = ch
+        i += 1
+    return "".join(out)
+
+
+_QUOTE_CHARS = "\"\u201c\u201d\u201e'\u2018\u2019"
+
+
+def strip_quote_marks(t: str) -> str:
+    """Drop leading/trailing quote characters (the quote layout draws its own mark)."""
+    t = t.strip()
+    lead = re.match(r"^((?:\*\*)?)[" + _QUOTE_CHARS + r"]+\s*", t)
+    if lead:
+        t = lead.group(1) + t[lead.end():]
+    chars = _QUOTE_CHARS if lead else "\"\u201c\u201d\u201e"
+    t = re.sub(r"\s*[" + chars + r"]+((?:\*\*)?)$", r"\1", t)
+    return t.strip()
 
 
 def rich(text: Optional[str], *, paragraphs: bool = False, case_fn=None) -> Markup:
@@ -279,7 +316,8 @@ def rich(text: Optional[str], *, paragraphs: bool = False, case_fn=None) -> Mark
     if case_fn:
         t = case_fn(t)
     t = html.escape(smart_quotes(t), quote=False)
-    t = re.sub(r"\*\*(.+?)\*\*", r'<span class="hl">\1</span>', t)
+    t = re.sub(r"\*\*(.+?)\*\*",
+               lambda m: '<span class="hl%s">%s</span>' % (" hlnw" if len(m.group(1).split()) <= 3 else "", m.group(1)), t)
     t = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", t)
     t = t.replace("**", "")
     # keep short hyphenated compounds ("must-see", "3-bed") on one line
@@ -329,6 +367,7 @@ class _Theme:
         self.t = build_typography(profile)
         self.fonts = build_fonts(profile)
         self.deco = parse_decorations(profile.decorations)
+        self.deco["message"] = "message" in (profile.name + " " + " ".join(profile.decorations or [])).lower()
         fc = self.deco["frame_color"]
         self.deco["frame_color"] = self.c["accent"] if fc == "accent" else self.c["line"]
         if not self.c["is_dark"] and not self.deco.get("grain_strong"):
@@ -354,20 +393,22 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
     media_h = 610
     if layout == "split_image":
         top = media_h + 56
-    grow = {"center_statement": 1.0, "cta": 1.0, "quote": 1.1, "split_image": 1.08}.get(layout, 1.18)
+    grow = {"center_statement": 1.0, "cta": 1.0, "quote": 1.1, "split_image": 1.08,
+            "top_heading_body": 1.4}.get(layout, 1.18)
     geo = dict(top=top, bottom=bottom, media_h=media_h, grow=grow)
 
     kicker = slide.kicker
     number = f"{numbered_ordinal:02d}"
     if layout == "numbered" and kicker:
-        m = re.fullmatch(r"\s*(?:#|no\.?|step|tip|rule|mistake|lesson|part)?\s*(\d{1,2})[.):]?\s*", kicker, re.I)
+        m = re.fullmatch(r"\s*(?:#|no\.?|step|tip|rule|mistake|lesson|part|point|reason|myth|fix|way|day|week)?\s*"
+                         r"(\d{1,2})(?:\s*(?:/|of)\s*\d{1,2})?[.):]?\s*", kicker, re.I)
         if m:
             number, kicker = f"{int(m.group(1)):02d}", None
 
     s = dict(
         index=slide.index, layout=layout,
-        kicker=Markup(html.escape(_plain(kicker))) if kicker else None,
-        heading=rich(slide.heading, case_fn=case_fn),
+        kicker=Markup(html.escape(smart_quotes(_plain(kicker)))) if kicker else None,
+        heading=rich(strip_quote_marks(slide.heading) if layout == "quote" else slide.heading, case_fn=case_fn),
         body=rich(slide.body, paragraphs=True) if slide.body else None,
         bullets=[rich(b) for b in slide.bullets if b and b.strip()],
     )
@@ -388,9 +429,11 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
     if layout == "quote":
         body = _plain(slide.body)
         if body and len(body.split()) <= 9:
-            ctx.update(attribution=body.lstrip("—–- ").strip(), quote_body=None)
+            ctx.update(attribution=html.escape(smart_quotes(body.lstrip("—–- ").strip())), quote_body=None)
         else:
             ctx.update(attribution=None, quote_body=s["body"])
+    if layout == "quote":
+        ctx["quote_card"] = bool(theme.deco["card"] or theme.deco["message"])
     if layout == "cta":
         cta = (brand.get("call_to_action") or "").strip()
         seen = (_plain(slide.heading) + " " + _plain(slide.body)).lower()
@@ -398,9 +441,23 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
         if handle and not handle.startswith("@"):
             handle = "@" + handle
         name = brand.get("brand_name") or handle.lstrip("@") or "•"
-        ctx.update(cta_text=cta if cta and cta.lower().rstrip(".!") not in seen else None,
-                   handle=handle, initial=name[:1].upper())
+        cta_text = cta if cta and cta.lower().rstrip(".!") not in seen else None
+        if slide.body and slide.index == total and _is_brand_cta(slide.body, cta, handle):
+            # the brand call to action lives in slide.body: render it as the button
+            cta_text = Markup(html.escape(smart_quotes(_plain(slide.body))))
+            s["body"] = None
+        elif cta_text:
+            cta_text = Markup(html.escape(smart_quotes(cta_text)))
+        ctx.update(cta_text=cta_text, handle=handle, initial=name[:1].upper())
     return ctx
+
+
+def _is_brand_cta(body: str, cta: str, handle: str) -> bool:
+    norm = lambda x: re.sub(r"[^a-z0-9@ ]+", "", _plain(x).lower().replace("\u2019", "'")).strip()  # noqa: E731
+    b, c = norm(body), norm(cta)
+    if c and (b == c or (len(b) >= 12 and (b in c or c in b)) or SequenceMatcher(None, b, c).ratio() > 0.75):
+        return True
+    return bool(handle and handle.lower() in b and re.search(r"\b(dm|follow|message)\b", b))
 
 
 def _fallback_layout(slide: Slide, total: int) -> str:

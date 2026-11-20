@@ -87,9 +87,13 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 .body strong, .h strong { font-weight: inherit; }
 .hl { color: var(--hl); }
 .nw { white-space: nowrap; }
+.hlnw { white-space: nowrap; }
 {% if deco.marker %}
-.hl { color: var(--on-accent); background: var(--accent); padding: 0 .14em; border-radius: .08em;
+/* the box is a gradient limited to the glyph body so it never reaches the descenders of the line above */
+.hl { color: var(--on-accent); padding: .02em .16em; margin: 0 -.02em; border-radius: .1em;
+      background: linear-gradient(var(--accent), var(--accent)) 0 54% / 100% 90% no-repeat;
       -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.h:has(.hl) { line-height: {{ [t.line_height, 1.2] | max }}; }
 {% endif %}
 .rule { width: 140px; height: {{ deco.rule_h }}px; background: var(--accent); border-radius: 99px;
         margin-top: calc(var(--k) * 40px); margin-bottom: calc(var(--k) * 4px); }

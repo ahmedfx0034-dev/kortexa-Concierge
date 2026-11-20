@@ -119,11 +119,11 @@
   "ig_media_id": null,
   "ig_permalink": null,
   "error": null,
-  "scheduled_at": null,
-  "slot_id": null,
-  "experiment_arm": null,
+  "scheduled_at": "2026-11-26T08:30:00+00:00",
+  "slot_id": "2026-11-26-1",
+  "experiment_arm": "explore",
   "image_urls": [],
   "published_at": null,
   "created_at": "2026-11-20T08:42:47+00:00",
-  "updated_at": "2026-11-20T08:42:49+00:00"
+  "updated_at": "2026-11-20T08:48:47+00:00"
 }
