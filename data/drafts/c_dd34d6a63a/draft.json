@@ -1,0 +1,129 @@
+{
+  "id": "c_dd34d6a63a",
+  "style": "field-notes",
+  "idea": {
+    "title": "Busy isn't why you're losing deals",
+    "angle": "Manual processes can't keep up with growth; it's a system problem, not effort",
+    "hook": "Busy isn't why you're losing deals"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Field notes",
+      "heading": "**Busy** isn't why you're losing deals",
+      "body": "A note to myself after another week of talking to agents.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Field note",
+      "heading": "**Every agent** I meet is working hard",
+      "body": "Viewings in the morning, landlord calls at lunch, WhatsApp replies at night. Effort isn't the problem. I haven't met a lazy agent yet.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Field note",
+      "heading": "The leak starts when you **grow**",
+      "body": "Say you get ten enquiries a week. You reply to all of them. Triple that, and messages start slipping. Same agent, same effort.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "quote",
+      "layout": "quote",
+      "kicker": "What we keep hearing",
+      "heading": "I saw the message. I meant to reply. Then the day happened.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 1",
+      "heading": "Effort can't fix a **system problem**",
+      "body": "More late nights just move the leak to a different hour. You need a process that keeps running when you can't.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 2",
+      "heading": "Write down **where leads go**",
+      "body": "For one week, note every enquiry: where it came from, when you replied, what happened next. The gaps show up fast.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 3",
+      "heading": "Start with the **first reply**",
+      "body": "Save a WhatsApp quick reply: \"Thanks for asking about the Kumasi plot. I'm on a viewing, full details by 4pm. Buying or renting?\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "**Fix the system**, not your sleep",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dd34d6a63a/slide_08.png"
+    }
+  ],
+  "caption": "Busy isn't why you're losing deals.\n\nEvery agent I talk to is working hard.\nThe problem shows up when enquiries grow faster than one person can answer.\nMore late nights don't fix that. A better process does.\nStart small: track one week of enquiries and save a quick first reply on WhatsApp.\n\nWhere do most of your leads slip through: DMs, WhatsApp or ad enquiries?\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#kumasirealestate",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#leadfollowup",
+    "#buildinpublic"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:43:27+00:00",
+  "updated_at": "2026-11-20T08:43:30+00:00"
+}

@@ -1,0 +1,129 @@
+{
+  "id": "c_7ae814ba9e",
+  "style": "field-notes",
+  "idea": {
+    "title": "3 messages to get landlords to list with you",
+    "angle": "Outreach messages that win more listings",
+    "hook": "3 messages to get landlords to list with you"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Field notes",
+      "heading": "**3 messages** to get landlords to list with you",
+      "body": "Copy, paste, change the details. Shaped by what I've learned doing outreach for Kortexa.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Field note",
+      "heading": "Landlords don't want **another agent**",
+      "body": "They want fewer empty months and less stress. Every message below talks about their property, not your services.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Message 1: the first hello",
+      "heading": "Lead with **their property**",
+      "body": "\"Good morning. I saw your 3-bedroom in Airport Residential is available. I get enquiries for that area. Can I share how I'd market it? Just 5 minutes.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Message 2: the follow-up",
+      "heading": "Make yes **easy**",
+      "body": "\"Hi again, no pressure. I can send a one-page plan for how I'd find a tenant for your Lekki flat. Should I send it here?\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Message 3: the referral ask",
+      "heading": "Ask the landlords **you have**",
+      "body": "\"Thank you for trusting me with your property. Do you know another landlord who's tired of chasing tenants? I'd give their place the same care.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 1",
+      "heading": "**Specific** beats polished",
+      "body": "Naming the property and the area shows you did your homework. \"I'm a real estate agent, do you have anything?\" is easy to ignore.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "quote",
+      "layout": "quote",
+      "kicker": "Worth remembering",
+      "heading": "**Reply fast.** A landlord who messages at 9pm shouldn't wait until tomorrow.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "**Save this** for your next outreach",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7ae814ba9e/slide_08.png"
+    }
+  ],
+  "caption": "3 messages to get landlords to list with you.\n\nMessage 1: lead with their property, not your agency.\nMessage 2: follow up with something useful, like a one-page plan.\nMessage 3: ask the landlords you already work with for a referral.\nChange the area and property type to match your market, from Airport Residential to Lekki.\nAnd when they reply, answer fast. Interest cools quickly.\n\nWhich one will you send first this week? ✍️\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#nigeriarealestate",
+    "#realestateagent",
+    "#landlords",
+    "#buildinpublic"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:43:30+00:00",
+  "updated_at": "2026-11-20T08:43:33+00:00"
+}

@@ -1,0 +1,129 @@
+{
+  "id": "c_05a7d5b032",
+  "style": "field-notes",
+  "idea": {
+    "title": "What agents keep telling us",
+    "angle": "The pain points we hear in conversations: slow replies, missed bookings, wasted ad spend",
+    "hook": "What agents in Ghana and Nigeria keep telling us"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Building in public",
+      "heading": "**Field notes:** what agents tell us",
+      "body": "Notes from our early conversations with agents in Ghana and Nigeria. No results to show yet. Just what we're hearing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "Field note",
+      "heading": "**Leads** aren't the problem",
+      "body": "Instagram DMs, WhatsApp, website enquiries: the leads are there. The complaint is always about what happens after the message lands.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "quote",
+      "layout": "quote",
+      "kicker": "What we keep hearing",
+      "heading": "A buyer asked for details. I got busy. By the time I replied, they'd gone quiet.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 1",
+      "heading": "Slow replies cost more than **bad listings**",
+      "body": "A buyer asking about a flat in East Legon is often asking other agents too. The first helpful reply has the advantage.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 2",
+      "heading": "**Viewings** die in the follow-up gap",
+      "body": "The buyer says \"let me check my schedule.\" Nobody checks back. The viewing never gets booked, and nobody notices it was lost.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "lesson",
+      "layout": "numbered",
+      "kicker": "Lesson 3",
+      "heading": "Ads don't fail. **Replies** do.",
+      "body": "You pay in cedis or naira to boost a listing. On a busy day the leads sit unanswered. The ad brought the lead. The process lost it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "note",
+      "layout": "top_heading_body",
+      "kicker": "What we're doing with this",
+      "heading": "**Building** for the gap, not the lead",
+      "body": "We're early: a two-person team, no client results yet. We're designing around these three leaks first: reply speed, booking follow-up and ad leads.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "**Follow along** as we build this",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_05a7d5b032/slide_08.png"
+    }
+  ],
+  "caption": "What agents keep telling us, in our early conversations.\n\nNobody says they need more leads.\nThey say the buyer went quiet before they could reply.\nThey say the viewing never got booked.\nThey say they paid for ads and the leads sat unanswered.\n\nWe're a two-person team, early, no client results to show yet. So we're sharing what we hear and what we're building around it.\n\nWhich of these three hits your business hardest right now? Tell me in the comments.\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#nigeriarealestate",
+    "#realestateagent",
+    "#buildinpublic",
+    "#leadfollowup"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:43:21+00:00",
+  "updated_at": "2026-11-20T08:43:24+00:00"
+}
