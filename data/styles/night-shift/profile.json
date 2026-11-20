@@ -1,0 +1,60 @@
+{
+  "name": "night-shift",
+  "summary": "Bold, high-contrast statements on a near-black navy background with one warm gold accent. Each slide hits one idea in huge condensed capitals, like a billboard. Built for scroll-stopping hooks and blunt truths.",
+  "palette": {
+    "background": "#0D1321",
+    "surface": "#16203A",
+    "text": "#F4F1E8",
+    "muted_text": "#9AA6BF",
+    "accent": "#F2B33D",
+    "accent_2": "#3E7CB1"
+  },
+  "typography": {
+    "heading_font": "Anton",
+    "body_font": "Inter",
+    "heading_weight": 400,
+    "heading_case": "upper",
+    "heading_size": "xl"
+  },
+  "archetypes": [
+    {
+      "name": "hook",
+      "description": "Huge centred statement in capitals, one or two words in gold",
+      "layout": "center_statement"
+    },
+    {
+      "name": "truth",
+      "description": "Short capital heading top-left with one supporting paragraph",
+      "layout": "top_heading_body"
+    },
+    {
+      "name": "step",
+      "description": "Giant gold number then a short heading and one line",
+      "layout": "numbered"
+    },
+    {
+      "name": "cta",
+      "description": "Centred ask with the call to action as a gold button",
+      "layout": "cta"
+    }
+  ],
+  "decorations": [
+    "slide counter top right like 01/07",
+    "handle bottom left",
+    "swipe arrow bottom right",
+    "thin accent underline under headings",
+    "subtle film grain texture"
+  ],
+  "uses_photos": false,
+  "words_per_slide": 22,
+  "slide_count": 7,
+  "hook_patterns": [
+    "Blunt contrarian statement",
+    "'You're not losing leads to X, you're losing them to Y'",
+    "A painful number or moment agents recognise"
+  ],
+  "tone": "Blunt, confident, peer-to-peer. Short punchy sentences. Second person.",
+  "caption_style": "Opens with a one-line restatement of the hook, 3-6 short lines of value, a direct question to drive comments, then the CTA. 1-2 emojis max. 5-8 niche hashtags at the end.",
+  "reference_ids": [],
+  "created_at": "2026-11-20T08:39:18+00:00"
+}

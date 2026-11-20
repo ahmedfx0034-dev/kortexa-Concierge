@@ -45,12 +45,13 @@ def _base(s) -> str:
 
 def _call(client, method: str, url: str, token: str, params: Optional[dict] = None) -> dict:
     params = dict(params or {})
-    params["access_token"] = token
+    # Token goes in a header (not the query/form) so a secret-injecting proxy can supply it.
+    headers = {"Authorization": f"Bearer {token}"}
     try:
         if method == "GET":
-            r = client.get(url, params=params)
+            r = client.get(url, params=params, headers=headers)
         else:
-            r = client.post(url, data=params)
+            r = client.post(url, data=params, headers=headers)
     except httpx.HTTPError as e:
         raise PublishError(f"Network error calling Instagram: {e}") from e
     try:

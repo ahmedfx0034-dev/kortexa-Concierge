@@ -1,0 +1,79 @@
+"""Typer commands for the campaign calendar. Mount with app.add_typer(campaign_app, name="campaign")."""
+from __future__ import annotations
+
+import json
+from datetime import date, datetime, timedelta, timezone
+from typing import List, Optional
+
+import typer
+
+from .. import store
+from . import apply_reviews as _apply_reviews
+from . import assign_week as _assign_week
+from . import attach_drafts_to_slots, load_calendar, plan_month
+from . import publish_due as _publish_due
+
+campaign_app = typer.Typer(help="Month-long posting calendar and style experiment.")
+
+
+@campaign_app.command("plan")
+def plan(start: str = typer.Argument(..., help="First day, YYYY-MM-DD"),
+         days: int = typer.Option(30), per_day: int = typer.Option(3, "--per-day"),
+         times: str = typer.Option("08:30,13:00,19:30", help="Comma-separated local HH:MM"),
+         styles: str = typer.Option(..., help="Comma-separated style names for week 1"),
+         tz: str = typer.Option("Africa/Accra")):
+    """Create the slots; week 1 gets rotated styles, later weeks stay open."""
+    cal = plan_month(date.fromisoformat(start), days=days, posts_per_day=per_day,
+                     times=[t.strip() for t in times.split(",")],
+                     styles=[s.strip() for s in styles.split(",") if s.strip()], tz=tz)
+    typer.echo(f"Calendar has {len(cal.slots)} slots.")
+
+
+@campaign_app.command("assign-week")
+def assign_week_cmd(week_start: str, champion: str = typer.Option(...),
+                    challenger: List[str] = typer.Option(..., help="Repeat for each challenger"),
+                    champion_share: float = typer.Option(0.6)):
+    """Assign styles for a later week: champion ~60%, challengers split the rest."""
+    changed = _assign_week(date.fromisoformat(week_start), champion, challenger, champion_share)
+    typer.echo(f"Assigned {len(changed)} slots.")
+
+
+@campaign_app.command("attach")
+def attach():
+    """Match unscheduled drafts to open slots of their style."""
+    res = attach_drafts_to_slots()
+    for r in res:
+        typer.echo(f"{r['draft_id']} -> {r['slot_id']} ({r['arm']}) {r['scheduled_at']}")
+    typer.echo(f"Attached {len(res)} drafts.")
+
+
+@campaign_app.command("calendar")
+def show_calendar(days: int = typer.Option(7)):
+    """Show the upcoming days: time, style, status, title."""
+    cal = load_calendar()
+    today = datetime.now(timezone.utc).date()
+    end = today + timedelta(days=days)
+    for s in cal.slots:
+        if today <= date.fromisoformat(s.date) < end:
+            title = ""
+            if s.draft_id:
+                try:
+                    title = store.load_draft(s.draft_id).idea.title
+                except FileNotFoundError:
+                    title = "(missing draft)"
+            typer.echo(f"{s.date} {s.time}  {(s.style or '-'):<18} {(s.arm or '-'):<10} "
+                       f"{s.status:<8} {title}{('  [' + s.reason + ']') if s.reason else ''}")
+
+
+@campaign_app.command("publish-due")
+def publish_due_cmd(dry_run: bool = typer.Option(False, "--dry-run"),
+                    max_posts: int = typer.Option(3, "--max-posts")):
+    """Post approved drafts whose slot time has come."""
+    res = _publish_due(dry_run=dry_run, max_posts=max_posts)
+    typer.echo(json.dumps(res, indent=2))
+
+
+@campaign_app.command("apply-reviews")
+def apply_reviews_cmd(path: str):
+    """Apply a JSON export of review decisions to drafts."""
+    typer.echo(json.dumps(_apply_reviews(path), indent=2))

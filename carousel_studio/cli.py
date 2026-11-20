@@ -18,6 +18,20 @@ from .config import BRAND_FILE, get_settings
 
 app = typer.Typer(add_completion=False, no_args_is_help=True, help="Carousel Studio")
 
+try:  # optional sub-apps
+    from .analytics.cli import analytics_app
+
+    app.add_typer(analytics_app, name="analytics", help="Pull Instagram results and compare styles")
+except ImportError:  # pragma: no cover
+    pass
+
+try:
+    from .campaign.cli import campaign_app
+
+    app.add_typer(campaign_app, name="campaign", help="Month calendar, scheduled posting and review import")
+except ImportError:  # pragma: no cover
+    pass
+
 
 @app.command()
 def learn(

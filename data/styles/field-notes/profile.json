@@ -1,0 +1,65 @@
+{
+  "name": "field-notes",
+  "summary": "Building-in-public notebook: warm off-white grid paper, black handwritten-feel headings and a red marker accent. Feels honest and behind-the-scenes, made for sharing lessons from real conversations with agents.",
+  "palette": {
+    "background": "#F5F3EE",
+    "surface": "#FFFFFF",
+    "text": "#1A1A1A",
+    "muted_text": "#6B6760",
+    "accent": "#D7263D",
+    "accent_2": "#2E86AB"
+  },
+  "typography": {
+    "heading_font": "Space Grotesk",
+    "body_font": "IBM Plex Sans",
+    "heading_weight": 700,
+    "heading_case": "sentence",
+    "heading_size": "l"
+  },
+  "archetypes": [
+    {
+      "name": "hook",
+      "description": "Centred statement like a journal headline with red marker highlight",
+      "layout": "center_statement"
+    },
+    {
+      "name": "note",
+      "description": "Dated-feeling heading with a short paragraph, like a notebook entry",
+      "layout": "top_heading_body"
+    },
+    {
+      "name": "lesson",
+      "description": "Red number with the lesson learned",
+      "layout": "numbered"
+    },
+    {
+      "name": "quote",
+      "description": "What an agent actually said, as a quote",
+      "layout": "quote"
+    },
+    {
+      "name": "cta",
+      "description": "Centred invitation to follow the journey",
+      "layout": "cta"
+    }
+  ],
+  "decorations": [
+    "faint grid paper texture",
+    "red highlighter marker on key words",
+    "handle top left",
+    "page number bottom right like 3/8",
+    "left accent bar stripe"
+  ],
+  "uses_photos": false,
+  "words_per_slide": 35,
+  "slide_count": 8,
+  "hook_patterns": [
+    "'I visited N agents this week. Here's what I learned.'",
+    "'What an agent in Accra told me about ...'",
+    "'Building in public: week N'"
+  ],
+  "tone": "Honest, reflective, first person. Shares real observations, admits what isn't proven yet.",
+  "caption_style": "Opens with a one-line restatement of the hook, 3-6 short lines of value, a direct question to drive comments, then the CTA. 1-2 emojis max. 5-8 niche hashtags at the end.",
+  "reference_ids": [],
+  "created_at": "2026-11-20T08:39:17+00:00"
+}

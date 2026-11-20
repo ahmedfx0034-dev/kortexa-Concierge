@@ -1,0 +1,37 @@
+{
+  "week": "2026-11-24",
+  "note": "Week 1 = explore. Each style gets a mix of content pillars so we compare styles, not topics.",
+  "assignments": {
+    "night-shift": [
+      {"pillar": "lead leaks", "title": "The first reply wins the client", "angle": "Buyers message several agents at once; the one who replies first usually gets the viewing"},
+      {"pillar": "AI done right", "title": "AI isn't smart on its own", "angle": "Kortexa's core belief: the system and prompting around AI is what makes it work"},
+      {"pillar": "building in public", "title": "Why we'll never post fake results", "angle": "Proof over promises: we're early and we'll share real numbers as they come"},
+      {"pillar": "scripts", "title": "Reply to 'I'll think about it' without sounding pushy", "angle": "Two or three short follow-up messages that keep the door open"},
+      {"pillar": "lead leaks", "title": "Your ad budget isn't the problem. Your reply speed is.", "angle": "Paying for ads that bring leads nobody answers fast enough"}
+    ],
+    "listing-sheet": [
+      {"pillar": "lead leaks", "title": "5 moments agents lose buyers", "angle": "Enquiry, after viewing, price question, weekend, late night: where leads leak"},
+      {"pillar": "AI done right", "title": "4 questions to ask before booking a viewing", "angle": "Qualify budget, location, timeline and decision-maker so viewings aren't wasted"},
+      {"pillar": "building in public", "title": "Why we're building AI for real estate agents in Ghana", "angle": "Origin story from Kortexa's first carousel: the problem isn't finding leads, it's losing them"},
+      {"pillar": "scripts", "title": "What to send after a viewing", "angle": "A same-day follow-up that moves the buyer to the next step"}
+    ],
+    "chat-script": [
+      {"pillar": "scripts", "title": "5 messages for a buyer who went quiet", "angle": "Copy-paste follow-ups for day 1, 3, 7, 14 and 30"},
+      {"pillar": "scripts", "title": "When a client says 'the price is too high'", "angle": "Replies that handle the objection without discounting first"},
+      {"pillar": "AI done right", "title": "When your AI assistant should hand over to you", "angle": "Smart human handoff: the moments a real agent must step in"},
+      {"pillar": "lead leaks", "title": "The enquiry you saw at 11pm", "angle": "What happens to late-night messages and a better way to handle them"}
+    ],
+    "sunrise-bold": [
+      {"pillar": "scripts", "title": "Your first reply to an Instagram property enquiry", "angle": "A copy-paste first reply that answers and asks the right next question"},
+      {"pillar": "AI done right", "title": "Why plug-and-play chatbots annoy buyers", "angle": "Generic bots vs a properly built assistant that knows your listings"},
+      {"pillar": "lead leaks", "title": "Every missed message is a missed commission", "angle": "A fill-in-your-own-numbers calculation of what slow replies cost (no invented stats)"},
+      {"pillar": "scripts", "title": "A weekend auto-reply that doesn't sound like a robot", "angle": "Template for weekend enquiries that still books the viewing"}
+    ],
+    "field-notes": [
+      {"pillar": "building in public", "title": "What agents keep telling us", "angle": "The pain points we hear in conversations: slow replies, missed bookings, wasted ad spend"},
+      {"pillar": "AI done right", "title": "A day in an agency with a proper AI assistant", "angle": "Walk through a day: instant replies, qualification, bookings, follow-up, handoff"},
+      {"pillar": "lead leaks", "title": "Busy isn't why you're losing deals", "angle": "Manual processes can't keep up with growth; it's a system problem, not effort"},
+      {"pillar": "scripts", "title": "3 messages to get landlords to list with you", "angle": "Outreach messages that win more listings"}
+    ]
+  }
+}

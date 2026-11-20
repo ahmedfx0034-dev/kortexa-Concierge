@@ -66,6 +66,7 @@ class FakeGraph:
         q = {k: v[0] for k, v in parse_qs(request.url.query.decode()).items()}
         form = {k: v[0] for k, v in parse_qs(request.content.decode()).items()} if request.content else {}
         self.calls.append((request.method, path, {**q, **form}))
+        self.auth = getattr(self, "auth", []) + [request.headers.get("authorization")]
         if self.fail_at and path.endswith(self.fail_at):
             return httpx.Response(400, json={"error": {"message": "Bad image", "code": 9004, "error_subcode": 2207052}})
         if request.method == "POST" and path.endswith("/1789/media"):
@@ -125,7 +126,8 @@ def test_publish_full_sequence():
     assert carousel["media_type"] == "CAROUSEL" and len(carousel["children"].split(",")) == 3
     assert carousel["caption"] == "Hello\n\n#one #two"
     assert posts[4][2]["creation_id"] == "container1"
-    assert all(c[2]["access_token"] == "tok" for c in g.calls)
+    assert all(a == "Bearer tok" for a in g.auth)
+    assert all("access_token" not in c[2] for c in g.calls)
 
 
 def test_publish_graph_error_marks_failed():

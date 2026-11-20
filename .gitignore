@@ -1,6 +1,11 @@
 .env
 __pycache__/
 *.egg-info/
-data/styles/*/refs/
-data/drafts/
 .venv/
+
+# Git is the state store for scheduled sessions: JSON is tracked, bulky/derived files are not.
+data/drafts/**/*.png
+data/drafts/**/*.jpg
+data/drafts/**/*.jpeg
+data/styles/*/refs/
+data/styles/*/preview*

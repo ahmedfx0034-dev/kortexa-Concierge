@@ -124,5 +124,11 @@ class CarouselDraft(BaseModel):
     ig_media_id: Optional[str] = None
     ig_permalink: Optional[str] = None
     error: Optional[str] = None
+    # campaign scheduling (all optional; older draft.json files still load)
+    scheduled_at: Optional[str] = Field(default=None, description="ISO 8601 with offset")
+    slot_id: Optional[str] = None
+    experiment_arm: Optional[str] = Field(default=None, description="'explore', 'champion', 'challenger'")
+    image_urls: List[str] = Field(default_factory=list, description="Public URLs once uploaded")
+    published_at: Optional[str] = None
     created_at: str = Field(default_factory=utcnow)
     updated_at: str = Field(default_factory=utcnow)
