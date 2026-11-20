@@ -23,7 +23,8 @@ from .browser import browser_page
 log = logging.getLogger(__name__)
 
 W, H = 1080, 1350
-LAYOUTS = ("center_statement", "top_heading_body", "numbered", "split_image", "list", "quote", "cta")
+LAYOUTS = ("center_statement", "top_heading_body", "numbered", "split_image", "list", "quote", "cta",
+           "before_after", "photo")
 TEMPLATES = Path(__file__).parent / "templates"
 
 _env = Environment(
@@ -97,9 +98,18 @@ def build_colors(profile: StyleProfile) -> dict:
     is_dark = _lum(bg) < 0.22
     card_text = muted if contrast(muted, surface) >= 3.2 else (text if contrast(text, surface) >= 4.5 else _best_on(surface))
     ph_mid = _mix(accent, accent2, 0.5)
+    on_accent = _best_on(accent)
+    if on_accent == "#111111":  # prefer the brand's own black on the accent (black text on a lime button)
+        darkest = min((bg, text), key=_lum)
+        if _lum(darkest) < 0.02 and contrast(darkest, accent) >= 4.5:
+            on_accent = darkest
+    # an accent bright enough to read on a dark photo scrim (used by photo layouts)
+    hl_dark = max((accent, accent2), key=lambda x: contrast(x, "#030305"))
     return dict(
         bg=bg, surface=surface, text=text, muted=muted, accent=accent, accent2=accent2,
-        on_accent=_best_on(accent), hl=hl, is_dark=is_dark, card_text=card_text,
+        on_accent=on_accent, hl=hl, hl_dark=hl_dark, is_dark=is_dark, card_text=card_text,
+        tint=_mix(bg, accent, 0.07 if not is_dark else 0.05),
+        panel=_mix(bg, "#FFFFFF", 0.055) if is_dark else _mix(bg, "#000000", 0.035),
         line=_rgba(text, 0.14), shadow="rgba(0,0,0,.35)" if is_dark else "rgba(20,20,40,.08)",
         on_ph=_best_on(ph_mid),
         accent_a18=_rgba(accent, 0.20 if is_dark else 0.16), accent2_a14=_rgba(accent2, 0.16 if is_dark else 0.14),
@@ -158,7 +168,7 @@ def build_fonts(profile: StyleProfile) -> dict:
     t = profile.typography
     hf, bf = (t.heading_font or "Inter").strip(), (t.body_font or "Inter").strip()
     w = max(100, min(900, int(round((t.heading_weight or 700) / 100) * 100)))
-    reqs = [(hf, {w, 900}), (bf, {400, 600, 700})]
+    reqs = [(hf, {w, 700, 900}), (bf, {400, 500, 600, 700})]
     serif_head = any(h in hf.lower() for h in fontlib.SERIF_HINTS) and "sans" not in hf.lower()
     css = ""
     try:
@@ -188,22 +198,49 @@ def _pos(text: str, default: str) -> str:
 def parse_decorations(decorations: Sequence[str]) -> dict:
     """Keyword-match free-text motifs into render switches + chrome positions."""
     d = dict(counter=None, counter_pad=False, counter_pill=False, handle=None, swipe=None, swipe_word=False,
-             brand=None, underline=False, rule_h=10, bar=None, frame=False, frame_w=2, frame_radius=0,
-             frame_color=None, grain=False, grain_opacity=0.10, progress=False, glow=False, dots=False,
-             grid=False, blob=False, card=False, marker=False, outline_numbers=False, numbered_marks=False)
+             brand=None, underline=False, rule_h=10, bar=None, bar_hero=False, frame=False, frame_w=2,
+             frame_radius=0, frame_color=None, grain=False, grain_opacity=0.10, progress=False, glow=False,
+             glow_hero=False, dots=False, grid=False, blob=False, card=False, marker=False, outline_numbers=False,
+             numbered_marks=False, logo=None, logo_mark=False, footer=None, eyebrow=False, eyebrow_bar=False,
+             callout=False, number_rows=False, cta_button=False)
     for raw in decorations or []:
         s = raw.lower()
+        if re.search(r"\bfooter\b", s):
+            q = re.search(r"[\"\u201c\u2018']([^\"\u201d\u2019']{2,60})[\"\u201d\u2019']", raw)
+            d["footer"] = q.group(1).strip() if q else True
+            s_rest = re.sub(r"[\"\u201c\u2018'][^\"\u201d\u2019']*[\"\u201d\u2019']", "", s)
+            # "footer with slide counter" also turns the counter on (bottom-right by default)
+            if re.search(r"counter|page number|slide number", s_rest):
+                d["counter"] = _pos(s_rest.replace("footer", "bottom"), "br")
+            continue
         if re.search(r"counter|page number|slide number|pagination|\d+\s*/\s*\d+|\d+ of \d+", s):
             d["counter"] = _pos(s, "tr")
             d["counter_pad"] = bool(re.search(r"\b0\d\b", s))
             d["counter_pill"] = any(k in s for k in ("pill", "badge", "capsule", "rounded"))
         if re.search(r"handle|username|@\w|account name", s):
             d["handle"] = _pos(s, "bl")
-        if re.search(r"swipe|arrow|chevron|next ?→|→", s):
+        if re.search(r"swipe|arrow|chevron|next ?\u2192|\u2192", s):
             d["swipe"] = _pos(s, "br")
             d["swipe_word"] = "swipe" in s
-        if re.search(r"\blogo\b|brand ?name|wordmark", s):
+        if re.search(r"\blogo\b", s):
+            d["logo"] = _pos(s, "tl")
+            d["logo_mark"] = bool(re.search(r"\bmark\b|\bicon\b|\bsymbol\b", s))
+            d["brand"] = d["logo"]  # text fallback when the brand has no logo file
+        elif re.search(r"brand ?name|wordmark", s):
             d["brand"] = _pos(s, "tl")
+        if re.search(r"eyebrow|kicker label|letter-?spaced (label|kicker)", s):
+            d["eyebrow"] = True
+            d["eyebrow_bar"] = bool(re.search(r"\bbar\b|\bdash\b|\brule\b|\bline\b", s))
+            continue
+        if re.search(r"\bcallout\b|takeaway box|left[- ]border", s):
+            d["callout"] = True
+            continue
+        if re.search(r"numbered rows|number(ed)? rows|big (lime |accent )?numbers?|row numbers", s):
+            d["number_rows"] = True
+            continue
+        if re.search(r"\bbutton\b", s):
+            d["cta_button"] = True
+            continue
         if "underline" in s or "rule under" in s:
             d["underline"] = True
             if "thin" in s or "hairline" in s:
@@ -211,6 +248,7 @@ def parse_decorations(decorations: Sequence[str]) -> dict:
         if re.search(r"(accent|colou?r|side|vertical|edge)[\w\s]*\b(bar|stripe|strip|band)\b|\bbar\b|\bstripe\b", s) \
                 and "progress" not in s and "underline" not in s:
             d["bar"] = "top" if "top" in s else "bottom" if "bottom" in s else "left"
+            d["bar_hero"] = bool(re.search(r"cover|hook|first", s))
         if re.search(r"border|frame|outline box|inset line", s):
             d["frame"] = True
             d["frame_radius"] = 28 if "round" in s else 0
@@ -224,6 +262,7 @@ def parse_decorations(decorations: Sequence[str]) -> dict:
             d["progress"] = True
         if re.search(r"gradient|glow|halo|mesh", s):
             d["glow"] = True
+            d["glow_hero"] = bool(re.search(r"cover|hook|first", s))
         if re.search(r"dot(s|ted)? (grid|pattern)|polka|halftone", s):
             d["dots"] = True
         elif re.search(r"grid", s):
@@ -232,26 +271,147 @@ def parse_decorations(decorations: Sequence[str]) -> dict:
             d["blob"] = True
         if re.search(r"card|panel|box|container", s) and "outline box" not in s:
             d["card"] = True
-        if re.search(r"highlight|marker|highlighter", s):
+        # "highlight words in lime" means coloured text; a marker/highlighter means a box behind the words
+        if re.search(r"marker|highlighter|highlight (box|block|band)", s) or (
+                "highlight" in s and not re.search(r"text|word|colou?r|lime|accent", s)):
             d["marker"] = True
         if re.search(r"outline(d)? (number|numeral|digit)", s):
             d["outline_numbers"] = True
         if re.search(r"numbered (bullet|list)|number badge", s):
             d["numbered_marks"] = True
+    d["kit"] = bool(d["footer"] or d["eyebrow"])  # refined, letter-spaced chrome (playbook look)
     return d
 
 
-def _chrome(deco: dict, brand: dict, index: int, total: int, layout: str, on_image: bool) -> dict:
+# -------------------------------------------------------------------- logos
+
+_LOGO_CACHE: dict = {}
+
+
+def _resolve_asset(path: Optional[str]) -> Optional[Path]:
+    if not path:
+        return None
+    p = Path(path)
+    for c in ([p] if p.is_absolute() else [config.ROOT / p, config.DATA_DIR.parent / p, config.DATA_DIR / p,
+                                           Path.cwd() / p]):
+        if c.is_file():
+            return c
+    return None
+
+
+def _png_uri(im) -> str:
+    import io
+
+    buf = io.BytesIO()
+    im.save(buf, format="PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
+def logo_variants(path: Optional[str]) -> Optional[dict]:
+    """Load a transparent logo PNG and split it into variants by its horizontal bands:
+    'full' (everything), 'lockup' (mark + wordmark, no tagline) and 'mark' (the symbol only).
+    Returns {variant: {"uri": data-URI, "ratio": w/h}} or None if the file is missing."""
+    p = _resolve_asset(path)
+    if not p:
+        return None
+    key = (str(p), p.stat().st_mtime)
+    if key in _LOGO_CACHE:
+        return _LOGO_CACHE[key]
+    try:
+        from PIL import Image
+
+        im = Image.open(p).convert("RGBA")
+        alpha = im.getchannel("A").point(lambda v: 255 if v > 40 else 0)
+        w, h = im.size
+        rw = max(1, w // 4)
+        rows = alpha.resize((rw, h)).tobytes()
+        ink = [any(rows[y * rw + x] for x in range(rw)) for y in range(h)]
+        bands, start = [], None
+        for y, on in enumerate(ink + [False]):
+            if on and start is None:
+                start = y
+            elif not on and start is not None:
+                if bands and start - bands[-1][1] < h * 0.025:   # tiny gap: same band
+                    bands[-1] = (bands[-1][0], y)
+                else:
+                    bands.append((start, y))
+                start = None
+
+        def crop(y0: int, y1: int) -> dict:
+            part = im.crop((0, y0, w, y1))
+            bb = part.getchannel("A").point(lambda v: 255 if v > 40 else 0).getbbox() or (0, 0, w, y1 - y0)
+            part = part.crop(bb)
+            return {"uri": _png_uri(part), "ratio": round(part.width / max(1, part.height), 4)}
+
+        if not bands:
+            out = None
+        else:
+            top, bottom = bands[0][0], bands[-1][1]
+            full = crop(top, bottom)
+            out = {"full": full,
+                   "lockup": crop(top, bands[1][1]) if len(bands) >= 3 else full,
+                   "mark": crop(*bands[0]) if len(bands) >= 2 else full}
+    except Exception as e:  # never let a bad logo break rendering
+        log.warning("Could not load logo %s: %s", p, e)
+        out = None
+    _LOGO_CACHE[key] = out
+    return out
+
+
+def brand_logo(brand: dict, dark_bg: bool) -> Optional[dict]:
+    """Logo variants for a background: logo_dark is the version made for dark slides."""
+    order = ("logo_dark", "logo_light", "logo") if dark_bg else ("logo_light", "logo_dark", "logo")
+    for k in order:
+        v = logo_variants(brand.get(k))
+        if v:
+            return v
+    return None
+
+
+def _logo_img(v: dict, height: int, cls: str) -> str:
+    return (f'<img class="{cls}" src="{v["uri"]}" alt="" '
+            f'style="height:{height}px;width:{round(height * v["ratio"])}px">')
+
+
+def _footer_html(text: str, tagline: bool = False) -> str:
+    """'KORTEXA · AI WORKFLOWS' -> first part muted, the rest in the accent colour.
+    tagline=True renders every part in the accent (the closing slide)."""
+    parts = [x.strip() for x in re.split(r"\s*[\u00b7|\u2022]\s*", text) if x.strip()]
+    esc = html.escape
+    if tagline:
+        inner = ' <span class="sep">\u00b7</span> '.join(esc(x) for x in parts)
+        return f'<div class="chip footer tagline"><span class="fl">{inner}</span></div>'
+    if len(parts) < 2:
+        return f'<div class="chip footer">{esc(text)}</div>'
+    rest = ' <span class="sep">\u00b7</span> '.join(esc(x) for x in parts[1:])
+    return (f'<div class="chip footer"><span>{esc(parts[0])}</span> <span class="sep">\u00b7</span> '
+            f'<span class="fl">{rest}</span></div>')
+
+
+def _chrome(deco: dict, brand: dict, index: int, total: int, layout: str, on_image: bool,
+            logo: Optional[dict] = None, hero: bool = False) -> dict:
     slots = {"tl": [], "tr": [], "bl": [], "br": []}
     esc = html.escape
-    if deco["brand"] and brand.get("brand_name"):
+    if deco["logo"] and logo and not hero:
+        v = logo["mark"] if deco["logo_mark"] else logo["lockup"]
+        slots[deco["logo"]].append(_logo_img(v, 64 if deco["logo_mark"] else 60, "chip logo"))
+    elif deco["brand"] and brand.get("brand_name") and not (hero and deco["logo"] and logo):
         slots[deco["brand"]].append(f'<div class="chip brand">{esc(brand["brand_name"])}</div>')
+    if deco["footer"]:
+        text = deco["footer"] if isinstance(deco["footer"], str) else (
+            brand.get("footer") or (brand.get("brand_name") or "").upper())
+        tagline = bool(hero and layout == "cta" and brand.get("tagline"))
+        if tagline:
+            text = brand["tagline"].upper()  # all-accent tagline, like the playbook's last page
+        if text:
+            slots["bl"].append(_footer_html(text, tagline))
     if deco["handle"] and brand.get("instagram_handle") and layout != "cta":
         h = brand["instagram_handle"]
         h = h if h.startswith("@") else "@" + h
         slots[deco["handle"]].append(f'<div class="chip handle">{esc(h)}</div>')
-    if deco["counter"]:
-        txt = f"{index:02d} / {total:02d}" if deco["counter_pad"] else f"{index}/{total}"
+    if deco["counter"] and not (hero and deco["kit"]):
+        pad = deco["counter_pad"] or deco["kit"]
+        txt = f"{index:02d} / {total:02d}" if pad else f"{index}/{total}"
         pill = deco["counter_pill"] or (on_image and deco["counter"].startswith("t"))
         cls = "chip counter pill" if pill else "chip counter"
         slots[deco["counter"]].append(f'<div class="{cls}">{txt}</div>')
@@ -372,8 +532,10 @@ class _Theme:
         self.deco["frame_color"] = self.c["accent"] if fc == "accent" else self.c["line"]
         if not self.c["is_dark"] and not self.deco.get("grain_strong"):
             self.deco["grain_opacity"] = 0.05  # multiply-grain greys out light backgrounds quickly
-        tops = {self.deco[k] for k in ("counter", "handle", "brand") if self.deco[k]}
-        bottoms = tops | ({self.deco["swipe"]} if self.deco["swipe"] else set())
+        self.logo = brand_logo(brand, self.c["is_dark"]) if self.deco["logo"] else None
+        self.logo_on_dark = (brand_logo(brand, True) if self.deco["logo"] else None)
+        tops = {self.deco[k] for k in ("counter", "handle", "brand", "logo") if self.deco[k]}
+        bottoms = tops | ({self.deco["swipe"]} if self.deco["swipe"] else set()) | ({"bl"} if self.deco["footer"] else set())
         self.has_top = any(p and p.startswith("t") for p in bottoms)
         self.has_bottom = any(p and p.startswith("b") for p in bottoms)
 
@@ -384,18 +546,47 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
     case_fn = title_case if t["title"] else None
     is_first, is_last = slide.index == 1, slide.index == total
 
-    image_uri = _image_uri(slide.image_path, base)
+    deco = theme.deco
+    ba_images: list = []
+    if layout == "before_after":
+        # image_path is the AFTER photo; "before.jpg | after.jpg" gives both panels a photo
+        paths = [x.strip() for x in re.split(r"\s*[|;]\s*", slide.image_path or "") if x.strip()]
+        if len(paths) == 1:
+            paths = [None, paths[0]]
+        ba_images = [_image_uri(x, base) if x else None for x in paths[:2]] + [None, None]
+        ba_images = ba_images[:2]
+        image_uri = None
+    else:
+        image_uri = _image_uri(slide.image_path, base)
+    photo_bg = layout == "photo"
     on_image = bool(layout == "split_image" or image_uri)
-    chrome = _chrome(theme.deco, brand, slide.index, total, layout, on_image and layout == "split_image")
+    # cover/hook and closing slides carry the full logo, large (like the playbook's cover and last page)
+    hero = bool(deco["logo"] and theme.logo and layout in ("center_statement", "cta", "photo")
+                and (is_first or is_last))
+    logo = theme.logo_on_dark if photo_bg else theme.logo
+    chrome = _chrome(deco, brand, slide.index, total, layout,
+                     on_image and layout in ("split_image", "photo"), logo, hero)
 
-    top = 64 + 44 + 52 if theme.has_top else 110
-    bottom = 64 + 44 + 52 if theme.has_bottom else 110
+    chrome_h = 60 if deco["kit"] else 44
+    chrome_y = 60 if deco["kit"] else 64
+    top = chrome_y + chrome_h + 52 if theme.has_top else 110
+    bottom = chrome_y + chrome_h + 52 if theme.has_bottom else 110
+    hero_logo = None
+    if hero and logo:
+        hv = logo["full"] if layout != "photo" else logo["lockup"]  # the tiny tagline turns to noise on a photo
+        hh = 150 if layout != "photo" else 104
+        hero_logo = Markup(_logo_img(hv, hh, "hero-logo"))
+        top = max(top, 72 + hh + 70)
     media_h = 610
     if layout == "split_image":
         top = media_h + 56
-    grow = {"center_statement": 1.0, "cta": 1.0, "quote": 1.1, "split_image": 1.08,
-            "top_heading_body": 1.4}.get(layout, 1.18)
-    geo = dict(top=top, bottom=bottom, media_h=media_h, grow=grow)
+    grow = {"center_statement": 1.0, "cta": 1.0, "quote": 1.1, "split_image": 1.08, "photo": 1.0,
+            "before_after": 1.1, "top_heading_body": 1.4}.get(layout, 1.18)
+    if layout == "list" and deco["number_rows"]:
+        grow = 1.35
+    if deco["kit"] and layout in ("center_statement", "cta"):
+        grow = 1.15  # the playbook look lets cover/statement type run large
+    geo = dict(top=top, bottom=bottom, media_h=media_h, grow=grow, chrome_h=chrome_h, chrome_y=chrome_y)
 
     kicker = slide.kicker
     number = f"{numbered_ordinal:02d}"
@@ -412,12 +603,28 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
         body=rich(slide.body, paragraphs=True) if slide.body else None,
         bullets=[rich(b) for b in slide.bullets if b and b.strip()],
     )
+    show_glow = deco["glow"] and (not deco["glow_hero"] or (hero or is_first or (is_last and layout == "cta")))
+    show_bar = deco["bar"] and (not deco["bar_hero"] or hero or is_first or (is_last and layout == "cta"))
     ctx = dict(
-        s=s, c=theme.c, t=t, fonts=theme.fonts, font_css=Markup(theme.fonts["css"]), deco=theme.deco,
-        chrome=chrome, chrome_on_image=layout == "split_image", geo=geo, total=total,
+        s=s, c=theme.c, t=t, fonts=theme.fonts, font_css=Markup(theme.fonts["css"]), deco=deco,
+        chrome=chrome, chrome_on_image=layout in ("split_image", "photo"), geo=geo, total=total,
         is_first=is_first, is_last=is_last, image_uri=image_uri, number=number,
-        align=_align_for(p, slide.archetype, layout),
+        align=_align_for(p, slide.archetype, layout), hero_logo=hero_logo, hero=hero,
+        show_glow=show_glow, show_bar=show_bar,
     )
+    if layout == "list" and deco["number_rows"]:
+        rows = []
+        src = [b for b in slide.bullets if b and b.strip()]
+        if not src and slide.body:
+            src = [ln.strip(" -\u2022*\t") for ln in slide.body.splitlines() if ln.strip(" -\u2022*\t")]
+        for b in src:
+            title, desc = _split_row(b)
+            rows.append(dict(title=rich(title) if title else None, desc=rich(desc) if desc else None))
+        ctx["rows"] = rows
+    if layout == "before_after":
+        before, after = _before_after_text(slide)
+        ctx.update(before=_ba_lines(before), after=_ba_lines(after), before_img=ba_images[0],
+                   after_img=ba_images[1], ba_labels=_ba_labels(slide))
     if layout == "list":
         bullets = s["bullets"]
         list_body = s["body"]
@@ -450,6 +657,52 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
             cta_text = Markup(html.escape(smart_quotes(cta_text)))
         ctx.update(cta_text=cta_text, handle=handle, initial=name[:1].upper())
     return ctx
+
+
+def _split_row(text: str) -> tuple[Optional[str], Optional[str]]:
+    """'The photo dump: twenty photos in random order' -> ('The photo dump', 'twenty photos ...')."""
+    t = text.strip()
+    m = re.match(r"^(.{2,48}?)\s*(?::|\s[\u2014\u2013-]\s)\s*(.+)$", t, re.S)
+    if m and len(_plain(m.group(1)).split()) <= 6:
+        desc = m.group(2).strip()
+        i = next((j for j, ch in enumerate(desc) if ch.isalpha()), None)
+        if i is not None and desc[i].islower():
+            desc = desc[:i] + desc[i].upper() + desc[i + 1:]
+        return m.group(1).strip(), desc
+    if len(t.split()) <= 6:
+        return t, None
+    return None, t
+
+
+def _before_after_text(slide: Slide) -> tuple[str, str]:
+    """BEFORE / AFTER copy. Either 'Before: ...' and 'After: ...' sections in the body,
+    or body = before and bullets = the after lines."""
+    body = (slide.body or "").strip()
+    parts = re.split(r"(?im)^\s*\**\s*(before|after)\s*\**\s*[:\-\u2013\u2014]\s*", body)
+    if len(parts) >= 3:
+        found = {parts[i].lower(): parts[i + 1].strip() for i in range(1, len(parts) - 1, 2)}
+        before, after = found.get("before", ""), found.get("after", "")
+        if not after and slide.bullets:
+            after = "\n".join(slide.bullets)
+        return before, after
+    return body, "\n".join(b for b in slide.bullets if b and b.strip())
+
+
+def _ba_lines(text: str) -> list:
+    out = []
+    for ln in (text or "").splitlines():
+        ln = ln.strip()
+        if not ln:
+            continue
+        m = re.match(r"^(\u2713|\u2714|\[x\]|-\s|\u2022|\*\s)\s*", ln)
+        if m:
+            ln = ln[m.end():]
+        out.append(dict(text=rich(ln), check=bool(m)))
+    return out
+
+
+def _ba_labels(slide: Slide) -> tuple[str, str]:
+    return "Before", "After"
 
 
 def _is_brand_cta(body: str, cta: str, handle: str) -> bool:

@@ -23,11 +23,23 @@
    font-size: calc(var(--kb) * 34px); line-height: 1.4; text-wrap: pretty; }
 .layout-quote .msg-note p + p { margin-top: .5em; }
 {% endif %}
+{% if deco.callout %}
+.layout-quote .callout .h { font-size: calc(var(--k) * var(--hs) * 70px); line-height: 1.1; font-style: normal;
+   font-weight: var(--hweight); letter-spacing: {{ t.tracking }}; {{ 'text-transform: uppercase;' if t.upper else '' }} }
+.layout-quote .callout .body.extra { margin-top: calc(var(--k) * 30px); color: var(--muted); }
+.layout-quote .callout .attr { margin-top: calc(var(--k) * 34px); }
+{% endif %}
 {% endblock %}
 {% block inner_class %}v-center align-left{% endblock %}
 {% block content %}
   {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
-  {% if deco.message %}
+  {% if deco.callout %}
+  <div class="callout">
+    <blockquote class="h">{{ s.heading }}</blockquote>
+    {% if quote_body %}<div class="body extra">{{ quote_body }}</div>{% endif %}
+    {% if attribution %}<div class="attr">{{ attribution }}</div>{% endif %}
+  </div>
+  {% elif deco.message %}
   <div class="card">
     <blockquote class="h">{{ s.heading }}</blockquote>
   </div>

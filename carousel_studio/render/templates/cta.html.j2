@@ -16,17 +16,32 @@
    font-family: var(--bfont); font-size: calc(var(--k) * 24px); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
 .layout-cta .icons span { display: flex; align-items: center; gap: 12px; }
 .layout-cta .icons svg { width: 1.6em; height: 1.6em; stroke: var(--muted); }
+{% if deco.cta_button %}
+/* block button like the playbook's "CHAT ON WHATSAPP": lime, black Montserrat caps, small radius */
+.layout-cta .cta-btn { font-family: var(--hfont); font-weight: 800; text-transform: uppercase; letter-spacing: .1em;
+   font-size: calc(var(--k) * 34px); line-height: 1.3; border-radius: 12px; padding: .95em 1.3em; gap: .8em; text-align: left; }
+.layout-cta .cta-btn .t { text-wrap: balance; }
+.layout-cta .cta-btn svg { stroke-width: 3; }
+.layout-cta .cta-note { margin-top: calc(var(--k) * 30px); font-family: var(--bfont); color: var(--muted);
+   font-size: calc(var(--kb) * 30px); }
+.layout-cta .cta-note b { color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+{% endif %}
 {% endblock %}
 {% block inner_class %}v-center {{ 'align-center' if align == 'center' else 'align-left' }}{% endblock %}
 {% block content %}
   {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  {% if deco.eyebrow_bar %}<div class="ebar"></div>{% endif %}
   <h2 class="h">{{ s.heading }}</h2>
   {% if deco.underline %}<div class="rule"></div>{% endif %}
   {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}
   {% if cta_text %}<div class="cta-btn"><span class="t">{{ cta_text }}</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>{% endif %}
+  {% if deco.cta_button %}
+  {% if handle %}<div class="cta-note"><b>{{ handle }}</b></div>{% endif %}
+  {% else %}
   {% if handle %}<div class="who"><div class="avatar">{{ initial }}</div>{{ handle }}</div>{% endif %}
   <div class="icons">
     <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>Save</span>
     <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg>Share</span>
   </div>
+  {% endif %}
 {% endblock %}

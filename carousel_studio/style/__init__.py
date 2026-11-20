@@ -11,7 +11,7 @@ from ..models import ReferenceCarousel, SlideArchetype, StyleProfile
 __all__ = ["analyze_style", "select_slides", "build_prompt", "ALLOWED_LAYOUTS"]
 
 ALLOWED_LAYOUTS = [
-    "center_statement", "top_heading_body", "numbered", "split_image", "list", "quote", "cta",
+    "center_statement", "top_heading_body", "numbered", "split_image", "list", "quote", "cta", "before_after", "photo",
 ]
 MAX_TOTAL_IMAGES = 40
 

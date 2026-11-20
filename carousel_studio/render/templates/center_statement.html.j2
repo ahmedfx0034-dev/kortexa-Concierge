@@ -5,7 +5,8 @@
 {% endblock %}
 {% block inner_class %}v-center {{ 'align-center' if align == 'center' else 'align-left' }}{% endblock %}
 {% block content %}
-  {% if s.kicker %}<div class="kicker {{ 'tag' if is_first else '' }}">{{ s.kicker }}</div>{% endif %}
+  {% if s.kicker %}<div class="kicker {{ 'tag' if is_first and not deco.eyebrow else '' }}">{{ s.kicker }}</div>{% endif %}
+  {% if deco.eyebrow_bar %}<div class="ebar"></div>{% endif %}
   <h1 class="h">{{ s.heading }}</h1>
   {% if deco.underline %}<div class="rule"></div>{% endif %}
   {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}

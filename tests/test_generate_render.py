@@ -211,3 +211,105 @@ def test_decoration_parsing_and_helpers():
     assert d["grain"] and d["card"]
     assert title_case("how to win at the game of AI") == "How to Win at the Game of AI"
     assert contrast("#000000", "#FFFFFF") > 20
+
+
+# ------------------------------------------------------------ brand kit: logo, before/after, photo
+
+
+def _logo_png(path, ink):
+    """A fake transparent logo with three bands: mark, wordmark, tagline (like data/brand/logo-*.png)."""
+    from PIL import ImageDraw
+
+    im = Image.new("RGBA", (400, 220), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rectangle([150, 10, 250, 110], fill=ink)        # mark
+    d.rectangle([20, 140, 380, 180], fill=ink)        # wordmark
+    d.rectangle([40, 200, 360, 208], fill="#98CC13")  # tagline
+    im.save(path)
+
+
+def _kit_profile(name="kit", bg="#030305", text="#FFFFFF") -> StyleProfile:
+    p = make_profile(name=name, uses_photos=False)
+    p.palette = Palette(background=bg, surface="#111114", text=text, muted_text="#888888",
+                        accent="#98CC13", accent_2="#6FA00B")
+    p.archetypes.append(SlideArchetype(name="before_after", description="Two panels", layout="before_after"))
+    p.decorations = ["full logo top left on cover, small logo on inner slides",
+                     "footer line 'KORTEXA · AI WORKFLOWS' bottom left", "slide counter 01 / 08 top right",
+                     "letter-spaced lime eyebrow label with a short lime bar", "numbered rows with big lime numbers",
+                     "callout with lime left border", "lime CTA button with black text",
+                     "highlighted words in lime text colour"]
+    return p
+
+
+def test_logo_embedding_picks_variant_by_background(tmp_path):
+    from carousel_studio.models import Slide
+    from carousel_studio.render.renderer import brand_logo, logo_variants, render_html
+
+    dark, light = tmp_path / "on-dark.png", tmp_path / "on-light.png"
+    _logo_png(dark, "#FFFFFF")
+    _logo_png(light, "#000000")
+    v = logo_variants(str(dark))
+    assert set(v) == {"full", "lockup", "mark"}
+    assert v["mark"]["ratio"] == pytest.approx(1.0, abs=0.05)       # the square symbol only
+    assert v["full"]["ratio"] < v["lockup"]["ratio"]                 # tagline makes the full logo taller
+    brand = {"brand_name": "Kortexa", "instagram_handle": "@kortexa", "logo_dark": str(dark),
+             "logo_light": str(light), "call_to_action": "Comment LISTING and I'll send you the playbook"}
+    assert brand_logo(brand, True)["full"]["uri"] == v["full"]["uri"]
+    assert brand_logo(brand, False)["full"]["uri"] == logo_variants(str(light))["full"]["uri"]
+
+    slides = [Slide(index=1, archetype="hook", layout="center_statement", heading="Your listing is **invisible**",
+                    kicker="For agents"),
+              Slide(index=2, archetype="point", layout="top_heading_body", heading="The problem", body="Text."),
+              Slide(index=3, archetype="cta", layout="cta", heading="Want the playbook?",
+                    body="Comment LISTING and I'll send you the playbook")]
+    for prof, logo in ((_kit_profile(), dark), (_kit_profile("kit-light", "#FFFFFF", "#030305"), light)):
+        lv = logo_variants(str(logo))
+        pages = render_html(prof, slides, brand)
+        assert 'class="hero-logo"' in pages[0] and lv["full"]["uri"] in pages[0]       # cover: big full logo
+        assert 'class="chip logo"' in pages[1] and lv["lockup"]["uri"] in pages[1]     # inner: small lockup
+        assert 'class="hero-logo"' in pages[2] and 'class="cta-btn"' in pages[2]
+        assert "Comment LISTING" in pages[2]
+        assert "AI WORKFLOWS" in pages[1] and 'class="kicker' in pages[0] and 'class="ebar"' in pages[0]
+    # highlights use the darker lime on white slides
+    light_page = render_html(_kit_profile("kit-light", "#FFFFFF", "#030305"), slides[:1], brand)[0]
+    assert "--hl: #6FA00B" in light_page
+    # no logo file -> falls back to the brand name as text, nothing breaks
+    page = render_html(_kit_profile(), slides[1:2], {"brand_name": "Kortexa", "logo_dark": "missing.png"})[0]
+    assert 'class="chip brand"' in page and "data:image/png" not in page
+
+
+def test_before_after_layout_text_and_photo(tmp_path):
+    from carousel_studio.models import Slide
+    from carousel_studio.render.renderer import render_html, render_slides
+
+    brand = {"brand_name": "Kortexa", "instagram_handle": "@kortexa"}
+    body = ("Before: Beautiful house for sale. DM for price.\n"
+            "After: Pool and garden in East Legon.\n✓ Gated\n✓ Fitted kitchen\nDM \"TOUR\" to book a viewing.")
+    text_slide = Slide(index=1, archetype="before_after", layout="before_after", heading="Same house. **Better caption.**",
+                       body=body)
+    html_ = render_html(_kit_profile(), [text_slide], brand)[0]
+    assert 'class="panel before"' in html_ and 'class="panel after"' in html_
+    assert "Beautiful house for sale" in html_ and "Fitted kitchen" in html_ and 'class="ck"' in html_
+    # body + bullets convention also works
+    alt = Slide(index=1, archetype="before_after", layout="before_after", heading="h", body="Photo dump",
+                bullets=["Hero shot first", "One clear action"])
+    alt_html = render_html(_kit_profile(), [alt], brand)[0]
+    assert "Photo dump" in alt_html and "One clear action" in alt_html
+
+    photo = tmp_path / "after.jpg"
+    Image.new("RGB", (900, 700), "#336699").save(photo)
+    photo_slide = text_slide.model_copy(update={"index": 2, "image_path": str(photo), "body": "Before: plain\nAfter: premium"})
+    full = Slide(index=3, archetype="photo", layout="photo", heading="4-bed with pool, **East Legon**",
+                 body="Gated, fitted kitchen.", image_path=str(photo))
+    paths = render_slides(_kit_profile(), [text_slide, photo_slide, full], tmp_path / "out", brand=brand)
+    assert [p.name for p in paths] == ["slide_01.png", "slide_02.png", "slide_03.png"]
+    with Image.open(paths[1]) as im:  # the AFTER panel (lower half) shows the photo
+        lower = im.convert("RGB").crop((90, 800, 990, 1150)).resize((90, 35))
+        px = [lower.getpixel((x, y)) for y in range(lower.height) for x in range(lower.width)]
+        blue = sum(1 for r, g, b in px if abs(r - 0x33) < 30 and abs(g - 0x66) < 30 and abs(b - 0x99) < 30)
+        assert blue > 300
+    with Image.open(paths[2]) as im:  # full-bleed photo: bright in the middle, dark gradient behind the text
+        rgb = im.convert("RGB")
+        r, g, b = rgb.getpixel((540, 520))
+        assert abs(r - 0x33) < 30 and abs(b - 0x99) < 30
+        assert sum(rgb.getpixel((540, 1300))) < 90

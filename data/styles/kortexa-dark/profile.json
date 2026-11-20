@@ -1,0 +1,83 @@
+{
+  "name": "kortexa-dark",
+  "summary": "Kortexa's playbook look on black: Montserrat ExtraBold uppercase headings with lime highlight words, Inter body, letter-spaced lime eyebrow labels with a short lime bar, hairline dividers and a quiet footer. Teaching format: a problem, then numbered steps or a list, a takeaway callout and one lime CTA button.",
+  "palette": {
+    "background": "#030305",
+    "surface": "#111114",
+    "text": "#FFFFFF",
+    "muted_text": "#B4B4BC",
+    "accent": "#98CC13",
+    "accent_2": "#6FA00B"
+  },
+  "typography": {
+    "heading_font": "Montserrat",
+    "body_font": "Inter",
+    "heading_weight": 800,
+    "heading_case": "upper",
+    "heading_size": "l"
+  },
+  "archetypes": [
+    {
+      "name": "hook",
+      "description": "Cover, left-aligned. Short eyebrow kicker (e.g. 'FREE PLAYBOOK' or 'FOR AGENTS IN ACCRA') with lime bar, then a huge uppercase heading of 4-8 words with 1-2 **lime** words; optional one-line body.",
+      "layout": "center_statement"
+    },
+    {
+      "name": "problem",
+      "description": "Left-aligned. Kicker like 'THE PROBLEM' or 'WHAT IT COSTS', uppercase heading of 3-7 words, lime bar, then 1-3 short sentences of body.",
+      "layout": "top_heading_body"
+    },
+    {
+      "name": "step",
+      "description": "Left-aligned. Kicker 'Step 1', 'Step 2'... becomes a big lime number. Uppercase heading of 3-6 words, lime bar, 1-2 short sentences of body.",
+      "layout": "numbered"
+    },
+    {
+      "name": "list",
+      "description": "Left-aligned heading, then 3-5 bullets written as 'Short title: one-line explanation'. Rendered as numbered rows with big lime 01/02 numbers and hairline dividers.",
+      "layout": "list"
+    },
+    {
+      "name": "takeaway",
+      "description": "Callout panel with a lime left border. Heading is one memorable sentence (max 14 words) with a **lime** word; optional one short body line. Kicker 'THE TAKEAWAY'.",
+      "layout": "quote"
+    },
+    {
+      "name": "before_after",
+      "description": "Before/after, text only unless the owner sends photos. Heading names the change (3-6 words). Two stacked panels: BEFORE (muted) and AFTER (lime). Write the body as 'Before: <what most agents post>' on one line, then 'After:' followed by 2-5 short lines (newline-separated; lines may start with ✓). No kicker needed.",
+      "layout": "before_after"
+    },
+    {
+      "name": "cta",
+      "description": "Closing slide, left-aligned, full logo at the top. Kicker 'NEXT STEP' with lime bar, uppercase heading of 3-6 words with one **lime** word, and the body is exactly the call to action ('Comment LISTING and I'll send you the playbook'), rendered as a lime button with black text.",
+      "layout": "cta"
+    }
+  ],
+  "decorations": [
+    "full logo top left on cover and CTA slides, small logo lockup top left on inner slides",
+    "footer line 'KORTEXA · AI WORKFLOWS' bottom left with hairline divider",
+    "slide counter 01 / 08 top right, letter-spaced",
+    "swipe cue arrow bottom right",
+    "letter-spaced lime eyebrow label with a short lime bar",
+    "numbered rows with big lime numbers and hairline dividers",
+    "callout with lime left border for takeaways",
+    "lime CTA button with black text",
+    "highlighted words in lime text colour",
+    "soft lime glow top right on cover",
+    "lime bar along bottom edge on cover"
+  ],
+  "uses_photos": false,
+  "words_per_slide": 25,
+  "slide_count": 8,
+  "hook_patterns": [
+    "Call out the agent + the pain in one bold line: 'YOUR LISTING ISN'T BAD. IT'S **INVISIBLE**.'",
+    "Mistakes count: '5 REASONS YOUR LISTING GETS **NO DMS**'",
+    "Named method: 'THE **15-SECOND** LISTING VIDEO'",
+    "Contrarian belief: 'YOU DON'T NEED MORE LISTINGS'",
+    "Buyer's side: 'THE BUYER MESSAGED **3 AGENTS**. WHO REPLIED FIRST?'"
+  ],
+  "tone": "First person 'I' (the founder) talking straight to 'you', the agent. Simple eighth-grade English, short sentences. Confident and helpful, never hype. Lead with the problem, then the fix. Local and specific: Ghanaian areas, WhatsApp, cedis. No made-up numbers, no prices, no guarantees.",
+  "caption_style": "Five-line formula: 1) hook line restating slide 1 in new words; 2) 2-4 short lines with the key takeaway; 3) a question to spark comments; 4) 'Comment LISTING and I'll send you the playbook.'; 5) 3-5 hashtags such as #ghanarealestate #accrarealestate #realestateghana #eastlegon #realestateagent. No emojis or at most one. No prices.",
+  "reference_ids": [],
+  "created_at": "2026-11-20T15:28:53+00:00"
+}

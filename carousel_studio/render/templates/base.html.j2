@@ -7,11 +7,12 @@
 :root {
   --bg: {{ c.bg }}; --surface: {{ c.surface }}; --text: {{ c.text }}; --muted: {{ c.muted }};
   --accent: {{ c.accent }}; --accent2: {{ c.accent2 }}; --on-accent: {{ c.on_accent }};
+  --tint: {{ c.tint }}; --panel: {{ c.panel }}; --hl-dark: {{ c.hl_dark }};
   --hl: {{ c.hl }}; --line: {{ c.line }}; --card-text: {{ c.card_text }};
   --hfont: {{ fonts.heading | safe }}; --bfont: {{ fonts.body | safe }};
   --hweight: {{ t.weight }}; --hs: {{ t.scale }}; --k: 1;
   --kb: calc(0.5 + 0.5 * var(--k)); /* body text shrinks slower than headings */
-  --pad: 90px; --chrome: 44px;
+  --pad: 90px; --chrome: {{ geo.chrome_h }}px;
   --content-top: {{ geo.top }}px; --content-bottom: {{ geo.bottom }}px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,9 +23,13 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 
 /* ---------- background decorations */
 .layer { position: absolute; inset: 0; pointer-events: none; }
+{% if deco.glow_hero %}
+.glow { background: radial-gradient(760px 760px at 92% 6%, {{ c.accent_a18 }} 0%, transparent 68%); }
+{% else %}
 .glow { background:
   radial-gradient(900px 700px at 105% -5%, {{ c.accent_a18 }} 0%, transparent 60%),
   radial-gradient(800px 700px at -10% 110%, {{ c.accent2_a14 }} 0%, transparent 60%); }
+{% endif %}
 .dots { background-image: radial-gradient({{ c.line }} 1.6px, transparent 1.8px); background-size: 36px 36px;
         -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.25)); }
 .gridlines { background-image: linear-gradient({{ c.line }} 1px, transparent 1px),
@@ -50,8 +55,8 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 /* ---------- chrome (counter, handle, swipe) */
 .chrome { position: absolute; left: var(--pad); right: var(--pad); height: var(--chrome);
           display: flex; align-items: center; justify-content: space-between; z-index: 5; }
-.chrome.top { top: 64px; }
-.chrome.bottom { bottom: 64px; }
+.chrome.top { top: {{ geo.chrome_y }}px; }
+.chrome.bottom { bottom: {{ geo.chrome_y }}px; }
 .slot { display: flex; align-items: center; gap: 22px; }
 .chip { font-family: var(--bfont); font-size: 26px; font-weight: 600; letter-spacing: .04em; color: var(--muted);
         white-space: nowrap; display: flex; align-items: center; gap: 12px; }
@@ -64,6 +69,24 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 .chrome.on-image .chip { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
 .chrome.on-image .chip.pill, .chrome.on-image .chip.handle, .chrome.on-image .chip.brand {
    padding: 8px 20px; border-radius: 999px; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.32); }
+.chip.logo { display: block; object-fit: contain; }
+.hero-logo { position: absolute; left: var(--pad); top: 72px; z-index: 5; display: block; object-fit: contain; }
+{% if deco.kit %}
+/* refined playbook chrome: letter-spaced Montserrat labels, hairline above the footer */
+.chip { font-family: var(--hfont); font-weight: 700; font-size: 21px; letter-spacing: .26em; text-transform: uppercase; }
+.chip.counter { letter-spacing: .26em; color: var(--muted); }
+.chip.footer { color: var(--muted); font-weight: 600; }
+.chip.footer .fl { color: var(--hl); font-weight: 800; }
+.chip.footer .sep { color: var(--muted); }
+.chip.footer.tagline { font-size: 18px; letter-spacing: .2em; }
+.chip.footer.tagline .sep { color: var(--hl); }
+.chip.swipe { font-size: 20px; letter-spacing: .26em; color: var(--muted); gap: 16px; }
+.chip .arrow { width: 50px; height: 50px; }
+.chip .arrow svg { width: 24px; height: 24px; }
+.chrome.bottom::before { content: ""; position: absolute; left: 0; right: 0; top: -22px; height: 1.5px; background: var(--line); }
+.chrome.on-image .chip { text-shadow: none; }
+.chrome.on-image .chip.counter { padding: 0; border: 0; background: none; }
+{% endif %}
 .handle-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
 
 /* ---------- content box (auto-fit) */
@@ -78,6 +101,16 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 
 .kicker { font-family: var(--bfont); font-weight: 700; text-transform: uppercase; letter-spacing: .16em;
           font-size: calc(var(--k) * 26px); color: var(--hl); margin-bottom: calc(var(--k) * 34px); }
+{% if deco.eyebrow %}
+.kicker { font-family: var(--hfont); font-weight: 800; letter-spacing: .3em; font-size: calc(var(--k) * 25px);
+          margin-bottom: calc(var(--k) * 26px); }
+{% endif %}
+.ebar { width: 72px; height: 8px; border-radius: 3px; background: var(--accent); flex: 0 0 auto; }
+.kicker + .ebar { margin-top: calc(var(--k) * -4px); margin-bottom: calc(var(--k) * 40px); }
+.h + .ebar { margin-top: calc(var(--k) * 40px); }
+.align-center .ebar { margin-left: auto; margin-right: auto; }
+.callout { width: 100%; border-left: 10px solid var(--accent); background: {{ c.panel if c.is_dark else c.tint }};
+           border-radius: 0 18px 18px 0; padding: calc(var(--k) * 52px) calc(var(--k) * 56px); }
 .kicker.tag { background: var(--accent); color: var(--on-accent); padding: .5em 1em; border-radius: 999px; letter-spacing: .12em; }
 .h { font-family: var(--hfont); font-weight: var(--hweight); color: var(--text); line-height: {{ t.line_height }};
      letter-spacing: {{ t.tracking }}; {{ 'text-transform: uppercase;' if t.upper else '' }}
@@ -105,8 +138,8 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 </style>
 </head>
 <body>
-<div class="slide layout-{{ s.layout }}">
-  {% if deco.glow %}<div class="layer glow"></div>{% endif %}
+<div class="slide layout-{{ s.layout }}{{ ' kit' if deco.kit else '' }}{{ ' hero' if hero else '' }}">
+  {% if show_glow %}<div class="layer glow"></div>{% endif %}
   {% if deco.dots %}<div class="layer dots"></div>{% endif %}
   {% if deco.grid %}<div class="layer gridlines"></div>{% endif %}
   {% if deco.blob %}<div class="blob"></div><div class="blob2"></div>{% endif %}
@@ -114,7 +147,8 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
   {% if image_uri %}<div class="bgimg" style="background-image:url('{{ image_uri }}')"></div><div class="scrim"></div>{% endif %}
   {% endblock %}
   {% if deco.frame %}<div class="frame"></div>{% endif %}
-  {% if deco.bar %}<div class="bar {{ deco.bar }}"></div>{% endif %}
+  {% if show_bar %}<div class="bar {{ deco.bar }}"></div>{% endif %}
+  {% if hero_logo %}{{ hero_logo }}{% endif %}
 
   <div class="chrome top {{ 'on-image' if chrome_on_image else '' }}">
     <div class="slot">{% for it in chrome.tl %}{{ it | safe }}{% endfor %}</div>
@@ -141,7 +175,7 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
   const box = document.getElementById('fit');
   const inner = box.firstElementChild;
   const root = document.documentElement;
-  const wide = () => [...box.querySelectorAll('.h, .body, .kicker, li, .num, .cta-btn')]
+  const wide = () => [...box.querySelectorAll('.h, .body, .kicker, li, .num, .cta-btn, .rt, .rd, .ba-text p')]
       .some(el => el.scrollWidth > el.clientWidth + 2);
   const fits = () => inner.scrollHeight <= box.clientHeight + 1 && inner.scrollWidth <= box.clientWidth + 1 && !wide();
   const set = k => root.style.setProperty('--k', k);

@@ -1,0 +1,63 @@
+{% extends "base.html.j2" %}
+{% macro panel(kind, label, lines, img) %}
+  <div class="panel {{ kind }}{{ ' photo' if img else '' }}"{% if img %} style="background-image:url('{{ img }}')"{% endif %}>
+    {% if img %}<div class="pscrim"></div>{% endif %}
+    <div class="plabel">{{ label }}</div>
+    {% if lines %}
+    <div class="ba-text{{ ' lead' if lines|length >= 3 else '' }}">
+      {% for ln in lines %}<p class="{{ 'ck' if ln.check else '' }}">{% if ln.check %}<svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{% endif %}<span>{{ ln.text }}</span></p>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+{% endmacro %}
+{% block css %}
+.layout-before_after .h { font-size: calc(var(--k) * var(--hs) * 74px); }
+.layout-before_after .ba { flex: 1 1 auto; display: flex; flex-direction: column; gap: calc(var(--k) * 26px);
+   margin-top: calc(var(--k) * 44px); width: 100%; }
+.layout-before_after .h + .ebar + .ba { margin-top: calc(var(--k) * 40px); }
+.layout-before_after .panel { position: relative; flex: 1 0 auto; border-radius: 22px; overflow: hidden;
+   padding: calc(var(--k) * 40px) calc(var(--k) * 46px); display: flex; flex-direction: column; justify-content: flex-start;
+   min-height: calc(var(--k) * 200px); }
+.layout-before_after .plabel { font-family: var(--hfont); font-weight: 800; text-transform: uppercase; letter-spacing: .3em;
+   font-size: calc(var(--k) * 23px); margin-bottom: calc(var(--k) * 20px); position: relative; z-index: 2; }
+.layout-before_after .ba-text { font-family: var(--bfont); font-size: calc(var(--kb) * 34px); line-height: 1.42;
+   position: relative; z-index: 2; text-wrap: pretty; }
+.layout-before_after .ba-text p + p { margin-top: .22em; }
+.layout-before_after .ba-text p.ck { display: flex; gap: .5em; align-items: baseline; }
+.layout-before_after .ba-text p.ck svg { width: .8em; height: .8em; flex: 0 0 auto; stroke: var(--hl); transform: translateY(.06em); }
+/* before: muted, quiet */
+.layout-before_after .before { background: {{ c.panel if c.is_dark else '#F2F2F3' }}; border: 1.5px solid var(--line); }
+.layout-before_after .before .plabel { color: var(--muted); }
+.layout-before_after .before .ba-text { color: var(--muted); }
+/* after: accent */
+{% if c.is_dark %}
+.layout-before_after .after { background: {{ c.tint }}; border: 2px solid var(--accent); }
+{% else %}
+.layout-before_after .after { background: #030305; border: 0; --text: #FFFFFF; --muted: #C9C9CF; --hl: var(--hl-dark); }
+{% endif %}
+.layout-before_after .after .plabel { color: var(--hl); }
+.layout-before_after .after .ba-text { color: var(--text); }
+.layout-before_after .after .ba-text.lead p:first-child { color: var(--hl); font-weight: 700; }
+.layout-before_after .after .ba-text.lead p:last-child:not(.ck) { color: var(--hl); font-weight: 700; }
+/* photo panels: image fills, label + caption sit on a dark gradient */
+.layout-before_after .panel.photo { background-size: cover; background-position: center; border: 0;
+   justify-content: space-between; --text: #FFFFFF; --muted: rgba(255,255,255,.86); --hl: var(--hl-dark); }
+.layout-before_after .pscrim { position: absolute; inset: 0; z-index: 1;
+   background: linear-gradient(180deg, rgba(3,3,5,.55) 0%, rgba(3,3,5,0) 32%, rgba(3,3,5,0) 45%, rgba(3,3,5,.88) 100%); }
+.layout-before_after .panel.photo .plabel { align-self: flex-start; background: rgba(3,3,5,.6); padding: .55em .9em .5em 1.05em;
+   border-radius: 8px; }
+.layout-before_after .panel.photo.after .plabel { background: var(--accent); color: var(--on-accent); }
+.layout-before_after .panel.photo .ba-text { color: #fff; font-size: calc(var(--kb) * 30px); }
+.layout-before_after .panel.photo.before .ba-text { color: rgba(255,255,255,.86); }
+.layout-before_after .panel.photo.after { box-shadow: inset 0 0 0 3px var(--accent); }
+{% endblock %}
+{% block inner_class %}v-start align-left{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if deco.eyebrow_bar %}<div class="ebar"></div>{% endif %}
+  <div class="ba">
+    {{ panel('before', ba_labels[0], before, before_img) }}
+    {{ panel('after', ba_labels[1], after, after_img) }}
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html.j2" %}
+{% block css %}
+/* full-bleed photo; text sits on a dark gradient at the bottom so it is always legible */
+.layout-photo { --text: #FFFFFF; --muted: rgba(255,255,255,.84); --hl: var(--hl-dark); --line: rgba(255,255,255,.22); background: #030305; }
+.layout-photo .photo-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; }
+.layout-photo .photo-ph { position: absolute; inset: 0; z-index: 0; background:
+   radial-gradient(900px 800px at 85% 10%, {{ c.accent_a18 }} 0%, transparent 65%),
+   linear-gradient(160deg, #1A1C20 0%, #0B0B0E 55%, #030305 100%); }
+.layout-photo .photo-scrim { position: absolute; inset: 0; z-index: 1; background:
+   linear-gradient(180deg, rgba(3,3,5,.78) 0%, rgba(3,3,5,.45) 12%, rgba(3,3,5,0) 26%, rgba(3,3,5,0) 36%, rgba(3,3,5,.8) 60%, rgba(3,3,5,.96) 100%); }
+.layout-photo .h { font-size: calc(var(--k) * var(--hs) * 88px); text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+.layout-photo .body { font-size: calc(var(--kb) * 36px); margin-top: calc(var(--k) * 28px); max-width: 860px; }
+.layout-photo #fit { top: 520px; }
+.layout-photo .chrome.top .chip.counter { color: rgba(255,255,255,.9); }
+{% endblock %}
+{% block background %}
+  {% if image_uri %}<div class="photo-bg" style="background-image:url('{{ image_uri }}')"></div>{% else %}<div class="photo-ph"></div>{% endif %}
+  <div class="photo-scrim"></div>
+{% endblock %}
+{% block inner_class %}v-end align-left{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
+  {% if deco.eyebrow_bar and s.kicker %}<div class="ebar"></div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if s.body %}<div class="body">{{ s.body }}</div>{% endif %}
+{% endblock %}

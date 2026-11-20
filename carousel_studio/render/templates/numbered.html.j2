@@ -16,7 +16,7 @@
   <div class="num">{{ number }}</div>
   {% if s.kicker %}<div class="kicker">{{ s.kicker }}</div>{% endif %}
   <h2 class="h">{{ s.heading }}</h2>
-  {% if deco.underline %}<div class="rule"></div>{% endif %}
+  {% if deco.eyebrow_bar %}<div class="ebar"></div>{% elif deco.underline %}<div class="rule"></div>{% endif %}
   {% if s.body or s.bullets %}
   <div class="body">
     {% if s.body %}{{ s.body }}{% endif %}
