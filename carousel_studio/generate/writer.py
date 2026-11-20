@@ -61,7 +61,37 @@ def _brand_block(brand: dict) -> str:
         f"Call to action: {brand.get('call_to_action', '')}\n"
         f"Topics to avoid: {', '.join(avoid) if avoid else 'none'}\n"
         f"Language: write everything in {brand.get('language', 'English')}"
+        + _extras_block(brand)
+        + _content_bank_block()
     )
+
+
+def _extras_block(brand: dict) -> str:
+    """Optional positioning fields in brand.json (statement, beliefs, rules, offer)."""
+    out = []
+    for key, label in (("offer", "What we sell"), ("brand_statement", "Brand statement"),
+                       ("contrarian_belief", "Core belief"), ("voice", "Voice")):
+        if brand.get(key):
+            out.append(f"{label}: {brand[key]}")
+    for key, label in (("content_pillars", "Content pillars"), ("content_rules", "Content rules (must follow)")):
+        items = brand.get(key) or []
+        if items:
+            out.append(f"{label}:\n" + "\n".join(f"- {x}" for x in items))
+    return ("\n" + "\n".join(out)) if out else ""
+
+
+def _content_bank_block(limit: int = 12000) -> str:
+    """Free-form notes (e.g. pulled from Notion) in data/content_bank.md: real stories,
+    client conversations, results and drafts the writer should draw from."""
+    from ..config import DATA_DIR
+
+    p = DATA_DIR / "content_bank.md"
+    if not p.exists():
+        return ""
+    text = p.read_text().strip()[:limit]
+    return ("\n\nContent bank (real material from the owner — prefer these facts, stories and "
+            "phrasing over generic claims; never invent results or numbers that aren't here):\n"
+            f"<content_bank>\n{text}\n</content_bank>") if text else ""
 
 
 def _style_block(p: StyleProfile) -> str:

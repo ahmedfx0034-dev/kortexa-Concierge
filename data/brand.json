@@ -1,10 +1,31 @@
 {
   "brand_name": "Kortexa",
   "instagram_handle": "@kortexa",
-  "niche": "CHANGE ME \u2014 e.g. 'AI tools for real estate agents'",
-  "audience": "CHANGE ME \u2014 who the carousels are for",
-  "goals": "Grow followers and drive profile visits",
-  "call_to_action": "Follow for more",
-  "topics_to_avoid": [],
+  "niche": "AI systems that help real estate agencies work faster and simpler: instant lead replies, lead qualification, automatic follow-up and viewing bookings",
+  "audience": "Real estate agents and agencies in Ghana and Nigeria, especially busy agents handling many leads (100+ a month) who lose deals to slow replies and forgotten follow-ups",
+  "goals": "Grow followers among real estate agents, build trust by sharing real work in public, and get agents to DM for a free trial",
+  "call_to_action": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+  "offer": "AI chatbot on the agency's website and social media that replies instantly, qualifies buyers, books viewings, follows up with leads and hands over to a human when needed",
+  "brand_statement": "Real estate agents who want more of their leads to actually close should invest in properly engineered AI systems, not plug-and-play chatbots that assume the AI will figure it out on its own.",
+  "contrarian_belief": "AI isn't smart on its own. It's only as good as the system and prompting built around it. The engineering behind it is what makes it work.",
+  "voice": "Direct, practical, honest and down to earth. Talk to agents like a peer who understands their day. Plain English, short sentences, no hype.",
+  "content_pillars": [
+    "Lead leaks: how slow replies, missed follow-ups and missed bookings cost agents commission",
+    "Ready-to-use messages: scripts agents can copy to handle client objections and win more clients",
+    "AI done right: why the system and prompting matter more than the AI tool",
+    "Building in public: what Kortexa is learning from real conversations with agents"
+  ],
+  "content_rules": [
+    "Proof over promises: never invent results, client names, numbers or case studies",
+    "Only use numbers and stories that appear in the content bank; otherwise speak in general terms",
+    "Built for one industry: always speak to real estate agents, never 'any business'",
+    "Examples should feel local to Ghana and Nigeria (Accra, Kumasi, Lagos, WhatsApp, Instagram DMs)",
+    "No generic AI hype or 'replace your team' claims"
+  ],
+  "topics_to_avoid": [
+    "Fake or unverifiable case studies",
+    "Pricing",
+    "Generic AI news unrelated to real estate"
+  ],
   "language": "English"
 }

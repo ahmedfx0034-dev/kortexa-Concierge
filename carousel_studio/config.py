@@ -38,7 +38,9 @@ class Settings:
     ig_access_token: str | None = field(default_factory=lambda: os.getenv("IG_ACCESS_TOKEN"))
     graph_api_version: str = field(default_factory=lambda: os.getenv("IG_GRAPH_VERSION", "v23.0"))
     # Public hosting for slide images (Instagram fetches them by URL).
-    image_host: str = field(default_factory=lambda: os.getenv("IMAGE_HOST", "s3"))  # "s3" (S3/R2/etc) or "local" (PUBLIC_BASE_URL)
+    # "vercel" (Vercel Blob, default), "s3" (S3/R2/etc) or "local" (PUBLIC_BASE_URL tunnel)
+    image_host: str = field(default_factory=lambda: os.getenv("IMAGE_HOST", "vercel"))
+    blob_token: str | None = field(default_factory=lambda: os.getenv("BLOB_READ_WRITE_TOKEN"))
     s3_bucket: str | None = field(default_factory=lambda: os.getenv("S3_BUCKET"))
     s3_endpoint_url: str | None = field(default_factory=lambda: os.getenv("S3_ENDPOINT_URL"))
     s3_public_base_url: str | None = field(default_factory=lambda: os.getenv("S3_PUBLIC_BASE_URL"))

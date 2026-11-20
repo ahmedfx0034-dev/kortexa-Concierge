@@ -147,7 +147,8 @@ def doctor():
         "Claude API key": bool(os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")),
         "Apify token (for links/@handles)": bool(s.apify_token),
         "Instagram user id + token": bool(s.ig_user_id and s.ig_access_token),
-        "Image host": bool(s.s3_bucket and s.s3_public_base_url) if s.image_host == "s3" else bool(s.public_base_url),
+        "Image host": {"vercel": bool(s.blob_token), "s3": bool(s.s3_bucket and s.s3_public_base_url)}.get(
+            s.image_host, bool(s.public_base_url)),
         "Niche set in brand.json": "CHANGE ME" not in json.dumps(s.brand),
     }
     for k, ok in checks.items():

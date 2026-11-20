@@ -259,3 +259,29 @@ def test_generate_and_revise_background(client, monkeypatch):
     assert called["gen"] == ("x", 2, "t")
     client.post("/drafts/g1/revise", data={"feedback": "punchier"})
     assert called["rev"] == ("g1", "punchier")
+
+
+def test_upload_images_vercel(monkeypatch):
+    from carousel_studio.publish import hosting
+    monkeypatch.setenv("IMAGE_HOST", "vercel")
+    monkeypatch.setenv("BLOB_READ_WRITE_TOKEN", "vercel_blob_rw_test")
+    d = make_draft("vb1", 3)
+    seen = []
+
+    def fake_put(pathname, data):
+        assert data[:2] == b"\xff\xd8"  # JPEG
+        seen.append(pathname)
+        return f"https://x.public.blob.vercel-storage.com/{pathname}"
+
+    urls = hosting.upload_images(d, blob_put=fake_put)
+    assert seen == [f"carousels/vb1/slide_{i:02d}.jpg" for i in (1, 2, 3)]
+    assert urls[0].startswith("https://x.public.blob.vercel-storage.com/")
+
+
+def test_upload_images_vercel_needs_token(monkeypatch):
+    import pytest
+    from carousel_studio.publish import hosting
+    monkeypatch.setenv("IMAGE_HOST", "vercel")
+    monkeypatch.delenv("BLOB_READ_WRITE_TOKEN", raising=False)
+    with pytest.raises(RuntimeError, match="BLOB_READ_WRITE_TOKEN"):
+        hosting.upload_images(make_draft("vb2", 2))

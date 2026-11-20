@@ -52,12 +52,32 @@ def _s3_client():
     return boto3.client("s3", endpoint_url=s.s3_endpoint_url or None)
 
 
-def upload_images(draft: CarouselDraft, s3_client=None) -> List[str]:
+def _vercel_put(pathname: str, data: bytes) -> str:
+    from vercel.blob.sync import put_blob
+
+    result = put_blob(
+        pathname, data, access="public", content_type="image/jpeg",
+        add_random_suffix=True, content_length=len(data),
+    )
+    return result.url
+
+
+def upload_images(draft: CarouselDraft, s3_client=None, blob_put=None) -> List[str]:
     """Convert slides to JPEG, host them publicly, return URLs in slide order."""
     s = get_settings()
     sources = _slide_sources(draft)
-    host = (s.image_host or "s3").lower()
+    host = (s.image_host or "vercel").lower()
     urls: List[str] = []
+    if host == "vercel":
+        if not s.blob_token:
+            raise RuntimeError(
+                "IMAGE_HOST=vercel requires BLOB_READ_WRITE_TOKEN (Vercel → Storage → your Blob store → .env.local)"
+            )
+        put = blob_put or _vercel_put
+        for i, src in enumerate(sources, 1):
+            # Random suffix keeps re-published drafts from hitting stale CDN copies.
+            urls.append(put(f"carousels/{draft.id}/slide_{i:02d}.jpg", to_jpeg_bytes(src)))
+        return urls
     if host == "local":
         if not s.public_base_url:
             raise RuntimeError("IMAGE_HOST=local requires PUBLIC_BASE_URL (e.g. your tunnel URL)")
@@ -77,4 +97,4 @@ def upload_images(draft: CarouselDraft, s3_client=None) -> List[str]:
             client.put_object(Bucket=s.s3_bucket, Key=key, Body=to_jpeg_bytes(src), ContentType="image/jpeg")
             urls.append(f"{s.s3_public_base_url.rstrip('/')}/{key}")
         return urls
-    raise RuntimeError(f"Unknown IMAGE_HOST '{s.image_host}' (use 's3' or 'local')")
+    raise RuntimeError(f"Unknown IMAGE_HOST '{s.image_host}' (use 'vercel', 's3' or 'local')")
