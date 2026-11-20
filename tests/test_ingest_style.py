@@ -172,8 +172,8 @@ ITEMS = [
 def fake_apify(monkeypatch):
     calls = []
 
-    def fake_post(url, params=None, json=None, timeout=None):
-        calls.append({"url": url, "params": params, "json": json, "timeout": timeout})
+    def fake_post(url, params=None, json=None, timeout=None, headers=None):
+        calls.append({"url": url, "params": params, "json": json, "timeout": timeout, "headers": headers})
         return FakeResp(json_data=ITEMS)
 
     s = config.Settings()
@@ -189,7 +189,7 @@ def test_ingest_accounts_top_sidecars(fake_apify):
     refs = ingest.ingest_accounts("s", ["@Creator"], per_account=2)
     call = fake_apify[0]
     assert "apify~instagram-scraper/run-sync-get-dataset-items" in call["url"]
-    assert call["params"]["token"] == "test-token"
+    assert call["headers"]["Authorization"] == "Bearer test-token"
     assert call["json"]["directUrls"] == ["https://www.instagram.com/creator/"]
     assert call["json"]["resultsType"] == "posts"
     assert call["timeout"] >= 300

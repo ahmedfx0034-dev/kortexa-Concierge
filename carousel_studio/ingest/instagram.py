@@ -49,7 +49,7 @@ def run_scraper(direct_urls: List[str], results_limit: int) -> List[Dict[str, An
     }
     try:
         resp = httpx.post(
-            APIFY_URL, params={"token": _token()}, json=payload, timeout=APIFY_TIMEOUT
+            APIFY_URL, headers={"Authorization": f"Bearer {_token()}"}, json=payload, timeout=APIFY_TIMEOUT
         )
     except httpx.TimeoutException as e:
         raise ApifyError(f"Apify scraper timed out after {APIFY_TIMEOUT:.0f}s") from e
