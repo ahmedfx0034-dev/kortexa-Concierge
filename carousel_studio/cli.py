@@ -87,6 +87,24 @@ def make(style: str, n: int = typer.Option(3, "-n"), theme: Optional[str] = None
     typer.echo("\nOpen the review app to approve:  studio review")
 
 
+@app.command("import-style")
+def import_style_cmd(path: str, name: Optional[str] = typer.Option(None, help="Override the style name")):
+    """Session mode: load a style profile JSON written by Claude."""
+    from .manual import import_style
+
+    p = import_style(path, name)
+    typer.echo(f"Saved style '{p.name}': {p.summary}")
+
+
+@app.command("import-carousel")
+def import_carousel_cmd(style: str, path: str, render: bool = typer.Option(True, help="Render slides now")):
+    """Session mode: turn carousel JSON written by Claude into drafts (and slides)."""
+    from .manual import import_carousels
+
+    for d in import_carousels(style, path, render=render):
+        typer.echo(f"[{d.id}] {d.idea.title} — {len(d.slides)} slides")
+
+
 @app.command("list")
 def list_cmd():
     """List drafts and their status."""

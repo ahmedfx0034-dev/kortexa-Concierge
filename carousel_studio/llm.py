@@ -22,9 +22,21 @@ T = TypeVar("T", bound=BaseModel)
 _client: anthropic.Anthropic | None = None
 
 
+class NoApiKey(RuntimeError):
+    pass
+
+
 def client() -> anthropic.Anthropic:
     global _client
     if _client is None:
+        import os
+
+        if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
+            raise NoApiKey(
+                "No ANTHROPIC_API_KEY set. That's fine in session mode: ask Claude in a Claude Code "
+                "session to write the style/carousel JSON, then run `studio import-style` / "
+                "`studio import-carousel`."
+            )
         _client = anthropic.Anthropic()
     return _client
 
