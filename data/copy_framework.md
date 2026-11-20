@@ -6,8 +6,8 @@ Every carousel follows this. Writers: read data/brand.json and data/content_bank
 
 ## The five elements (decide these BEFORE writing any slide)
 1. **Target customer**: specific enough that they think "that's me".
-   e.g. "Agency owners in East Legon", "Agents who post listings on WhatsApp Status",
-   "Developers selling off-plan to diaspora buyers".
+   e.g. "Agency owners whose listings get likes but no DMs", "Agents who post listings on WhatsApp Status",
+   "Developers selling off-plan to overseas buyers".
 2. **Desired outcome**: the specific thing they want. Not "more sales": "more DMs on the
    listings you already have", "viewings booked from Instagram", "a listing video that
    looks premium".
@@ -43,7 +43,7 @@ Every carousel follows this. Writers: read data/brand.json and data/content_bank
 | 2 The real problem | Interest | Name the deeper problem / the limiting belief: "Most agents think they need more listings. You don't." |
 | 3 What it costs | Interest | What the belief leads to, in their life: posts ignored, viewings lost, weekends editing. Validate how they feel. |
 | 4 "It doesn't have to be that way" | Desire | The solution as a METHOD, not our product: "All you need is a listing that's packaged to be noticed." |
-| 5–8 The steps | Desire + logic | One step or idea per slide, from the playbook. Concrete, specific, local. |
+| 5–8 The steps | Desire + logic | One step or idea per slide, from the playbook. Concrete and specific, with universal examples. |
 | 9 Takeaway (optional) | Desire | One line they'll remember, or a quick checklist. |
 | Last CTA | Action | ONE action. Default: "Comment LISTING and I'll send you the playbook." |
 
@@ -59,7 +59,7 @@ slide, the steps, and the CTA.
 - **AI explained / myth-busting**: state the myth plainly, then the honest truth. No hype.
   Be honest about what AI does (turns real photos into smooth video) and doesn't do
   (it shouldn't invent rooms, furniture or views).
-- **Agency growth**: diaspora buyers, consistency, five places.
+- **Agency growth**: out-of-town and overseas buyers, consistency, five places.
 - **Offer (about 1 in 10)**: full structure, then a slide introducing the done-for-you
   premium listing videos ("all done for you, all you do is send the photos"), then
   "DM me" or the free listing review. Never prices. Value framing: "one extra rental a
@@ -77,5 +77,5 @@ slide, the steps, and the CTA.
 2. 2–4 short lines of the key takeaway.
 3. A question to spark comments, OR the CTA.
 4. CTA line: "Comment LISTING and I'll send you the playbook." (same keyword every time)
-5. 3–5 hashtags (Instagram reportedly caps posts at 5): e.g. #ghanarealestate #accrarealestate
-   #realestateghana #eastlegon #realestateagent
+5. 3–5 hashtags (Instagram reportedly caps posts at 5): e.g. #realestateagent #realestatemarketing
+   #listingvideo #realtortips #realestatetips

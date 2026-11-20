@@ -20,7 +20,7 @@
 | 2026-12-01 | 19:30 | by results | mistakes | No hook: your first slide says nothing | LISTING |  |
 | 2026-12-02 | 12:30 | by results | before-after | Real listing: photo dump vs the order that sells | LISTING | yes |
 | 2026-12-02 | 19:30 | by results | speed | The buyer messaged 3 agents. Who won? | LISTING |  |
-| 2026-12-03 | 12:30 | by results | growth | Diaspora buyers can't visit. Video lets them look | LISTING |  |
+| 2026-12-03 | 12:30 | by results | growth | Out-of-town buyers can't visit. Video lets them look | LISTING |  |
 | 2026-12-03 | 19:30 | by results | offer | All you do is send the photos | DM |  |
 | 2026-12-04 | 12:30 | by results | how-to | The 15-second listing video formula | LISTING |  |
 | 2026-12-04 | 19:30 | by results | ai-explained | What AI should never do to your listing | LISTING |  |
@@ -38,9 +38,9 @@
 | 2026-12-10 | 19:30 | by results | how-to | Pick the 3 highlights buyers care about | SAVE |  |
 | 2026-12-11 | 12:30 | by results | before-after | First slide: weak hook vs strong hook | LISTING |  |
 | 2026-12-11 | 19:30 | by results | ai-explained | Myth: I can just edit the videos myself | LISTING |  |
-| 2026-12-12 | 12:30 | by results | growth | Buyers coming home for Christmas | LISTING |  |
+| 2026-12-12 | 12:30 | by results | growth | Holiday-season buyers are house hunting | LISTING |  |
 | 2026-12-12 | 19:30 | by results | before-after | Real listing: gate-first cover vs hero shot | LISTING | yes |
-| 2026-12-13 | 12:30 | by results | speed | Diaspora buyers message while you sleep | LISTING |  |
+| 2026-12-13 | 12:30 | by results | speed | Overseas buyers message while you sleep | LISTING |  |
 | 2026-12-13 | 19:30 | by results | offer | One extra rental a month covers it | DM |  |
 | 2026-12-14 | 12:30 | by results | mistakes | 4 photo mistakes that make homes look cheap | SAVE |  |
 | 2026-12-14 | 19:30 | by results | how-to | Use one keyword per listing (TOUR1, TOUR2) | LISTING |  |

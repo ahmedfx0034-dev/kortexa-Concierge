@@ -4,7 +4,8 @@ The real material carousels are built from. Facts here may be used; anything
 not here must not be stated as fact. Add notes from sales conversations any time.
 
 ## Who we are
-- Kortexa, an AI agency based in Tamale, Ghana. The founder speaks in first person ("I").
+- Kortexa, an AI agency based in Tamale, Ghana, serving real estate agencies in general (not one country).
+  The founder speaks in first person ("I"). Carousels speak to agencies everywhere.
 - Main promise: "We turn your listing photos into premium videos that get more enquiries."
 - Main service: turn a listing's existing photos into premium, cinematic short videos with AI.
   No filming, no camera crew, no reshoot. Plus captions and posting across their platforms.
@@ -15,16 +16,16 @@ not here must not be stated as fact. Add notes from sales conversations any time
   AI receptionist, workflow automation.
 - Never mention prices on carousels.
 
-## What agencies struggle with (from real conversations)
+## What agencies struggle with (from real conversations; true for agencies everywhere)
 - Many don't get enough enquiries in the first place. Their listing posts get ignored.
 - Many edit their own videos and the results look basic.
 - Busy agencies take 3 to 4 hours to reply to WhatsApp messages and lose buyers.
 - Some are doubtful about AI.
-- Some of their buyers are diaspora Ghanaians abroad (they can't visit easily, so video matters).
+- Some of their buyers live out of town or overseas and can't easily visit in person, so video matters.
 
 ## The Listing Enquiry Playbook (the free PDF; CTA: "Comment LISTING")
 Promise: How to turn the listings you already have into posts and videos that make buyers stop
-scrolling and send you a message. 15-minute read, made for agencies in Ghana, costs nothing extra.
+scrolling and send you a message. 15-minute read, costs nothing extra.
 
 ### Why most listings get no messages
 "You don't need more listings. You need the ones you have to get noticed."
@@ -49,7 +50,7 @@ scrolling and send you a message. 15-minute read, made for agencies in Ghana, co
 
 ### Step 2: The 15-second listing video
 Short videos reach far more people than photo posts on Instagram, TikTok and WhatsApp Status.
-- 0–3 sec HOOK: your best shot with bold text on screen, like "4-bed with pool, East Legon."
+- 0–3 sec HOOK: your best shot with bold text on screen, like "4-bed with pool, quiet street."
 - 3–12 sec THE TOUR: four or five of your best spaces in the Step 1 order. Smooth, slow camera moves.
   Each shot two to three seconds, never longer.
 - 12–15 sec THE ASK: price, location and one clear action: "DM TOUR to book a viewing."
@@ -65,9 +66,9 @@ Short videos reach far more people than photo posts on Instagram, TikTok and Wha
 3. Three highlights: the three things buyers in this area care about most.
 4. Price and location: show the price. Listings with a price filter out time-wasters.
 5. One action: one keyword or one WhatsApp link. Never three options.
-Before: "Beautiful house for sale. Very nice and spacious. DM for more info and price. #realestate #ghana"
-After: "Pool, garden and quiet street in East Legon. / 4 bedrooms · 4 bathrooms · for sale /
-✓ Gated, 24-hour security ✓ Fitted kitchen ✓ 5 minutes to the main road / [Price] · East Legon, Accra /
+Before: "Beautiful house for sale. Very nice and spacious. DM for more info and price. #realestate"
+After: "Pool, garden and quiet street, close to schools. / 4 bedrooms · 4 bathrooms · for sale /
+✓ Gated, 24-hour security ✓ Fitted kitchen ✓ 5 minutes to the main road / [Price] · [Area, City] /
 DM "TOUR" to book a viewing."
 Tip: use a different keyword for each listing (TOUR1, TOUR2) so you know which property each message is about.
 
@@ -90,4 +91,8 @@ three highlights in the caption · one keyword or WhatsApp link · posted in all
 "Want this done for you?" Free listing review on WhatsApp (see above).
 
 ## Value framing (no prices)
-- "One extra rental a month covers it." Use comparisons like this, never numbers in cedis for our packages.
+- "One extra rental a month covers it." Use comparisons like this, never prices or currency amounts for our packages.
+
+## Note on examples
+The playbook's own examples were written with Ghanaian areas. On carousels, use general examples instead
+(no country, city or currency), so the content speaks to real estate agencies anywhere.
