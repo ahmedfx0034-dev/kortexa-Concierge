@@ -1,0 +1,134 @@
+{
+  "id": "c_f82af16b7f",
+  "style": "listing-sheet",
+  "idea": {
+    "title": "5 moments agents lose buyers",
+    "angle": "Enquiry, after viewing, price question, weekend, late night: where leads leak",
+    "hook": "Most buyers aren't lost in the negotiation. They're lost in five quiet moments."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Lead leaks",
+      "heading": "5 quiet moments where agents **lose buyers**",
+      "body": "Not in the negotiation. Much earlier.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Moment 1",
+      "heading": "The **first enquiry**",
+      "body": "A buyer DMs 'Is the East Legon flat still available?' You're on a viewing. By the time you reply, they've asked three other agents.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Moment 2",
+      "heading": "Right **after the viewing**",
+      "body": "They liked the house. You drove off and moved to the next client. No message that evening, so the excitement fades.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Moment 3",
+      "heading": "The **price question**",
+      "body": "'How much?' gets a slow or vague answer. Buyers read silence as 'too expensive' and quietly move on.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Moment 4",
+      "heading": "The **weekend**",
+      "body": "Saturday is when buyers in Lekki and Kumasi finally have time to browse. If your phone is off till Monday, so is your pipeline.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Moment 5",
+      "heading": "**Late** at night",
+      "body": "A diaspora buyer in London messages at 11pm your time. Nobody answers until morning. By then they've found someone who did.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "checklist",
+      "layout": "list",
+      "kicker": "This week",
+      "heading": "Plug the leaks",
+      "body": null,
+      "bullets": [
+        "Reply to every enquiry within minutes",
+        "Message every buyer the evening of a viewing",
+        "Have a clear price answer ready to send",
+        "Decide who covers weekends and late nights"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Which moment costs you **the most?**",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_f82af16b7f/slide_08.png"
+    }
+  ],
+  "caption": "Most buyers aren't lost in the negotiation. They're lost in five quiet moments.\n\n1. The first enquiry that waits too long\n2. The evening after a viewing with no message\n3. The price question that gets a vague answer\n4. The weekend when your phone is off\n5. The late-night DM nobody sees till morning\n\nNone of these need more leads to fix. They need a reply at the right time.\n\nWhich one hits closest to home for you? Tell us in the comments.\n\nFollow @kortexa and DM 'SYSTEM' for a free trial 👇",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#ghanarealestate",
+    "#nigeriarealestate",
+    "#leadfollowup"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:46+00:00",
+  "updated_at": "2026-11-20T08:42:47+00:00"
+}

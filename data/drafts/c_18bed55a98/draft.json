@@ -1,0 +1,122 @@
+{
+  "id": "c_18bed55a98",
+  "style": "chat-script",
+  "idea": {
+    "title": "The enquiry you saw at 11pm",
+    "angle": "What happens to late-night messages and a better way to handle them",
+    "hook": "What to text the lead who messaged you at 11pm"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Lead leaks",
+      "heading": "What to text the lead who messaged you **at 11pm**",
+      "body": "Because 'I'll reply in the morning' is where leads go to die.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "situation",
+      "layout": "top_heading_body",
+      "kicker": "The moment",
+      "heading": "You saw it. You said **'tomorrow'.**",
+      "body": "An Instagram DM at 11pm: 'Is the 2-bedroom in Ikeja still available?' You're tired, so you leave it. By morning they've asked three other agents, and one replied.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "script",
+      "layout": "quote",
+      "kicker": "Send this tonight",
+      "heading": "\"Yes, it's available! I'll send full details and photos first thing tomorrow. When's a good time to call?\"",
+      "body": "Ten seconds. They know you're real and you're on it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "script",
+      "layout": "quote",
+      "kicker": "Then send this at 8am",
+      "heading": "\"Good morning! Here are the photos. Rent is yearly. Would you like to view it this week?\"",
+      "body": "Photos, the key details and one clear next step: a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "script",
+      "layout": "quote",
+      "kicker": "If you missed it completely",
+      "heading": "\"So sorry for the late reply! Is the 2-bedroom still what you need? I can show it today.\"",
+      "body": "Own it, skip the excuses, and give them a reason to reply.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "tips",
+      "layout": "list",
+      "kicker": "Make it easier",
+      "heading": "Don't rely on **memory**",
+      "body": null,
+      "bullets": [
+        "Save the 11pm reply as a WhatsApp quick reply",
+        "Mark late messages unread so you see them",
+        "Keep photos for each listing in one folder",
+        "Or let a system reply instantly for you"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Save this for your **next late-night** lead",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_18bed55a98/slide_07.png"
+    }
+  ],
+  "caption": "What to text the lead who messaged you at 11pm.\n\nLate-night messages are some of the easiest leads to lose.\nYou see them, you plan to reply in the morning, and by then they've moved on.\nA 10-second reply tonight keeps you in the game.\nA proper follow-up at 8am moves them to a viewing.\nIf you missed it, say sorry and offer a viewing straight away.\n\nWhat time do most of your enquiries come in? 🌙\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#realestatenigeria",
+    "#leadgeneration",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:59+00:00",
+  "updated_at": "2026-11-20T08:43:00+00:00"
+}

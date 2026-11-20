@@ -1,0 +1,139 @@
+{
+  "id": "c_64d9447d07",
+  "style": "listing-sheet",
+  "idea": {
+    "title": "Why we're building AI for real estate agents in Ghana",
+    "angle": "Origin story from Kortexa's first carousel: the problem isn't finding leads, it's losing them",
+    "hook": "The biggest problem in real estate isn't finding leads. It's losing them."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "Why we're building this",
+      "heading": "The problem isn't finding leads. It's **losing them.**",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "What agents tell us",
+      "heading": "Good agents, **too many chats**",
+      "body": "A buyer asks for property details. You're busy. You forget to follow up. The opportunity disappears. Not because you're bad at sales. Because you can't be everywhere at once.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "checklist",
+      "layout": "list",
+      "kicker": "Where it slips",
+      "heading": "The same leaks, **again and again**",
+      "body": null,
+      "bullets": [
+        "Slow replies, so interested buyers go cold",
+        "Viewings that never get booked",
+        "Ad money spent on leads nobody answers in time"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "insight",
+      "layout": "quote",
+      "kicker": null,
+      "heading": "Every missed message is a **missed commission.**",
+      "body": "Why Kortexa exists",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "What we believe",
+      "heading": "AI isn't smart **on its own**",
+      "body": "A plug-and-play chatbot guesses. What works is the system around it: your listings, your FAQs and clear rules for when a human takes over.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "checklist",
+      "layout": "list",
+      "kicker": "What we're building",
+      "heading": "A system that:",
+      "body": null,
+      "bullets": [
+        "Replies to enquiries instantly",
+        "Asks budget, location and timeline",
+        "Books viewings",
+        "Follows up when buyers go quiet",
+        "Hands over to you when it matters"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Building in public",
+      "heading": "We're **early**, and honest about it",
+      "body": "We're a small team, talking to agents and building as we learn. No made-up results here. We'll share what works and what doesn't.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Follow along as we **build it**",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_64d9447d07/slide_08.png"
+    }
+  ],
+  "caption": "The biggest problem in real estate isn't finding leads. It's losing them.\n\nAgents in Accra, Kumasi and Lagos keep telling us the same thing.\nThe buyer asks for details. You're on a viewing. The chat goes cold.\nViewings never get booked because nobody followed up.\nAd money goes to leads nobody answered in time.\n\nThat's why we're building this, and why we're doing it in public.\n\nWhat's the one part of handling leads you wish ran itself? Tell us below.\n\nFollow @kortexa and DM 'SYSTEM' for a free trial 🙌",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#ghanarealestate",
+    "#buildinginpublic",
+    "#proptech"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:49+00:00",
+  "updated_at": "2026-11-20T08:42:50+00:00"
+}

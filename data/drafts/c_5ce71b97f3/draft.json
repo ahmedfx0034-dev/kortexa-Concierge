@@ -1,0 +1,129 @@
+{
+  "id": "c_5ce71b97f3",
+  "style": "listing-sheet",
+  "idea": {
+    "title": "4 questions to ask before booking a viewing",
+    "angle": "Qualify budget, location, timeline and decision-maker so viewings aren't wasted",
+    "hook": "A wasted viewing costs you a morning. Four questions prevent most of them."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "A simple framework",
+      "heading": "4 questions to ask **before** you book a viewing",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Why it matters",
+      "heading": "A viewing is **not free**",
+      "body": "Fuel, Accra traffic, a lost morning. If the buyer can't afford it or isn't ready, that time is gone. A few questions first protect it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Question 1",
+      "heading": "Ask about **budget**",
+      "body": "Send: 'So I show you the right options, what budget range are you working with?' Then match listings to the answer, not the hope.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Question 2",
+      "heading": "Ask about **location**",
+      "body": "Send: 'Which areas work for you, and is there anywhere you'd rather avoid?' Lekki Phase 1 and Ajah are very different conversations.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Question 3",
+      "heading": "Ask about **timing**",
+      "body": "Send: 'When are you hoping to move in?' Next month and next year are both fine. They just need different follow-up.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "explain",
+      "layout": "top_heading_body",
+      "kicker": "Question 4",
+      "heading": "Ask who **decides**",
+      "body": "Send: 'Will anyone else be part of the decision? Happy to have them at the viewing too.' Saves a second trip for the spouse.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "insight",
+      "layout": "quote",
+      "kicker": null,
+      "heading": "AI only qualifies well when someone teaches it **the right questions.**",
+      "body": "A Kortexa principle",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": null,
+      "heading": "Save this for your **next enquiry**",
+      "body": "Follow @kortexa and DM 'SYSTEM' for a free trial",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_5ce71b97f3/slide_08.png"
+    }
+  ],
+  "caption": "A wasted viewing costs you a morning. Four questions prevent most of them.\n\nBudget: so you only show what they can buy.\nLocation: so you don't drive across town for nothing.\nTimeline: so you know how hard to follow up.\nDecision-maker: so the real buyer is in the room.\n\nThe same goes for any chatbot answering your DMs. It only qualifies well if the right questions are built into it.\n\nWhich of the four do you usually skip? 🤔\n\nFollow @kortexa and DM 'SYSTEM' for a free trial.",
+  "hashtags": [
+    "#realestateghana",
+    "#accrarealestate",
+    "#lagosrealestate",
+    "#realestateagent",
+    "#nigeriarealestate",
+    "#propertyviewing",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-20T08:42:47+00:00",
+  "updated_at": "2026-11-20T08:42:49+00:00"
+}
