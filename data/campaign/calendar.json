@@ -3,238 +3,161 @@
     {
       "id": "2026-11-24-1",
       "date": "2026-11-24",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "night-shift",
+      "style": "kortexa-dark",
       "arm": "explore",
-      "draft_id": "c_a02db08424",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-24-2",
       "date": "2026-11-24",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "listing-sheet",
-      "arm": "explore",
-      "draft_id": "c_f82af16b7f",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-24-3",
-      "date": "2026-11-24",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "chat-script",
+      "style": "kortexa-light",
       "arm": "explore",
-      "draft_id": "c_b429629a27",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-25-1",
       "date": "2026-11-25",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "sunrise-bold",
+      "style": "kortexa-bold",
       "arm": "explore",
-      "draft_id": "c_d2a284b4d4",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-25-2",
       "date": "2026-11-25",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "field-notes",
-      "arm": "explore",
-      "draft_id": "c_05a7d5b032",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-25-3",
-      "date": "2026-11-25",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "night-shift",
+      "style": "kortexa-dark",
       "arm": "explore",
-      "draft_id": "c_b6574e29a0",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-26-1",
       "date": "2026-11-26",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "listing-sheet",
+      "style": "kortexa-light",
       "arm": "explore",
-      "draft_id": "c_5ce71b97f3",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-26-2",
       "date": "2026-11-26",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "chat-script",
-      "arm": "explore",
-      "draft_id": "c_41ca4b5cb4",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-26-3",
-      "date": "2026-11-26",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "sunrise-bold",
+      "style": "kortexa-bold",
       "arm": "explore",
-      "draft_id": "c_efc922c3c8",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-27-1",
       "date": "2026-11-27",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "field-notes",
+      "style": "kortexa-light",
       "arm": "explore",
-      "draft_id": "c_3b8bc318e9",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-27-2",
       "date": "2026-11-27",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "night-shift",
-      "arm": "explore",
-      "draft_id": "c_6acbc64aa4",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-27-3",
-      "date": "2026-11-27",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "listing-sheet",
+      "style": "kortexa-bold",
       "arm": "explore",
-      "draft_id": "c_64d9447d07",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-28-1",
       "date": "2026-11-28",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "chat-script",
+      "style": "kortexa-dark",
       "arm": "explore",
-      "draft_id": "c_37226bd40f",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-28-2",
       "date": "2026-11-28",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "sunrise-bold",
-      "arm": "explore",
-      "draft_id": "c_64e8929dc2",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-28-3",
-      "date": "2026-11-28",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "field-notes",
+      "style": "kortexa-light",
       "arm": "explore",
-      "draft_id": "c_dd34d6a63a",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-29-1",
       "date": "2026-11-29",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "listing-sheet",
+      "style": "kortexa-bold",
       "arm": "explore",
-      "draft_id": "c_fde1b0bab1",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-29-2",
       "date": "2026-11-29",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "chat-script",
-      "arm": "explore",
-      "draft_id": "c_18bed55a98",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-29-3",
-      "date": "2026-11-29",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "sunrise-bold",
+      "style": "kortexa-dark",
       "arm": "explore",
-      "draft_id": "c_52533a9c5f",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-30-1",
       "date": "2026-11-30",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
-      "style": "field-notes",
+      "style": "kortexa-bold",
       "arm": "explore",
-      "draft_id": "c_7ae814ba9e",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-11-30-2",
       "date": "2026-11-30",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": "night-shift",
-      "arm": "explore",
-      "draft_id": "c_7b71563dee",
-      "status": "filled",
-      "reason": null
-    },
-    {
-      "id": "2026-11-30-3",
-      "date": "2026-11-30",
       "time": "19:30",
       "tz": "Africa/Accra",
-      "style": "night-shift",
+      "style": "kortexa-dark",
       "arm": "explore",
-      "draft_id": "c_7fdda465d6",
-      "status": "filled",
+      "draft_id": null,
+      "status": "open",
       "reason": null
     },
     {
       "id": "2026-12-01-1",
       "date": "2026-12-01",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -244,17 +167,6 @@
     },
     {
       "id": "2026-12-01-2",
-      "date": "2026-12-01",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-01-3",
       "date": "2026-12-01",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -267,7 +179,7 @@
     {
       "id": "2026-12-02-1",
       "date": "2026-12-02",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -277,17 +189,6 @@
     },
     {
       "id": "2026-12-02-2",
-      "date": "2026-12-02",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-02-3",
       "date": "2026-12-02",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -300,7 +201,7 @@
     {
       "id": "2026-12-03-1",
       "date": "2026-12-03",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -310,17 +211,6 @@
     },
     {
       "id": "2026-12-03-2",
-      "date": "2026-12-03",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-03-3",
       "date": "2026-12-03",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -333,7 +223,7 @@
     {
       "id": "2026-12-04-1",
       "date": "2026-12-04",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -343,17 +233,6 @@
     },
     {
       "id": "2026-12-04-2",
-      "date": "2026-12-04",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-04-3",
       "date": "2026-12-04",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -366,7 +245,7 @@
     {
       "id": "2026-12-05-1",
       "date": "2026-12-05",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -376,17 +255,6 @@
     },
     {
       "id": "2026-12-05-2",
-      "date": "2026-12-05",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-05-3",
       "date": "2026-12-05",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -399,7 +267,7 @@
     {
       "id": "2026-12-06-1",
       "date": "2026-12-06",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -409,17 +277,6 @@
     },
     {
       "id": "2026-12-06-2",
-      "date": "2026-12-06",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-06-3",
       "date": "2026-12-06",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -432,7 +289,7 @@
     {
       "id": "2026-12-07-1",
       "date": "2026-12-07",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -442,17 +299,6 @@
     },
     {
       "id": "2026-12-07-2",
-      "date": "2026-12-07",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-07-3",
       "date": "2026-12-07",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -465,7 +311,7 @@
     {
       "id": "2026-12-08-1",
       "date": "2026-12-08",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -475,17 +321,6 @@
     },
     {
       "id": "2026-12-08-2",
-      "date": "2026-12-08",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-08-3",
       "date": "2026-12-08",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -498,7 +333,7 @@
     {
       "id": "2026-12-09-1",
       "date": "2026-12-09",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -508,17 +343,6 @@
     },
     {
       "id": "2026-12-09-2",
-      "date": "2026-12-09",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-09-3",
       "date": "2026-12-09",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -531,7 +355,7 @@
     {
       "id": "2026-12-10-1",
       "date": "2026-12-10",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -541,17 +365,6 @@
     },
     {
       "id": "2026-12-10-2",
-      "date": "2026-12-10",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-10-3",
       "date": "2026-12-10",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -564,7 +377,7 @@
     {
       "id": "2026-12-11-1",
       "date": "2026-12-11",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -574,17 +387,6 @@
     },
     {
       "id": "2026-12-11-2",
-      "date": "2026-12-11",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-11-3",
       "date": "2026-12-11",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -597,7 +399,7 @@
     {
       "id": "2026-12-12-1",
       "date": "2026-12-12",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -607,17 +409,6 @@
     },
     {
       "id": "2026-12-12-2",
-      "date": "2026-12-12",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-12-3",
       "date": "2026-12-12",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -630,7 +421,7 @@
     {
       "id": "2026-12-13-1",
       "date": "2026-12-13",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -640,17 +431,6 @@
     },
     {
       "id": "2026-12-13-2",
-      "date": "2026-12-13",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-13-3",
       "date": "2026-12-13",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -663,7 +443,7 @@
     {
       "id": "2026-12-14-1",
       "date": "2026-12-14",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -673,17 +453,6 @@
     },
     {
       "id": "2026-12-14-2",
-      "date": "2026-12-14",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-14-3",
       "date": "2026-12-14",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -696,7 +465,7 @@
     {
       "id": "2026-12-15-1",
       "date": "2026-12-15",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -706,17 +475,6 @@
     },
     {
       "id": "2026-12-15-2",
-      "date": "2026-12-15",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-15-3",
       "date": "2026-12-15",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -729,7 +487,7 @@
     {
       "id": "2026-12-16-1",
       "date": "2026-12-16",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -739,17 +497,6 @@
     },
     {
       "id": "2026-12-16-2",
-      "date": "2026-12-16",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-16-3",
       "date": "2026-12-16",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -762,7 +509,7 @@
     {
       "id": "2026-12-17-1",
       "date": "2026-12-17",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -772,17 +519,6 @@
     },
     {
       "id": "2026-12-17-2",
-      "date": "2026-12-17",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-17-3",
       "date": "2026-12-17",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -795,7 +531,7 @@
     {
       "id": "2026-12-18-1",
       "date": "2026-12-18",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -805,17 +541,6 @@
     },
     {
       "id": "2026-12-18-2",
-      "date": "2026-12-18",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-18-3",
       "date": "2026-12-18",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -828,7 +553,7 @@
     {
       "id": "2026-12-19-1",
       "date": "2026-12-19",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -838,17 +563,6 @@
     },
     {
       "id": "2026-12-19-2",
-      "date": "2026-12-19",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-19-3",
       "date": "2026-12-19",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -861,7 +575,7 @@
     {
       "id": "2026-12-20-1",
       "date": "2026-12-20",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -871,17 +585,6 @@
     },
     {
       "id": "2026-12-20-2",
-      "date": "2026-12-20",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-20-3",
       "date": "2026-12-20",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -894,7 +597,7 @@
     {
       "id": "2026-12-21-1",
       "date": "2026-12-21",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -904,17 +607,6 @@
     },
     {
       "id": "2026-12-21-2",
-      "date": "2026-12-21",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-21-3",
       "date": "2026-12-21",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -927,7 +619,7 @@
     {
       "id": "2026-12-22-1",
       "date": "2026-12-22",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -937,17 +629,6 @@
     },
     {
       "id": "2026-12-22-2",
-      "date": "2026-12-22",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-22-3",
       "date": "2026-12-22",
       "time": "19:30",
       "tz": "Africa/Accra",
@@ -960,7 +641,7 @@
     {
       "id": "2026-12-23-1",
       "date": "2026-12-23",
-      "time": "08:30",
+      "time": "12:30",
       "tz": "Africa/Accra",
       "style": null,
       "arm": null,
@@ -970,17 +651,6 @@
     },
     {
       "id": "2026-12-23-2",
-      "date": "2026-12-23",
-      "time": "13:00",
-      "tz": "Africa/Accra",
-      "style": null,
-      "arm": null,
-      "draft_id": null,
-      "status": "open",
-      "reason": null
-    },
-    {
-      "id": "2026-12-23-3",
       "date": "2026-12-23",
       "time": "19:30",
       "tz": "Africa/Accra",

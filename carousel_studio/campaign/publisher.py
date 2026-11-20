@@ -46,6 +46,16 @@ def posts_in_last_24h(now: datetime) -> int:
     return n
 
 
+def _log(entry: dict, draft) -> None:
+    try:
+        from .post_log import log_event
+
+        log_event({**{k: v for k, v in entry.items() if k != "media_id"},
+                   "draft_id": draft.id, "title": draft.idea.title, "style": draft.style})
+    except Exception:  # the log must never block posting
+        pass
+
+
 def publish_due(now: Optional[datetime] = None, dry_run: bool = False, max_posts: int = 3) -> List[dict]:
     """Publish approved drafts whose slot time has passed (within 6h). Returns a summary list."""
     now = now or datetime.now(timezone.utc)
@@ -102,9 +112,11 @@ def publish_due(now: Optional[datetime] = None, dry_run: bool = False, max_posts
             posted_now += 1
             summary.append({**entry, "action": "posted", "permalink": result.ig_permalink,
                             "media_id": result.ig_media_id})
+            _log({**entry, "action": "posted", "permalink": result.ig_permalink}, draft)
         else:
             slot.status, slot.reason = "skipped", f"publish failed: {result.error}"
             summary.append({**entry, "action": "failed", "reason": result.error})
+            _log({**entry, "action": "failed", "reason": result.error}, draft)
         save_calendar(cal)  # persist after each post so a crash can't double-post
     if not dry_run:
         save_calendar(cal)

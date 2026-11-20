@@ -63,7 +63,18 @@ def _brand_block(brand: dict) -> str:
         f"Language: write everything in {brand.get('language', 'English')}"
         + _extras_block(brand)
         + _content_bank_block()
+        + _framework_block()
     )
+
+
+def _framework_block(limit: int = 9000) -> str:
+    """The owner's copywriting method (data/copy_framework.md), if present."""
+    from ..config import DATA_DIR
+
+    p = DATA_DIR / "copy_framework.md"
+    if not p.exists():
+        return ""
+    return "\n\nCopywriting framework (follow it):\n<framework>\n" + p.read_text().strip()[:limit] + "\n</framework>"
 
 
 def _extras_block(brand: dict) -> str:

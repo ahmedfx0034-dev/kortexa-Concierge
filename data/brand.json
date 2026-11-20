@@ -1,31 +1,41 @@
 {
   "brand_name": "Kortexa",
   "instagram_handle": "@kortexa",
-  "niche": "AI systems that help real estate agencies work faster and simpler: instant lead replies, lead qualification, automatic follow-up and viewing bookings",
-  "audience": "Real estate agents and agencies in Ghana and Nigeria, especially busy agents handling many leads (100+ a month) who lose deals to slow replies and forgotten follow-ups",
-  "goals": "Grow followers among real estate agents, build trust by sharing real work in public, and get agents to DM for a free trial",
-  "call_to_action": "Follow @kortexa and DM 'SYSTEM' for a free trial",
-  "offer": "AI chatbot on the agency's website and social media that replies instantly, qualifies buyers, books viewings, follows up with leads and hands over to a human when needed",
-  "brand_statement": "Real estate agents who want more of their leads to actually close should invest in properly engineered AI systems, not plug-and-play chatbots that assume the AI will figure it out on its own.",
-  "contrarian_belief": "AI isn't smart on its own. It's only as good as the system and prompting built around it. The engineering behind it is what makes it work.",
-  "voice": "Direct, practical, honest and down to earth. Talk to agents like a peer who understands their day. Plain English, short sentences, no hype.",
+  "niche": "AI for real estate agencies in Ghana: turning listing photos into premium, cinematic short videos (no filming) plus captions and posting, so listings get more enquiries",
+  "audience": "Owners and managers of real estate agencies in Ghana (mostly Accra: East Legon, Cantonments, Airport Residential; also Kumasi and other cities), independent agents and property developers. Some of their buyers are diaspora Ghanaians abroad.",
+  "goals": "Get agencies to comment LISTING for the free Listing Enquiry Playbook, build trust by teaching useful things, and start sales conversations for the done-for-you listing video service",
+  "call_to_action": "Comment LISTING and I'll send you the playbook",
+  "offer": "Done-for-you: we turn a listing's photos into premium, cinematic short videos made with AI (no filming needed), write the captions and post across their platforms. Also a free listing review on WhatsApp. Later services, mention lightly only: a WhatsApp/Instagram AI assistant that replies to enquiries instantly, an AI receptionist, workflow automation.",
+  "brand_statement": "We turn your listing photos into premium videos that get more enquiries.",
+  "contrarian_belief": "You don't need more listings. You need the ones you have to get noticed. The fix isn't more money on ads, it's packaging the same listing so it gets noticed, understood and acted on.",
+  "voice": "First person singular: 'I' (the founder speaking). Simple English at about an eighth-grade reading level. Short sentences. Confident and helpful, never hype. Talk directly to the agent as 'you'.",
   "content_pillars": [
-    "Lead leaks: how slow replies, missed follow-ups and missed bookings cost agents commission",
-    "Ready-to-use messages: scripts agents can copy to handle client objections and win more clients",
-    "AI done right: why the system and prompting matter more than the AI tool",
-    "Building in public: what Kortexa is learning from real conversations with agents"
+    "Listing mistakes and fixes (e.g. 5 reasons your listing gets no DMs)",
+    "How-tos from the playbook: photos, the 15-second video formula, the 5-line caption formula",
+    "Before and after: a plain photo-dump post vs a premium version",
+    "Speed and replies: why slow WhatsApp replies lose buyers",
+    "AI for real estate, explained simply, and myth-busting for doubters",
+    "Agency growth: getting listings noticed, diaspora buyers, consistency",
+    "Offer posts (about 1 in 10): the done-for-you service or the free listing review"
   ],
   "content_rules": [
-    "Proof over promises: never invent results, client names, numbers or case studies",
-    "Only use numbers and stories that appear in the content bank; otherwise speak in general terms",
-    "Built for one industry: always speak to real estate agents, never 'any business'",
-    "Examples should feel local to Ghana and Nigeria (Accra, Kumasi, Lagos, WhatsApp, Instagram DMs)",
-    "No generic AI hype or 'replace your team' claims"
+    "No made-up statistics, results or testimonials. Only use numbers from the content bank or the playbook. Clearly hypothetical examples are fine ('say you get 20 messages a week').",
+    "Never promise a guaranteed number of enquiries, viewings or sales.",
+    "Never put prices on carousels or captions. For value framing use comparisons like 'one extra rental a month covers it'.",
+    "No on-screen text saying content is AI-generated. Never show or describe unrealistic houses.",
+    "Speak to Ghanaian agents: cedis (GH₵), Ghanaian areas (East Legon, Cantonments, Airport Residential, Spintex, Kumasi), WhatsApp and WhatsApp Status, Instagram, TikTok, Facebook, property sites.",
+    "One idea per slide. Strong hook on slide 1. A clear takeaway. The last slide has ONE call to action.",
+    "Default call to action: 'Comment LISTING and I'll send you the playbook'. Use exactly the keyword LISTING. Occasionally 'Save this' or 'DM me' instead, never more than one action.",
+    "About 9 helpful carousels for every 1 that sells."
   ],
   "topics_to_avoid": [
-    "Fake or unverifiable case studies",
-    "Pricing",
-    "Generic AI news unrelated to real estate"
+    "Prices or package names with prices",
+    "Guarantees of results",
+    "Fake testimonials or case studies",
+    "AI hype or 'AI will replace agents'"
   ],
-  "language": "English"
+  "language": "English",
+  "logo_dark": "data/brand/logo-on-dark.png",
+  "logo_light": "data/brand/logo-on-light.png",
+  "tagline": "AI Automation · Intelligent Workflow · Real Results"
 }

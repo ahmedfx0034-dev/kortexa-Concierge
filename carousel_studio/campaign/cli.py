@@ -86,3 +86,13 @@ def review_bundle_cmd(week_start: str, out: str = typer.Option("review_page", he
 
     data = build_review_bundle(week_start, out)
     typer.echo(f"{len(data['items'])} carousels exported to {out}/")
+
+
+@campaign_app.command("log")
+def log_cmd(last: int = typer.Option(20, help="How many entries to show")):
+    """Show the post log (what was posted, when, and any failures)."""
+    from .post_log import read_log
+
+    for r in read_log()[-last:]:
+        typer.echo(f"{r['logged_at']}  {r.get('slot_id',''):<14} {r.get('action',''):<8} "
+                   f"{r.get('title','')}  {r.get('permalink') or r.get('reason') or ''}")
