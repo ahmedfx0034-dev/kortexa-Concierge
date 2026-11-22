@@ -53,8 +53,16 @@ def _s3_client():
 
 
 def _vercel_put(pathname: str, data: bytes) -> str:
+    import os
+
     from vercel.blob.sync import put_blob
 
+    # The SDK reads the token from the environment; fill it from settings (which may be a
+    # proxy placeholder carrying only the store id) when it isn't set there.
+    if not os.environ.get("BLOB_READ_WRITE_TOKEN"):
+        token = get_settings().blob_token
+        if token:
+            os.environ["BLOB_READ_WRITE_TOKEN"] = token
     result = put_blob(
         pathname, data, access="public", content_type="image/jpeg",
         add_random_suffix=True, content_length=len(data),

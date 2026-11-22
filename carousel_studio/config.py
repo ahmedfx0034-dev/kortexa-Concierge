@@ -55,9 +55,33 @@ def load_brand() -> dict:
     return {**DEFAULT_BRAND, **json.loads(BRAND_FILE.read_text())}
 
 
+PROXY_PLACEHOLDER = "proxy-injected"
+
+
+def load_connections() -> dict:
+    """data/connections.json: NON-secret connection details kept in git, e.g.
+    {"ig_user_id": "1784...", "blob_store_id": "abc123", "secrets_via_proxy": true}.
+    With secrets_via_proxy, real keys live in the cloud environment's network secrets
+    (injected as Authorization headers by its proxy), so the program uses placeholders."""
+    p = DATA_DIR / "connections.json"
+    try:
+        return json.loads(p.read_text()) if p.exists() else {}
+    except ValueError:
+        return {}
+
+
 def get_settings() -> Settings:
     for d in (STYLES_DIR, DRAFTS_DIR):
         d.mkdir(parents=True, exist_ok=True)
     s = Settings()
     s.brand = load_brand()
+    c = load_connections()
+    s.ig_user_id = s.ig_user_id or c.get("ig_user_id")
+    if c.get("secrets_via_proxy"):
+        s.ig_access_token = s.ig_access_token or PROXY_PLACEHOLDER
+        s.apify_token = s.apify_token or PROXY_PLACEHOLDER
+        if not s.blob_token and c.get("blob_store_id"):
+            # The Vercel SDK reads the store id out of the token; the secret part is
+            # replaced by the proxy's Authorization header.
+            s.blob_token = f"vercel_blob_rw_{c['blob_store_id']}_{PROXY_PLACEHOLDER}"
     return s
