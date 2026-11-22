@@ -7,8 +7,9 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { LLM, LLMError } from "./llm.js";
-import { systemPrompt, parseReply, SUMMARY_PROMPT, scoreLead } from "./prompt.js";
+import { LLMError } from "./llm.js";
+import { Limiter, cleanMessages, llmFromEnv, webApi, send } from "./web.js";
+import { loadAgency } from "./agency.js";
 import { WhatsApp, parseWebhook, parseStatuses, validSignature } from "./whatsapp.js";
 import { Chats } from "./chats.js";
 import { Receptionist } from "./receptionist.js";
@@ -19,61 +20,15 @@ import { runChecks, subscribeApp, checkPage } from "./check.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(here, "..", "public");
-const MAX_TURNS = 30;        // messages per conversation
-const MAX_CHARS = 600;       // per message
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon" };
 
-/** Simple per-visitor and per-day limits so the free AI plan isn't used up by one person. */
-export class Limiter {
-  constructor({ perWindow = 40, windowMs = 10 * 60000, perDay = 800 } = {}) {
-    Object.assign(this, { perWindow, windowMs, perDay });
-    this.hits = new Map();
-    this.day = "";
-    this.dayCount = 0;
-  }
-  allow(ip, now = Date.now()) {
-    const today = new Date(now).toISOString().slice(0, 10);
-    if (today !== this.day) { this.day = today; this.dayCount = 0; this.hits.clear(); }
-    if (this.dayCount >= this.perDay) return "The demo has had a lot of visitors today. Please try again tomorrow.";
-    const list = (this.hits.get(ip) || []).filter((t) => now - t < this.windowMs);
-    if (list.length >= this.perWindow) return "You're sending messages very fast. Please wait a few minutes.";
-    list.push(now);
-    this.hits.set(ip, list);
-    this.dayCount++;
-    return null;
-  }
-}
-
-export function cleanMessages(input, { endWithUser = true } = {}) {
-  if (!Array.isArray(input) || !input.length) throw new LLMError("No message to answer.", 400);
-  if (input.length > MAX_TURNS) throw new LLMError("This demo chat is full. Tap Restart to begin a new one.", 400);
-  const msgs = input.map((m) => ({
-    role: m?.role === "assistant" ? "assistant" : "user",
-    content: String(m?.content ?? "").slice(0, MAX_CHARS).trim(),
-  })).filter((m) => m.content);
-  if (!msgs.length || (endWithUser && msgs[msgs.length - 1].role !== "user")) throw new LLMError("No message to answer.", 400);
-  return msgs;
-}
+export { Limiter, cleanMessages, llmFromEnv, loadAgency };
 
 export function createApp({ agency, llm, limiter = new Limiter(), now = () => Date.now(), log = console,
   wa = null, chats = null, receptionist = null, demos = null, verifyToken = "", appSecret = "", adminPassword = "",
   wabaId = "", appId = "", version = "", fetchImpl = globalThis.fetch }) {
   const events = []; // last webhook deliveries, shown on /check
   const note = (ok, text) => { events.push({ at: now(), ok, text }); if (events.length > 15) events.shift(); };
-  const agencyFor = (code) => (code && demos?.get(code)) || agency;
-  const send = (res, code, body) => {
-    res.writeHead(code, { "Content-Type": "application/json", "Cache-Control": "no-store" });
-    res.end(JSON.stringify(body));
-  };
-  const readJson = (req) => new Promise((resolve, reject) => {
-    // Hosts like Vercel may have read and parsed the body already.
-    if (req.body && typeof req.body === "object" && !Buffer.isBuffer(req.body)) return resolve(req.body);
-    if (typeof req.body === "string" || Buffer.isBuffer(req.body)) { try { return resolve(JSON.parse(String(req.body) || "{}")); } catch { return reject(new LLMError("Bad request.", 400)); } }
-    let size = 0; const chunks = [];
-    req.on("data", (c) => { size += c.length; if (size > 64 * 1024) { reject(new LLMError("Message too large.", 413)); req.destroy(); } else chunks.push(c); });
-    req.on("end", () => { try { resolve(JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}")); } catch { reject(new LLMError("Bad request.", 400)); } });
-    req.on("error", reject);
-  });
   const readRaw = (req) => new Promise((resolve, reject) => {
     let size = 0; const chunks = [];
     req.on("data", (c) => { size += c.length; if (size > 1024 * 1024) { reject(new LLMError("Too large.", 413)); req.destroy(); } else chunks.push(c); });
@@ -87,7 +42,8 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
     const pass = Buffer.from(b64, "base64").toString().split(":").slice(1).join(":");
     return pass.length === adminPassword.length && crypto.timingSafeEqual(Buffer.from(pass), Buffer.from(adminPassword));
   };
-  const ipOf = (req) => String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
+
+  const web = webApi({ agency, llm, limiter, demos, now, log });
 
   return async function handler(req, res) {
     const url = new URL(req.url, "http://x");
@@ -174,12 +130,7 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         return send(res, 404, { error: "Not found" });
       }
 
-      if (url.pathname === "/api/agency" && req.method === "GET") {
-        const code = url.searchParams.get("demo");
-        if (code && !demos?.get(code)) return send(res, 404, { error: "No demo with that code." });
-        const { agencyName, receptionistName, listings, isDemo = false } = agencyFor(code);
-        return send(res, 200, { agencyName, receptionistName, isDemo, listings: listings.map(({ id, title, price }) => ({ id, title, price })) });
-      }
+      if (await web(req, res, url)) return;
 
       // Personalised demo pages: /d/<code> shows the same chat page for that agency.
       const dm = /^\/d\/([a-z0-9-]{2,24})\/?$/.exec(url.pathname);
@@ -187,27 +138,6 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
         if (!demos?.get(dm[1])) return send(res, 404, { error: "No demo with that code." });
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
         return fs.createReadStream(path.join(PUBLIC, "index.html")).pipe(res);
-      }
-
-      if ((url.pathname === "/api/chat" || url.pathname === "/api/summary") && req.method === "POST") {
-        if (!llm) return send(res, 503, { error: "The AI isn't connected yet. Add LLM_API_KEY to the server settings." });
-        const tooMany = limiter.allow(ipOf(req), now());
-        if (tooMany) return send(res, 429, { error: tooMany });
-        const body = await readJson(req);
-        const messages = cleanMessages(body.messages, { endWithUser: url.pathname === "/api/chat" });
-        const agency = agencyFor(body.demo);
-
-        if (url.pathname === "/api/chat") {
-          const raw = await llm.chat([{ role: "system", content: systemPrompt(agency, now()) }, ...messages]);
-          return send(res, 200, parseReply(raw, agency));
-        }
-        const transcript = messages.map((m) => `${m.role === "user" ? "BUYER" : "RECEPTIONIST"}: ${m.content}`).join("\n");
-        const raw = await llm.chat([{ role: "system", content: SUMMARY_PROMPT }, { role: "user", content: transcript }], { maxTokens: 300, temperature: 0 });
-        const match = raw.match(/\{[\s\S]*\}/);
-        let summary = null;
-        try { summary = match ? JSON.parse(match[0]) : null; } catch { /* handled below */ }
-        if (!summary) return send(res, 502, { error: "Couldn't make the summary. Try again." });
-        return send(res, 200, { ...summary, ...scoreLead(summary, summary.viewing ? true : null) });
       }
 
       if (req.method === "GET") {
@@ -224,22 +154,6 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
   };
 }
 
-/** The AI client from environment settings (null when there's no key). */
-export function llmFromEnv(env = process.env) {
-  return env.LLM_API_KEY
-    ? new LLM({
-        baseUrl: env.LLM_BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai",
-        model: env.LLM_MODEL || "gemini-3.5-flash",
-        apiKey: env.LLM_API_KEY,
-        reasoningEffort: env.LLM_REASONING_EFFORT ?? "none",
-        fallbackModel: env.LLM_FALLBACK_MODEL ?? "gemini-flash-lite-latest",
-      })
-    : null;
-}
-
-export function loadAgency(env = process.env) {
-  return JSON.parse(fs.readFileSync(env.AGENCY_FILE || path.join(here, "..", "config", "agency.json"), "utf8"));
-}
 
 // ---- start when run directly ----------------------------------------------
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
