@@ -31,3 +31,10 @@ test("pre-parsed request bodies (Vercel) reach the AI", async () => {
   assert.equal(res.code, 200);
   assert.equal(JSON.parse(out).text, "Hello from Anna");
 });
+
+test("demos can come from the DEMOS_JSON setting", async () => {
+  const { Demos } = await import("../src/demos.js");
+  const d = new Demos("/nonexistent", JSON.stringify([{ code: "O2A", agencyName: "O2A" }]));
+  assert.equal(d.get("o2a").agencyName, "O2A");
+  assert.equal(new Demos("/nonexistent", "not json").list().length, 0);
+});

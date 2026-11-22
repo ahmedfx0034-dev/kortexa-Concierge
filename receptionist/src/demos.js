@@ -45,9 +45,15 @@ export function makeDemo({ name, city = "Accra", receptionistName = "Anna", code
 }
 
 export class Demos {
-  constructor(dir = DEMOS_DIR) {
+  constructor(dir = DEMOS_DIR, json = process.env.DEMOS_JSON || "") {
     this.dir = dir;
     this.byCode = new Map();
+    // Hosts without the demo files (they aren't in the public repo) can pass them
+    // as one setting: DEMOS_JSON = [ {...demo}, {...demo} ].
+    if (json) {
+      try { for (const d of [].concat(JSON.parse(json))) if (d?.code) this.byCode.set(String(d.code).toLowerCase(), d); }
+      catch { console.warn("DEMOS_JSON isn't valid JSON, so it was ignored."); }
+    }
     if (fs.existsSync(dir)) {
       for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".json"))) {
         const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
