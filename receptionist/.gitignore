@@ -2,3 +2,6 @@ node_modules/
 .env
 data/
 config/demos/*.json
+
+# Prospects' logos for personalised demos (not uploaded: the repo is public)
+public/avatars/

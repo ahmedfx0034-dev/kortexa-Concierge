@@ -35,7 +35,8 @@ svg { display: block; }
 
 header { background: var(--head); color: var(--head-fg); display: flex; align-items: center; gap: 6px; padding: calc(8px + env(safe-area-inset-top, 0px)) 4px 8px 6px; flex: none; }
 .back { width: 28px; height: 40px; display: grid; place-items: center; opacity: .95; }
-.avatar { width: 40px; height: 40px; border-radius: 50%; background: #dfe5e7; color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 18px; flex: none; background: linear-gradient(135deg, #c9a24a, #8a6a24); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 18px; flex: none; background: linear-gradient(135deg, #c9a24a, #8a6a24); overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
 .who { flex: 1; min-width: 0; padding-left: 4px; }
 .who b { display: block; font-weight: 600; font-size: 16.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .who span { display: block; font-size: 13px; color: var(--head-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -131,6 +132,10 @@ const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ history, i
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 const ticks = (read) => { const s = el("span", "ticks" + (read ? " read" : "")); s.innerHTML = '<svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M11.1.6 4.9 7.9 2 5.2.9 6.3l4.1 3.9L12.2 1.6zM15.1.6 8.9 7.9l-.9-.8-1.1 1.2 2.1 1.9L16.2 1.6z"/></svg>'; return s; };
 
+const greeting = () => "Hello! 👋 Welcome to " + agency.agencyName + ". I'm " + agency.receptionistName + ". How can I help you today?";
+// The AI sees the greeting too, so it doesn't say hello a second time.
+const withGreeting = () => agency.agencyName ? [{ role: "assistant", content: greeting() }, ...history] : history;
+
 function bubble(dir, text, time, first, read) {
   const m = el("div", "msg " + dir + (first ? " first" : ""));
   m.append(document.createTextNode(text));
@@ -145,7 +150,7 @@ function render() {
   chat.replaceChildren(el("div", "pill", "Today"));
   if (agency.agencyName) chat.append(
     el("div", "notice", "🔒 Messages here are answered by " + agency.receptionistName + ", " + agency.agencyName + "'s AI assistant."),
-    bubble("in", "Hello! 👋 Welcome to " + agency.agencyName + ". I'm " + agency.receptionistName + ". How can I help you today?", started || nowTime(), true));
+    bubble("in", greeting(), started || nowTime(), true));
   let lastDir = "in";
   for (const it of items) {
     if (it.kind === "msg") {
@@ -200,7 +205,7 @@ async function sendText(text) {
   items.push(mine);
   busy = true; render();
   try {
-    const r = await post("/api/chat", { messages: history, demo: DEMO });
+    const r = await post("/api/chat", { messages: withGreeting(), demo: DEMO });
     mine.read = true;
     history.push({ role: "assistant", content: r.text || "" });
     if (r.text) items.push({ kind: "msg", dir: "in", text: r.text, time: nowTime() });
@@ -241,6 +246,8 @@ fetch("/api/agency" + (DEMO ? "?demo=" + encodeURIComponent(DEMO) : "")).then((r
   agency = { ...agency, ...a };
   $("agency").textContent = a.agencyName;
   $("avatar").textContent = (a.agencyName || "A").trim()[0].toUpperCase();
+  // A personalised demo can have the agency's own picture at /avatars/<code>.jpg.
+  if (DEMO) { const img = new Image(); img.alt = ""; img.onload = () => $("avatar").replaceChildren(img); img.src = "/avatars/" + DEMO + ".jpg"; }
   document.title = a.agencyName;
   render();
 }).catch(() => render());
