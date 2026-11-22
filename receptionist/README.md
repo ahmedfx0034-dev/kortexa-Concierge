@@ -166,6 +166,19 @@ chat is saved only in their own browser, so everyone who opens the link starts
 fresh. The ⋮ menu has **Lead summary** (what the agent would receive) and
 **Clear chat**.
 
+## Host the web chat on Vercel (opens instantly, free)
+
+Render's free plan sleeps, so the first visitor sees a "waking up" screen. The
+web chat also runs on Vercel, which doesn't sleep (`api/` + `vercel.json`):
+
+1. Vercel → **Add New → Project** → import this repository.
+2. **Root Directory:** `receptionist`. Framework: Other. Leave the build settings empty.
+3. **Environment Variables:** `LLM_API_KEY` = your Gemini key (optional: `LLM_MODEL`,
+   `LLM_FALLBACK_MODEL`, `DAILY_LIMIT`).
+4. Deploy. The chat is at `https://<project>.vercel.app/`.
+
+The Render server is still needed for WhatsApp (webhook, inbox, /check).
+
 ## Run locally and test
 
 ```bash

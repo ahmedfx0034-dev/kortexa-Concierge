@@ -66,6 +66,9 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
     res.end(JSON.stringify(body));
   };
   const readJson = (req) => new Promise((resolve, reject) => {
+    // Hosts like Vercel may have read and parsed the body already.
+    if (req.body && typeof req.body === "object" && !Buffer.isBuffer(req.body)) return resolve(req.body);
+    if (typeof req.body === "string" || Buffer.isBuffer(req.body)) { try { return resolve(JSON.parse(String(req.body) || "{}")); } catch { return reject(new LLMError("Bad request.", 400)); } }
     let size = 0; const chunks = [];
     req.on("data", (c) => { size += c.length; if (size > 64 * 1024) { reject(new LLMError("Message too large.", 413)); req.destroy(); } else chunks.push(c); });
     req.on("end", () => { try { resolve(JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}")); } catch { reject(new LLMError("Bad request.", 400)); } });
@@ -84,7 +87,7 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
     const pass = Buffer.from(b64, "base64").toString().split(":").slice(1).join(":");
     return pass.length === adminPassword.length && crypto.timingSafeEqual(Buffer.from(pass), Buffer.from(adminPassword));
   };
-  const ipOf = (req) => String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "").split(",")[0].trim();
+  const ipOf = (req) => String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
 
   return async function handler(req, res) {
     const url = new URL(req.url, "http://x");
@@ -221,11 +224,9 @@ export function createApp({ agency, llm, limiter = new Limiter(), now = () => Da
   };
 }
 
-// ---- start when run directly ----------------------------------------------
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const env = process.env;
-  const agency = JSON.parse(fs.readFileSync(env.AGENCY_FILE || path.join(here, "..", "config", "agency.json"), "utf8"));
-  const llm = env.LLM_API_KEY
+/** The AI client from environment settings (null when there's no key). */
+export function llmFromEnv(env = process.env) {
+  return env.LLM_API_KEY
     ? new LLM({
         baseUrl: env.LLM_BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai",
         model: env.LLM_MODEL || "gemini-3.5-flash",
@@ -234,6 +235,17 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         fallbackModel: env.LLM_FALLBACK_MODEL ?? "gemini-flash-lite-latest",
       })
     : null;
+}
+
+export function loadAgency(env = process.env) {
+  return JSON.parse(fs.readFileSync(env.AGENCY_FILE || path.join(here, "..", "config", "agency.json"), "utf8"));
+}
+
+// ---- start when run directly ----------------------------------------------
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const env = process.env;
+  const agency = loadAgency(env);
+  const llm = llmFromEnv(env);
   const limiter = new Limiter({ perDay: Number(env.DAILY_LIMIT) || 800 });
   const wa = new WhatsApp({ token: env.WHATSAPP_TOKEN, phoneNumberId: env.WHATSAPP_PHONE_NUMBER_ID, apiVersion: env.WHATSAPP_API_VERSION || "v23.0" });
   const chats = new Chats(env.DATA_FILE || "");
