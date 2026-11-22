@@ -152,6 +152,15 @@ studio learn bold-dark ./screenshots @someaccount https://www.instagram.com/p/XY
 - `./screenshots` is a folder of screenshots. You can mix folders, @handles and post links in one command.
 - The program reads the style automatically when it finishes. To skip that, add `--no-analyze`.
 
+**Pinterest references.** You can also use Pinterest pins, boards or profiles as references (uses the same `APIFY_TOKEN`):
+
+```bash
+studio learn bold-dark https://www.pinterest.com/pin/123456789/ https://www.pinterest.com/someone/my-board/ --per-board 12
+```
+
+- Each pin becomes one single-slide reference. For a board or profile link, the program takes the most-liked pins, up to `--per-board` (default 12).
+- `pin.it` short links work too. Pins that are videos are skipped.
+
 **Step B: check the style looks right.**
 
 ```bash

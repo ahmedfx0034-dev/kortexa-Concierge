@@ -36,14 +36,15 @@ except ImportError:  # pragma: no cover
 @app.command()
 def learn(
     style: str = typer.Argument(..., help="Name for this style, e.g. 'bold-dark'"),
-    sources: List[str] = typer.Argument(..., help="Folders of screenshots, post links and/or @handles"),
+    sources: List[str] = typer.Argument(..., help="Folders of screenshots, post links, @handles and/or Pinterest URLs"),
     per_account: int = typer.Option(8, help="Carousels to pull per @handle"),
+    per_board: int = typer.Option(12, help="Pins to pull per Pinterest board/user URL"),
     analyze: bool = typer.Option(True, help="Run style analysis right after ingesting"),
 ):
     """Collect reference carousels you like, then learn their style."""
-    from .ingest import ingest_accounts, ingest_local, ingest_post_urls, parse_inputs
+    from .ingest import ingest_accounts, ingest_local, ingest_pinterest, ingest_post_urls, parse_inputs
 
-    folders, urls, handles = parse_inputs(sources)
+    folders, urls, handles, pins = parse_inputs(sources)
     refs = []
     for f in folders:
         refs += ingest_local(style, f)
@@ -51,6 +52,8 @@ def learn(
         refs += ingest_post_urls(style, urls)
     if handles:
         refs += ingest_accounts(style, handles, per_account=per_account)
+    if pins:
+        refs += ingest_pinterest(style, pins, per_board=per_board)
     total = len(store.list_references(style))
     typer.echo(f"Added {len(refs)} carousels ({total} total) to style '{store.slugify(style)}'.")
     if analyze:

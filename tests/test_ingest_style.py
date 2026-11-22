@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT))
 import carousel_studio.config as config  # noqa: E402
 import carousel_studio.store as store  # noqa: E402
 from carousel_studio import ingest, style  # noqa: E402
-from carousel_studio.ingest import instagram  # noqa: E402
+from carousel_studio.ingest import instagram, pinterest  # noqa: E402
 from carousel_studio.models import (  # noqa: E402
     Palette, ReferenceCarousel, ReferenceSource, SlideArchetype, StyleProfile, Typography,
 )
@@ -94,16 +94,20 @@ def test_ingest_local_errors(tmp_path):
 # ------------------------------------------------------------- parse_inputs
 
 def test_parse_inputs(tmp_path):
-    folders, posts, handles = ingest.parse_inputs([
+    folders, posts, handles, pins = ingest.parse_inputs([
         str(tmp_path),
         "https://www.instagram.com/p/ABC123/?img_index=1",
         "instagram.com/reel/XYZ/",
         "https://www.instagram.com/some.creator/",
         "@another_one",
+        "https://www.pinterest.com/pin/123/",
+        "https://pin.it/abc",
+        "pinterest.com/user/board/",
     ])
     assert folders == [str(tmp_path)]
     assert len(posts) == 2
     assert handles == ["some.creator", "another_one"]
+    assert pins == ["https://www.pinterest.com/pin/123/", "https://pin.it/abc", "pinterest.com/user/board/"]
     with pytest.raises(ValueError):
         ingest.parse_inputs(["definitely/not/a/path/xyz"])
 
@@ -220,6 +224,85 @@ def test_missing_apify_token(monkeypatch):
     monkeypatch.setattr(instagram, "get_settings", lambda: s)
     with pytest.raises(instagram.ApifyError, match="APIFY_TOKEN"):
         ingest.ingest_post_urls("s", ["https://www.instagram.com/p/X/"])
+
+
+# --------------------------------------------------------------- pinterest
+
+def _pin(pid, likes=None, images=None, **kw):
+    d = {"id": pid, "url": f"https://www.pinterest.com/pin/{pid}/", "grid_title": f"T{pid}",
+         "description": f"D{pid}", "board": {"name": "b"},
+         "images": images or {"orig": {"url": f"https://cdn/{pid}-orig.jpg", "width": 900, "height": 1600},
+                              "736x": {"url": f"https://cdn/{pid}-736.jpg", "width": 736, "height": 1300}}}
+    if likes is not None:
+        d["like_count"] = likes
+    d.update(kw)
+    return d
+
+
+@pytest.fixture
+def fake_pin(monkeypatch):
+    calls = []
+    state = {"items": []}
+
+    def fake_post(url, params=None, json=None, timeout=None, headers=None):
+        calls.append({"url": url, "json": json, "timeout": timeout, "headers": headers})
+        return FakeResp(json_data=state["items"])
+
+    s = config.Settings()
+    s.apify_token = "test-token"
+    monkeypatch.setattr(instagram, "get_settings", lambda: s)
+    monkeypatch.setattr(instagram.httpx, "post", fake_post)
+    monkeypatch.setattr(instagram.httpx, "Client", FakeClient)
+    FakeClient.gets = []
+    return calls, state
+
+
+def test_ingest_pinterest_single_pin(fake_pin):
+    calls, state = fake_pin
+    state["items"] = [_pin("111", likes=5)]
+    refs = ingest.ingest_pinterest("s", ["https://www.pinterest.com/pin/111/?x=1"])
+    call = calls[0]
+    assert "epctex~pinterest-scraper/run-sync-get-dataset-items" in call["url"]
+    assert call["headers"] == {"Authorization": "Bearer test-token"}
+    assert call["json"] == {"startUrls": ["https://www.pinterest.com/pin/111/?x=1"], "getDetails": True,
+                            "includeComments": False, "maxItems": 1, "endPage": 1}
+    assert call["timeout"] >= 300
+    assert len(refs) == 1
+    r = refs[0]
+    assert r.id == "pin_111" and r.source == ReferenceSource.pinterest
+    assert r.origin == "https://www.pinterest.com/pin/111/?x=1" and r.likes == 5
+    assert r.caption == "T111\n\nD111"
+    assert len(r.slide_paths) == 1 and Image.open(r.slide_paths[0]).format == "JPEG"
+    assert FakeClient.gets == ["https://cdn/111-orig.jpg"]  # orig preferred
+    assert ingest.ingest_pinterest("s", ["https://www.pinterest.com/pin/111/"]) == []  # dedupe
+
+
+def test_pinterest_image_choice():
+    assert pinterest.best_image_url({"images": {"236x": {"url": "http://a", "width": 1, "height": 1},
+                                               "736x": {"url": "http://b"}}}) == "http://b"
+    assert pinterest.best_image_url({"images": {"236x": {"url": "http://a", "width": 236, "height": 300},
+                                               "474x": {"url": "http://c", "width": 474, "height": 600}}}) == "http://c"
+    assert pinterest.best_image_url({"images": {}}) is None
+
+
+def test_ingest_pinterest_board_cap_and_sort(fake_pin):
+    calls, state = fake_pin
+    state["items"] = [_pin("1", 10), _pin("2", 300), _pin("3"), _pin("4", 50), _pin("5", 70)]
+    refs = ingest.ingest_pinterest("s", ["https://www.pinterest.com/user/board/"], per_board=3)
+    assert [r.id for r in refs] == ["pin_2", "pin_5", "pin_4"]
+    assert calls[0]["json"]["maxItems"] >= 3
+    assert all(r.origin == "https://www.pinterest.com/user/board/" for r in refs)
+
+
+def test_pinterest_missing_token(monkeypatch):
+    s = config.Settings()
+    s.apify_token = None
+    monkeypatch.setattr(instagram, "get_settings", lambda: s)
+    posted = []
+    monkeypatch.setattr(instagram.httpx, "post", lambda *a, **k: posted.append(1))
+    with pytest.raises(instagram.ApifyError, match="APIFY_TOKEN"):
+        ingest.ingest_pinterest("s", ["https://www.pinterest.com/pin/1/"])
+    assert posted == []
 
 
 # ------------------------------------------------------------------ style

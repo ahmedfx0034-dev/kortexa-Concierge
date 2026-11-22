@@ -18,6 +18,7 @@ class ReferenceSource(str, Enum):
     local = "local"          # images the user dropped in a folder
     post_url = "post_url"    # a single instagram.com/p/... link
     account = "account"      # an @handle we pulled recent carousels from
+    pinterest = "pinterest"  # a pin, board or user on pinterest.com
 
 
 class ReferenceCarousel(BaseModel):
