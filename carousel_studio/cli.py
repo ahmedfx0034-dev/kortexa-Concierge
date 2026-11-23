@@ -179,7 +179,7 @@ def doctor():
 
     s = get_settings()
     checks = {
-        "Claude API key": bool(os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")),
+        "Claude API key (optional: session mode works without it)": bool(os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")),
         "Apify token (for links/@handles)": bool(s.apify_token),
         "Instagram user id + token": bool(s.ig_user_id and s.ig_access_token),
         "Image host": {"vercel": bool(s.blob_token), "s3": bool(s.s3_bucket and s.s3_public_base_url)}.get(
