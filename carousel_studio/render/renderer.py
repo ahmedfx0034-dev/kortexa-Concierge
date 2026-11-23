@@ -721,6 +721,22 @@ def _find_image(path: str, base: Optional[Path]) -> Optional[Path]:
     return None
 
 
+def _edge_connected(mask, step: int = 4):
+    """Binary-threshold an 'L' mask and keep only the parts that touch the image border."""
+    from PIL import Image, ImageDraw
+
+    w, h = mask.size
+    small = mask.resize((max(1, w // step), max(1, h // step)), Image.BILINEAR).point(lambda v: 255 if v >= 128 else 0)
+    sw, sh = small.size
+    px = small.load()
+    border = [(x, y) for x in range(sw) for y in (0, sh - 1)] + [(x, y) for y in range(sh) for x in (0, sw - 1)]
+    for xy in border:
+        if px[xy] == 255:
+            ImageDraw.floodfill(small, xy, 128)
+    keep = small.point(lambda v: 255 if v == 128 else 0)
+    return keep.resize((w, h), Image.BILINEAR)
+
+
 def cinematic_grade(path: Path, max_h: int = 1700) -> Optional[dict]:
     """Moody 'film still' grade for a real photo, done in Pillow so the browser gets one small JPEG.
     Bright, colourless areas (white ceilings, skies, walls) are pulled down hard to near-black, while
@@ -742,10 +758,12 @@ def cinematic_grade(path: Path, max_h: int = 1700) -> Optional[dict]:
         bright = val.point(lambda v: 0 if v < 80 else 255 if v > 150 else int((v - 80) / 70 * 255))
         # grow the mask a little before softening it, so the light background is crushed right up to
         # the subject's outline (no bright halo) while the feathered edge stays on the background side
+        # Only regions connected to the frame's edge count as background: highlights inside the subject
+        # (forehead shine, eye whites) are islands and stay untouched.
+        mask = _edge_connected(ImageChops.multiply(lowsat, bright))
         r = max(2, round(im.width / 220))
-        mask = ImageChops.multiply(lowsat, bright).filter(ImageFilter.MinFilter(3)) \
-            .filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
-        crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.2)
+        mask = mask.filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
+        crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.27)
         out = Image.composite(crushed, im, mask)
         out = ImageEnhance.Color(out).enhance(0.92)
         out = ImageEnhance.Contrast(out).enhance(1.06)
