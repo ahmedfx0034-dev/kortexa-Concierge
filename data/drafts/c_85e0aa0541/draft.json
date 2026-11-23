@@ -1,0 +1,132 @@
+{
+  "id": "c_85e0aa0541",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "The 15-second listing video formula",
+    "angle": "Short videos reach far more people than photo posts. The formula: 0-3 seconds hook, 3-12 seconds tour of four or five spaces, 12-15 seconds the ask with one clear action.",
+    "hook": "THE 15-SECOND VIDEO THAT GETS DMS"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE LISTING ENQUIRY PLAYBOOK",
+      "heading": "THE **15-SECOND** VIDEO THAT GETS DMS",
+      "body": "Three parts. Hook, tour, ask.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "NOBODY FINISHES A **SLOW** VIDEO",
+      "body": "Long walk-throughs lose people before the best room. Yet short videos reach far more people than photo posts. So keep it short.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "0-3 SECONDS: THE **HOOK**",
+      "body": "Your best shot with bold text on screen. Like: \"4-bed with pool, quiet street.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "3-12 SECONDS: THE **TOUR**",
+      "body": "Four or five of your best spaces, in the order that sells. Slow, smooth moves. Two to three seconds each.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "12-15 SECONDS: THE **ASK**",
+      "body": "Price, location and one clear action. \"DM TOUR to book a viewing.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "list",
+      "layout": "list",
+      "kicker": "MAKE IT LOOK PREMIUM",
+      "heading": "THE **PREMIUM** DETAILS",
+      "body": null,
+      "bullets": [
+        "Light: bright and warm. Dark rooms look small.",
+        "Captions: big enough to read with the sound off.",
+        "Music: calm for luxury, upbeat for apartments.",
+        "Nothing fake: no added furniture, rooms or views."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "No time to film? Your **photos** are enough.",
+      "body": "AI can turn the listing photos you already have into a smooth video. No camera crew. No reshoot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE FULL **FORMULA**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_85e0aa0541/slide_08.png"
+    }
+  ],
+  "caption": "Your listing video doesn't need to be long. It needs to be 15 seconds.\n\n0-3 seconds: your best shot with bold text.\n3-12 seconds: four or five of your best spaces, two to three seconds each.\n12-15 seconds: price, location and one clear action.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-28T12:30:00+00:00",
+  "slot_id": "2026-11-28-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:42:01+00:00",
+  "updated_at": "2026-11-23T05:42:37+00:00"
+}

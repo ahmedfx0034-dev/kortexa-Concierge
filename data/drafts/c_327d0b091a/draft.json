@@ -1,0 +1,127 @@
+{
+  "id": "c_327d0b091a",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "4 photo mistakes that make homes look cheap",
+    "angle": "Dark rooms, tilted walls, clutter (buckets, wires, clothes) and shooting from the middle of the room all make a good home look small and cheap. Each has a simple fix.",
+    "hook": "4 PHOTO MISTAKES THAT MAKE HOMES LOOK CHEAP"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR AGENTS WHO SHOOT ON A PHONE",
+      "heading": "4 MISTAKES THAT MAKE HOMES LOOK **CHEAP**",
+      "body": "Good homes. Bad photos. Simple fixes.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "IT'S NOT THE HOME. IT'S THE **PHOTOS**.",
+      "body": "Buyers judge the home by your photos. Same phone, a few new habits, and the same home looks its best.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Mistake 1",
+      "heading": "**DARK** ROOMS",
+      "body": "Dark rooms look small and unloved. Fix: shoot in daylight, curtains open, lights on. Late morning usually gives the most even light.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Mistake 2",
+      "heading": "**TILTED** WALLS",
+      "body": "Tilted walls make a home look cheap. Fix: hold the phone straight, at chest height.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Mistake 3",
+      "heading": "**CLUTTER** IN THE SHOT",
+      "body": "Buckets, wires, clothes, anything personal. Fix: clear the room before you shoot, not after.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Mistake 4",
+      "heading": "SHOOTING FROM THE **MIDDLE**",
+      "body": "The room looks smaller than it is. Fix: shoot from the corner, so the room looks open and true to size.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "Make it look good. Keep it **honest**.",
+      "body": "Never edit the layout. Buyers who feel misled don't come back.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "SHOOT IT **RIGHT** NEXT TIME",
+      "body": "Save this for your next listing shoot",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_327d0b091a/slide_08.png"
+    }
+  ],
+  "caption": "Most homes don't look cheap. Their photos do.\n\nDark rooms, tilted walls, clutter and shooting from the middle of the room.\nEach one has a simple fix, and you can use the same phone.\nDaylight, phone straight, clear the room, shoot from the corner.\n\nSave this for your next listing shoot.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realestatephotography",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-29T08:30:00+00:00",
+  "slot_id": "2026-11-29-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:42:03+00:00",
+  "updated_at": "2026-11-23T05:42:37+00:00"
+}
