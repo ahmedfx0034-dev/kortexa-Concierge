@@ -1,0 +1,127 @@
+{
+  "id": "c_b3522e1c6a",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "All you do is send the photos",
+    "angle": "Filming, editing and posting take time you don't have. I turn your listing photos into premium, cinematic short videos, write the captions and post them across your platforms.",
+    "hook": "ALL YOU DO IS SEND THE PHOTOS."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "DONE FOR YOU",
+      "heading": "ALL YOU DO IS SEND THE **PHOTOS**.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "GOOD VIDEOS NEED A CAMERA CREW",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "THE COST",
+      "heading": "WEEKENDS LOST TO **EDITING**",
+      "body": "And the video still looks basic. So the listing gets ignored.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "YOUR PHOTOS ARE **ENOUGH**",
+      "body": "AI can turn the photos you already have into smooth, cinematic video.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "YOU SEND THE **PHOTOS**",
+      "body": "On WhatsApp. The same photos you already took for the listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "I MAKE THE **VIDEO**",
+      "body": "Premium, cinematic and short. Your real rooms, nothing fake added.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "I WRITE IT AND **POST** IT",
+      "body": "Captions written for you. Posted across your platforms. You get back to selling.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "WANT THIS **DONE** FOR YOU?",
+      "body": "DM me REVIEW and I'll look at one of your listings",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_b3522e1c6a/slide_08.png"
+    }
+  ],
+  "caption": "No filming. No editing. No posting yourself.\n\nYou send the listing photos.\nI turn them into premium, cinematic short videos, write the captions and post them across your platforms.\nOne extra rental a month covers it.\n\nDM me REVIEW and I'll look at one of your listings.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realestatevideo",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-29T19:30:00+00:00",
+  "slot_id": "2026-11-29-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:40:41+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

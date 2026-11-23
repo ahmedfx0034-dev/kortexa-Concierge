@@ -1,0 +1,127 @@
+{
+  "id": "c_d44b55aedc",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "No hook: your first slide says nothing",
+    "angle": "Nothing in the first moment says why this home is worth their time. A hook names the size or the standout feature, like '4-bed with a pool'.",
+    "hook": "\"NICE HOUSE FOR SALE\" IS NOT A HOOK"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "LISTING MISTAKE",
+      "heading": "\"NICE HOUSE FOR SALE\" IS NOT A **HOOK**",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "THE PHOTOS SPEAK FOR THEMSELVES",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "BUYERS DECIDE IN ABOUT A **SECOND**",
+      "body": "If the first moment doesn't say why, they keep scrolling.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "A HOOK SAYS **WHY** THIS HOME",
+      "body": "Name the size, the area or the standout feature. In one line.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "LEAD WITH THE **SIZE**",
+      "body": "\"4-bed\" tells a buyer in a second if it fits their family.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "ADD THE **STANDOUT** FEATURE",
+      "body": "Pool, garden, view. The one thing that makes this home different.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAME HOUSE. A **REAL** HOOK.",
+      "body": "Before: Nice house for sale.\nAfter:\n✓ \"4-bed with pool, quiet street\"\n✓ Bold text on your best shot\n✓ Easy to read with the sound off",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "WRITE HOOKS THAT **STOP** THE SCROLL",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_d44b55aedc/slide_08.png"
+    }
+  ],
+  "caption": "\"Nice house for sale\" gives nobody a reason to stop.\n\nBuyers decide in about a second whether to keep looking.\nYour hook names the size or the standout feature.\nTry \"4-bed with pool, quiet street\" in bold text on your best shot.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-28T08:30:00+00:00",
+  "slot_id": "2026-11-28-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:40:39+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

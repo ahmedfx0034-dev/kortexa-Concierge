@@ -1,0 +1,127 @@
+{
+  "id": "c_23bf6b6eae",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "Lead with your best shot, not the gate",
+    "angle": "The first photo is your hook. Always lead with the single most impressive shot (pool, view, living room), even if it isn't the front of the house.",
+    "hook": "YOUR BEST SHOT GOES FIRST. ALWAYS."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE ORDER THAT SELLS",
+      "heading": "YOUR BEST SHOT GOES **FIRST**. ALWAYS.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "THE FRONT GATE GOES FIRST",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "YOUR FIRST PHOTO IS THE **HOOK**",
+      "body": "Buyers decide in about a second whether to keep looking.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "FIND YOUR **HERO** SHOT",
+      "body": "The single most impressive photo. The pool, the view or the living room.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "PUT IT **FIRST**",
+      "body": "Even if it isn't the front of the house. The gate can wait.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "KEEP THE REST IN **ORDER**",
+      "body": "Main rooms next. Standout feature and neighbourhood at the end.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAME PHOTOS. NEW **FIRST** PHOTO.",
+      "body": "Before: Front gate first. The pool is photo 14.\nAfter:\n✓ The pool first\n✓ Living room and kitchen next\n✓ Neighbourhood last",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE FULL **PLAYBOOK**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_23bf6b6eae/slide_08.png"
+    }
+  ],
+  "caption": "The front gate is not your best photo. So why is it first?\n\nYour first photo is your hook.\nLead with the pool, the view or the living room, even if it isn't the front.\nOne small change. No new photos needed.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realestatephotography",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-25T08:30:00+00:00",
+  "slot_id": "2026-11-25-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:40:33+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}
