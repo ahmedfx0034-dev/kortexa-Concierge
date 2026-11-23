@@ -23,6 +23,9 @@
 .sub { font-size: calc(var(--k) * 46px); color: rgba(255,255,255,.88); max-width: 860px; }
 .note { font-size: calc(var(--k) * 54px); }
 {% endblock %}
+{% block scrims %}<div class="layer scrim-top"></div>
+{% if photo and photo.fit == 'cover' %}<div class="layer" style="background:linear-gradient(0deg, rgba(3,3,5,.9) 0%, rgba(3,3,5,.66) 40%, rgba(3,3,5,.3) 58%, transparent 70%)"></div>
+{% else %}<div class="layer scrim-bottom"></div>{% endif %}{% endblock %}
 {% block content %}
   <div class="qblock">
     <div class="numeral">{{ numeral }}.</div>

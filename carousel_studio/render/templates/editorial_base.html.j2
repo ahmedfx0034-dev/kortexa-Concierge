@@ -51,9 +51,11 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
 .nw, .hlnw { white-space: nowrap; }
 .scribble { position: relative; display: inline-block; white-space: nowrap; }
 .scribble .scrib { position: absolute; left: -16%; top: -26%; width: 132%; height: 150%; overflow: visible; pointer-events: none; }
-.scribble .scrib path { fill: none; stroke: var(--accent); stroke-width: 3.2px; stroke-linecap: round; stroke-linejoin: round;
+.h .scribble .scrib { left: -7%; top: -20%; width: 114%; height: 138%; }
+.scribble .scrib path { fill: none; stroke: var(--accent); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round;
      vector-effect: non-scaling-stroke; opacity: .95; }
 .h .scribble .scrib path { stroke-width: 5px; }
+.measuring .scrib { display: none; }
 
 /* ---------- chrome */
 .ed-logo { position: absolute; z-index: 6; display: block; object-fit: contain; }
@@ -118,6 +120,7 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
   const used = () => Math.max(0, ...[...inner.children].map(e => e.offsetTop + e.offsetHeight));
   const fits = () => used() <= box.clientHeight + 1 && inner.scrollWidth <= box.clientWidth + 1 && !wide();
   const set = k => root.style.setProperty('--k', k);
+  document.body.classList.add('measuring');  // scribbles overhang their word on purpose: ignore them while fitting
   let k = 1; set(1);
   if (!fits()) {
     let lo = 0.3, hi = 1;
@@ -126,6 +129,7 @@ body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: an
   }
   window.__fit = k;
   window.__overflow = !fits();
+  document.body.classList.remove('measuring');
   window.__ready = true;
 })();
 </script>

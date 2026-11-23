@@ -543,21 +543,28 @@ class _Theme:
             self.deco["grain_opacity"] = 0.05  # multiply-grain greys out light backgrounds quickly
         self.logo = brand_logo(brand, self.c["is_dark"]) if self.deco["logo"] else None
         self.logo_on_dark = (brand_logo(brand, True) if self.deco["logo"] else None)
-        self.editorial = any(a.layout in EDITORIAL for a in profile.archetypes)
         self.serif = self.deco["serif"] or DEFAULT_ACCENT_SERIF
-        if self.editorial:
-            self.logo_on_dark = brand_logo(brand, True)
-            try:
-                extra = fontlib.font_css([], italic_body=self.serif)
-            except Exception as e:  # never let fonts break rendering
-                log.warning("Accent serif loading failed: %s", e)
-                extra = ""
-            self.fonts["css"] = self.fonts["css"] + "\n" + extra
-            self.fonts["serif"] = Markup(fontlib.css_stack(self.serif))
+        self.fonts["serif"] = Markup(fontlib.css_stack(self.serif))
         tops = {self.deco[k] for k in ("counter", "handle", "brand", "logo") if self.deco[k]}
         bottoms = tops | ({self.deco["swipe"]} if self.deco["swipe"] else set()) | ({"bl"} if self.deco["footer"] else set())
         self.has_top = any(p and p.startswith("t") for p in bottoms)
         self.has_bottom = any(p and p.startswith("b") for p in bottoms)
+        self.editorial = False
+        if any(a.layout in EDITORIAL for a in profile.archetypes):
+            self.use_editorial()
+
+    def use_editorial(self) -> None:
+        """Load what the editorial layouts need: the accent italic serif and the logo made for dark."""
+        if self.editorial:
+            return
+        self.editorial = True
+        self.logo_on_dark = brand_logo(self.brand, True)
+        try:
+            extra = fontlib.font_css([], italic_body=self.serif)
+        except Exception as e:  # never let fonts break rendering
+            log.warning("Accent serif loading failed: %s", e)
+            extra = ""
+        self.fonts["css"] = self.fonts["css"] + "\n" + extra
 
 
 def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, base: Optional[Path]) -> dict:
@@ -689,7 +696,8 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
 # Photo options ride on slide.image_path after a '#', e.g. "founder.png#pos=50% 0%" or
 # "photo.jpg#fit=right&focus=70% 40%". Keys: pos (CSS background-position for a full-bleed crop),
 # fit=right|left (show the whole photo height anchored to that side, fading into black, text column
-# on the other side), focus (centre of the vignette, defaults to pos), grade=cinematic|none.
+# on the other side), focus (centre of the vignette), grade=cinematic|portrait|none (see cinematic_grade).
+# Bare words work too: "founder.png#right&portrait".
 _IMG_OPT_KEYS = ("pos", "fit", "focus", "grade")
 
 
@@ -706,8 +714,8 @@ def _split_image_opts(path: str) -> tuple[str, dict]:
                 opts[k] = re.sub(r"[^\w%. -]", "", v).strip()  # values land in CSS: keep them inert
         elif part.strip().lower() in ("right", "left"):
             opts["fit"] = part.strip().lower()
-        elif part.strip().lower() in ("cinematic", "none", "raw"):
-            opts["grade"] = part.strip().lower()
+        elif part.strip().lower() in ("cinematic", "portrait", "none", "raw"):
+            opts["grade"] = "none" if part.strip().lower() == "raw" else part.strip().lower()
     return raw, opts
 
 
@@ -737,12 +745,20 @@ def _edge_connected(mask, step: int = 4):
     return keep.resize((w, h), Image.BILINEAR)
 
 
-def cinematic_grade(path: Path, max_h: int = 1700) -> Optional[dict]:
+GRADES = ("cinematic", "portrait", "none")
+
+
+def cinematic_grade(path: Path, mode: str = "cinematic", max_h: int = 1700) -> Optional[dict]:
     """Moody 'film still' grade for a real photo, done in Pillow so the browser gets one small JPEG.
-    Bright, colourless areas (white ceilings, skies, walls) are pulled down hard to near-black, while
-    saturated areas (skin, clothes, logos) only get a gentle global tone-down: faces stay natural.
+
+    cinematic: darker, slightly desaturated, highlights rolled off (skies and white walls go dim but keep
+               their detail) - the default for listing photos.
+    portrait:  for a person in front of a light background. Bright, colourless areas that touch the
+               frame's edge (ceilings, walls, skies) are crushed to near-black; the subject, including
+               highlights inside it (forehead shine, eye whites), only gets a gentle tone-down, so faces
+               and skin tones stay natural.
     Returns {"uri", "ratio"} or None."""
-    key = (str(path), path.stat().st_mtime, max_h)
+    key = (str(path), path.stat().st_mtime, mode, max_h)
     if key in _GRADE_CACHE:
         return _GRADE_CACHE[key]
     try:
@@ -753,20 +769,23 @@ def cinematic_grade(path: Path, max_h: int = 1700) -> Optional[dict]:
         im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
         if im.height > max_h:
             im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
-        _, sat, val = im.convert("HSV").split()
-        lowsat = sat.point(lambda v: 255 if v < 60 else 0 if v > 115 else int((115 - v) / 55 * 255))
-        bright = val.point(lambda v: 0 if v < 80 else 255 if v > 150 else int((v - 80) / 70 * 255))
-        # grow the mask a little before softening it, so the light background is crushed right up to
-        # the subject's outline (no bright halo) while the feathered edge stays on the background side
-        # Only regions connected to the frame's edge count as background: highlights inside the subject
-        # (forehead shine, eye whites) are islands and stay untouched.
-        mask = _edge_connected(ImageChops.multiply(lowsat, bright))
-        r = max(2, round(im.width / 220))
-        mask = mask.filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
-        crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.27)
-        out = Image.composite(crushed, im, mask)
-        out = ImageEnhance.Color(out).enhance(0.92)
-        out = ImageEnhance.Contrast(out).enhance(1.06)
+        if mode == "portrait":
+            _, sat, val = im.convert("HSV").split()
+            lowsat = sat.point(lambda v: 255 if v < 60 else 0 if v > 115 else int((115 - v) / 55 * 255))
+            bright = val.point(lambda v: 0 if v < 80 else 255 if v > 150 else int((v - 80) / 70 * 255))
+            mask = _edge_connected(ImageChops.multiply(lowsat, bright))
+            # grow, then feather: the background is crushed right up to the outline (no bright halo)
+            r = max(2, round(im.width / 220))
+            mask = mask.filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
+            crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.27)
+            out = Image.composite(crushed, im, mask)
+            out = ImageEnhance.Color(out).enhance(0.92)
+            out = ImageEnhance.Contrast(out).enhance(1.06)
+        else:
+            # soft-knee tone curve: shadows a touch deeper, highlights rolled off to ~70%
+            curve = [round(255 * (0.86 * x if x < 0.45 else 0.387 + (x - 0.45) * 0.56)) for x in (i / 255 for i in range(256))]
+            out = ImageEnhance.Color(im).enhance(0.78).point(curve * 3)
+            out = ImageEnhance.Contrast(out).enhance(1.1)
         buf = io.BytesIO()
         out.save(buf, format="JPEG", quality=88, optimize=True)
         res = {"uri": "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode(),
@@ -787,8 +806,8 @@ def editorial_photo(image_path: Optional[str], base: Optional[Path], cinematic_d
     if not p:
         log.warning("Slide image not found: %s", raw)
         return None
-    grade = opts.get("grade") or ("cinematic" if cinematic_default else "none")
-    img = cinematic_grade(p) if grade == "cinematic" else None
+    grade = opts.get("grade") if opts.get("grade") in GRADES else ("cinematic" if cinematic_default else "none")
+    img = cinematic_grade(p, grade) if grade != "none" else None
     if img is None:
         uri = _image_uri(str(p))
         try:
@@ -803,7 +822,7 @@ def editorial_photo(image_path: Optional[str], base: Optional[Path], cinematic_d
     pos = opts.get("pos") or "50% 30%"
     focus = opts.get("focus") or ("50% 46%" if fit == "cover" else ("72% 42%" if fit == "right" else "28% 42%"))
     width = min(W, round(H * img["ratio"])) if fit != "cover" else W
-    return dict(uri=img["uri"], fit=fit, pos=pos, focus=focus, width=width, graded=grade == "cinematic")
+    return dict(uri=img["uri"], fit=fit, pos=pos, focus=focus, width=width, grade=grade)
 
 
 _SCRIBBLE = ('<svg class="scrib" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true">'
@@ -849,7 +868,7 @@ _BG_SPOTS = ("78% 14%", "16% 84%", "88% 62%", "24% 18%", "70% 92%", "8% 40%", "9
 
 def _editorial_ctx(theme: "_Theme", slide: Slide, layout: str, ordinal: int, base: Optional[Path], s: dict) -> dict:
     brand, deco = theme.brand, theme.deco
-    photo = editorial_photo(slide.image_path, base, cinematic_default=True)
+    photo = editorial_photo(slide.image_path, base, cinematic_default=deco["cinematic"])
     numeral = None
     if layout == "worksheet":
         m = re.search(r"\d{1,2}", slide.kicker or "")
@@ -858,7 +877,7 @@ def _editorial_ctx(theme: "_Theme", slide: Slide, layout: str, ordinal: int, bas
     s["heading"] = scribble(s["heading"])
     if layout == "editorial_cover":
         # a white (**) phrase that ends the headline leaves its final period in the accent: "DO IT."
-        s["heading"] = Markup(re.sub(r"([.!?])</span>$", r"</span><span class=\"dot\">\1</span>", str(s["heading"])))
+        s["heading"] = Markup(re.sub(r"([.!?])</span>$", r'</span><span class="dot">\1</span>', str(s["heading"])))
     if s.get("body"):
         s["body"] = scribble(s["body"])
     handle = brand.get("instagram_handle") or ""
@@ -961,6 +980,8 @@ def render_html(profile: StyleProfile, slides: Sequence[Slide], brand: Optional[
     """Build the HTML for each slide (exposed for debugging / tests)."""
     brand = brand if brand is not None else get_settings().brand
     theme = _Theme(profile, brand)
+    if any(sl.layout in EDITORIAL for sl in slides):
+        theme.use_editorial()
     out, n_ord = [], 0
     total = len(slides)
     for sl in slides:
@@ -1020,6 +1041,13 @@ _SAMPLE = {
                           "\"The X nobody talks about\"", "\"X mistakes costing you Y\""]),
     "quote": dict(heading="People don't save information. They save **transformation**.", body="Your audience"),
     "cta": dict(heading="Want more like this?", body="Save this post for your next content day and share it with a friend who needs it."),
+    "editorial_cover": dict(heading="How to plan your *next* post and actually **do it.**",
+                            body="from someone who used to wing it..."),
+    "worksheet": dict(heading="What do you want to be known for?",
+                      bullets=["One word:", "The ~~one~~ thing I'll post about:"]),
+    "editorial_takeaway": dict(kicker="Remember this:", heading="Clarity beats ~~more~~ content.",
+                               body="Answer these once and every post gets easier."),
+    "editorial_cta": dict(heading="Want more like **this?**", body="Save this post for your next content day."),
 }
 
 
@@ -1038,7 +1066,7 @@ def sample_slides(profile: StyleProfile) -> List[Slide]:
     for i, a in enumerate(order, 1):
         layout = a.layout if a.layout in LAYOUTS else ("center_statement" if i == 1 else "top_heading_body")
         copy = dict(_SAMPLE[layout])
-        if layout == "numbered":
+        if layout in ("numbered", "worksheet"):
             copy["kicker"] = None
         if profile.uses_photos and layout == "split_image":
             copy["image_prompt"] = "candid behind-the-scenes photo"

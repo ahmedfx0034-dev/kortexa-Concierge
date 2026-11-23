@@ -313,3 +313,130 @@ def test_before_after_layout_text_and_photo(tmp_path):
         r, g, b = rgb.getpixel((540, 520))
         assert abs(r - 0x33) < 30 and abs(b - 0x99) < 30
         assert sum(rgb.getpixel((540, 1300))) < 90
+
+
+# ------------------------------------------------------------ editorial format (kortexa-editorial)
+
+EDITORIAL_PROFILE = config.ROOT / "data" / "styles" / "kortexa-editorial" / "profile.json"
+_ED_BRAND = {"brand_name": "Kortexa", "instagram_handle": "@ahmed.kortexa",
+             "call_to_action": "Comment LISTING and I'll send you the playbook"}
+
+
+def _editorial_profile() -> StyleProfile:
+    return StyleProfile.model_validate_json(EDITORIAL_PROFILE.read_text())
+
+
+def test_editorial_profile_is_valid():
+    from carousel_studio.render.renderer import LAYOUTS
+
+    p = _editorial_profile()
+    assert p.name == "kortexa-editorial" and p.palette.accent == "#98CC13" and p.palette.background == "#030305"
+    assert p.typography.heading_font == "Montserrat" and p.typography.body_font == "Inter"
+    assert {a.layout for a in p.archetypes} == {"editorial_cover", "worksheet", "editorial_takeaway", "editorial_cta"}
+    assert all(a.layout in LAYOUTS for a in p.archetypes)
+    assert "~~" in next(a.description for a in p.archetypes if a.layout == "worksheet")  # scribble convention documented
+    d = parse_decorations(p.decorations)
+    assert d["serif"] == "Instrument Serif" and d["cinematic"]
+
+
+def test_editorial_worksheet_html():
+    from carousel_studio.models import Slide
+    from carousel_studio.render.renderer import render_html
+
+    slides = [
+        Slide(index=1, archetype="question", layout="worksheet", kicker="2", heading="What is the ~~one~~ thing?",
+              bullets=["My hero shot:", "Price shown? (yes/no):", "Keep it short"]),
+        Slide(index=2, archetype="question", layout="worksheet", heading="Who replies?",
+              bullets=["My first reply:", "___", "___"]),
+    ]
+    a, b = render_html(_editorial_profile(), slides, _ED_BRAND)
+    assert '<div class="numeral">2.</div>' in a                    # kicker digits
+    assert '<div class="numeral">2.</div>' in b                    # no kicker: 2nd question slide
+    assert a.count('class="row"') == 2 and a.count('class="fill"') == 2
+    assert a.count('class="line"') == 4                            # 2 prompts -> 2 extra writing lines each
+    assert '<div class="note">Keep it short</div>' in a            # no ':' -> italic line, no rule
+    assert b.count('class="line"') == 2                            # explicit '___' lines replace the auto ones
+    assert 'class="scribble"' in a and 'class="scrib"' in a and "~~" not in a
+    assert "--serif: 'Instrument Serif'" in a and "@ahmed.kortexa" in a and "save for later" in a
+    assert "Montserrat" in a and "#98CC13" in a
+
+
+def test_editorial_cover_takeaway_cta_html():
+    from carousel_studio.models import Slide
+    from carousel_studio.render.renderer import render_html
+
+    slides = [
+        Slide(index=1, archetype="cover", layout="editorial_cover",
+              heading="Your listing **checklist** *before* you **post.**", body="from someone who reviews listings"),
+        Slide(index=2, archetype="takeaway", layout="editorial_takeaway", kicker="Remember this:",
+              heading="Same listing. Better ~~package~~.", body="Get the ones you have **noticed**."),
+        Slide(index=3, archetype="cta", layout="editorial_cta", heading="Get my **playbook**",
+              body="Comment LISTING and I'll send you the playbook"),
+    ]
+    cover, take, cta = render_html(_editorial_profile(), slides, _ED_BRAND)
+    assert "<em>before</em>" in cover and '<span class="hl hlnw">checklist</span>' in cover
+    assert '<span class="dot">.</span>' in cover                   # white phrase, accent full stop
+    assert 'class="sub"' in cover and "swipe" in cover
+    assert "Remember this:" in take and 'class="scribble"' in take and 'class="rule2"' in take
+    assert 'class="cta-btn"' in cta and "Comment LISTING" in cta and cta.count("Comment LISTING") == 1
+    assert 'class="swipe"' not in cta                              # last slide: no swipe cue
+
+
+def test_editorial_photo_options_and_grade(tmp_path):
+    from carousel_studio.render.renderer import _split_image_opts, cinematic_grade, editorial_photo
+
+    raw, opts = _split_image_opts("me.png#pos=50% 0%&right&portrait")
+    assert raw == "me.png" and opts == {"pos": "50% 0%", "fit": "right", "grade": "portrait"}
+    assert _split_image_opts("x.jpg#pos=1px;}body{color:red")[1]["pos"] == "1px"  # CSS can't be injected
+    assert _split_image_opts("x.jpg#raw")[1]["grade"] == "none"
+
+    # portrait grade: light background touching the frame goes dark, the subject and a highlight
+    # inside it (an island, like forehead shine) are left natural
+    from PIL import ImageDraw
+    im = Image.new("RGB", (400, 500), (205, 205, 200))
+    d = ImageDraw.Draw(im)
+    d.rectangle([100, 120, 300, 500], fill=(140, 92, 64))
+    d.rectangle([180, 200, 220, 240], fill=(205, 205, 200))
+    src = tmp_path / "portrait.png"
+    im.save(src)
+    import base64
+    import io
+    g = cinematic_grade(src, "portrait")
+    out = Image.open(io.BytesIO(base64.b64decode(g["uri"].split(",", 1)[1]))).convert("RGB")
+    assert sum(out.getpixel((20, 20))) < 3 * 80                    # background crushed
+    assert sum(out.getpixel((200, 220))) > 3 * 150                 # interior highlight untouched
+    r, gg, b = out.getpixel((140, 400))
+    assert abs(r - 140) < 30 and abs(gg - 92) < 30 and abs(b - 64) < 30  # skin-like tone kept
+    assert g["ratio"] == pytest.approx(0.8)
+
+    ph = editorial_photo(str(src) + "#right", None)
+    assert ph["fit"] == "right" and ph["width"] == round(1350 * 0.8) and ph["grade"] == "cinematic"
+    assert editorial_photo("missing.png", None) is None
+
+
+def test_editorial_render_with_and_without_photo(tmp_path):
+    from carousel_studio.models import Slide
+    from carousel_studio.render.renderer import render_slides
+
+    photo = tmp_path / "red.jpg"
+    Image.new("RGB", (900, 1200), (200, 40, 40)).save(photo)
+    slides = [
+        Slide(index=1, archetype="question", layout="worksheet", kicker="1", heading="What will buyers see first?",
+              bullets=["My hero shot:"]),
+        Slide(index=2, archetype="question", layout="worksheet", kicker="2", heading="Which ~~one~~ keyword?",
+              bullets=["My one keyword:"], image_path=str(photo) + "#right&grade=none"),
+    ]
+    paths = render_slides(_editorial_profile(), slides, tmp_path / "out", brand=_ED_BRAND)
+    with Image.open(paths[0]) as im:                                # dark cinematic stand-in, no photo
+        rgb = im.convert("RGB")
+        assert rgb.size == (1080, 1350)
+        assert sum(rgb.getpixel((900, 700))) < 3 * 60
+        # the lime numeral sits behind the heading at the top left
+        lime = sum(1 for x in range(80, 400, 8) for y in range(100, 560, 8)
+                   if (lambda p: p[1] > 150 and p[0] < 190 and p[2] < 90)(rgb.getpixel((x, y))))
+        assert lime > 30
+    with Image.open(paths[1]) as im:                                # photo on the right, fading to black on the left
+        rgb = im.convert("RGB")
+        r, g, b = rgb.getpixel((900, 700))
+        assert r > 90 and r > g + 40
+        assert sum(rgb.getpixel((30, 700))) < 3 * 40
