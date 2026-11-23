@@ -1,0 +1,132 @@
+{
+  "id": "c_27e0054507",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "The order that sells: 8 photos in sequence",
+    "angle": "Order is a story: hero shot, living room, kitchen, master bedroom, master bathroom, other bedrooms, standout feature, neighbourhood. Same photos, clearer listing.",
+    "hook": "POST YOUR PHOTOS IN THIS ORDER"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE ORDER THAT SELLS",
+      "heading": "POST YOUR PHOTOS IN **THIS ORDER**",
+      "body": "Same photos. A clearer listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "RANDOM PHOTOS GET BUYERS **LOST**",
+      "body": "Gate, bathroom, kitchen, garden. The buyer can't picture the home, so they stop swiping. Order turns your photos into a story.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "LEAD WITH YOUR **HERO** SHOT",
+      "body": "Your single most impressive photo, even if it's not the front. That shot is your hook.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "THEN THE **LIVING** SPACES",
+      "body": "Living room first, then the kitchen. Walk them in the way you would on a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "THEN THE **BEDROOMS**",
+      "body": "Master bedroom, then the master bathroom. Then the other bedrooms.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 4",
+      "heading": "FINISH WITH THE **EXTRAS**",
+      "body": "Your standout feature, like a pool, a view or a garden. Then the neighbourhood or a nearby landmark.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "list",
+      "layout": "list",
+      "kicker": "SAVE THIS",
+      "heading": "THE ORDER **AT A GLANCE**",
+      "body": null,
+      "bullets": [
+        "Open: hero shot, living room, kitchen.",
+        "Then: master bedroom and bathroom.",
+        "Next: the other bedrooms.",
+        "End: standout feature, then the neighbourhood."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "SAME PHOTOS. **CLEARER** LISTING.",
+      "body": "Save this before you post your next listing",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_27e0054507/slide_08.png"
+    }
+  ],
+  "caption": "The photos you already have can sell better. Just change the order.\n\nLead with your hero shot, even if it's not the front.\nThen walk buyers through the home: living room, kitchen, bedrooms.\nEnd with the standout feature and the neighbourhood.\n\nSave this before you post your next listing.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#realestatephotography"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-26T08:30:00+00:00",
+  "slot_id": "2026-11-26-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:56+00:00",
+  "updated_at": "2026-11-23T05:42:01+00:00"
+}

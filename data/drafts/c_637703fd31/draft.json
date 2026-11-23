@@ -1,0 +1,127 @@
+{
+  "id": "c_637703fd31",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Out-of-town buyers can't visit. Video lets them look",
+    "angle": "Out-of-town and overseas buyers can't easily come to a viewing. A short, clear listing video lets them walk through the home from afar and decide if it's worth a trip.",
+    "hook": "YOUR BUYER LIVES ABROAD. NOW WHAT?"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "OUT-OF-TOWN BUYERS",
+      "heading": "YOUR BUYER LIVES **ABROAD**. NOW WHAT?",
+      "body": "They can't easily come to a viewing. A short video lets them look anyway.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "PHOTOS DON'T SHOW HOW IT **FLOWS**",
+      "body": "From far away, buyers can't picture the home. How do the rooms connect? How big is it really? So they don't make the trip.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "LET THEM **WALK THROUGH** FROM AFAR",
+      "body": "A short, clear listing video works like a quick tour. They see the home in order, then decide if it's worth a trip.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "LEAD WITH THE **BEST** SHOT",
+      "body": "The first three seconds. Your hero shot with bold text, like \"4-bed with pool, quiet street.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "WALK THROUGH IN **ORDER**",
+      "body": "Living room, kitchen, master bedroom. Smooth, slow moves, two to three seconds each. Now they can picture the layout.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "END WITH ONE **ACTION**",
+      "body": "Price, location and one clear ask, like DM \"TOUR\". Then reply fast. Buyers abroad still message other agents.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "They can't check in person, so keep it honest.",
+      "body": "Nothing added. Nothing fake.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE **15-SECOND** VIDEO FORMULA",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_637703fd31/slide_08.png"
+    }
+  ],
+  "caption": "Your buyer lives in another city, or another country. Can they still picture the home?\n\nPhotos alone leave far-away buyers guessing.\nA short, clear listing video works like a quick tour.\nThey see the home in order and decide if it's worth a trip.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#propertymarketing",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-28T19:30:00+00:00",
+  "slot_id": "2026-11-28-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:24+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

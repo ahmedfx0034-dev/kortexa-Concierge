@@ -1,0 +1,127 @@
+{
+  "id": "c_e5c5045b67",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Post layout: photo dump vs a post that sells",
+    "angle": "Before: a grid of random photos, gate first, no text. After: hero shot with a hook line, rooms in the order that sells, basics on a slide, one keyword at the end. Shown as a simple layout, no real photos.",
+    "hook": "SAME LISTING. TWO POSTS. SPOT THE DIFFERENCE."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "BEFORE AND AFTER",
+      "heading": "SAME LISTING. TWO POSTS. SPOT THE **DIFFERENCE**.",
+      "body": "Same photos. A new layout.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "MOST LISTING POSTS LOOK **THE SAME**",
+      "body": "A grid of random photos. The gate first. No words. Nothing tells the buyer why they should stop.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **FIRST** PHOTO",
+      "body": "Before: The gate, or a blurry corridor. No words.\nAfter:\n✓ Your single best shot first\n✓ One bold line on top\n✓ \"4-bed with pool, quiet street\"\n✓ Buyers know why to stop",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **ORDER**",
+      "body": "Before: Random rooms. Kitchen, then garden, then a bathroom.\nAfter:\n✓ Living room, then kitchen\n✓ Master bedroom and bathroom\n✓ Other bedrooms\n✓ Standout feature, then the area",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **BASICS**",
+      "body": "Before: No details. Buyers have to ask, and many don't.\nAfter:\n✓ Bedrooms and bathrooms\n✓ For sale or for rent\n✓ Three highlights\n✓ Price and location",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **ENDING**",
+      "body": "Before: \"DM for more info.\" Or three ways to contact you.\nAfter:\n✓ One keyword, like TOUR\n✓ Or one WhatsApp link\n✓ A new keyword per listing\n✓ Never three options",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "You don't need a new shoot. You need a better **layout**.",
+      "body": "Same photos. Now buyers notice it and understand it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE LAYOUT THAT **SELLS**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_e5c5045b67/slide_08.png"
+    }
+  ],
+  "caption": "Same listing. Same photos. One post gets ignored, the other gets messages.\n\nThe difference is the layout, not the house.\nLead with your best shot and one bold line.\nShow the rooms in order, put the basics where buyers can see them, and end with one keyword.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-25T12:30:00+00:00",
+  "slot_id": "2026-11-25-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:54+00:00",
+  "updated_at": "2026-11-23T05:42:01+00:00"
+}

@@ -1,0 +1,136 @@
+{
+  "id": "c_0fe584b48f",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Free listing review: send me one listing",
+    "angle": "You've seen the fixes; now see them on your own listing. Send photos of one current listing by WhatsApp, Instagram DM or text and I'll show how I'd turn it into a premium video and post.",
+    "hook": "SEND ME ONE LISTING. I'LL SHOW YOU."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FREE LISTING REVIEW",
+      "heading": "SEND ME ONE LISTING. I'LL **SHOW** YOU.",
+      "body": "See the fixes on your own listing, not someone else's.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL PROBLEM",
+      "heading": "YOUR LISTING ISN'T BAD. IT'S **INVISIBLE**.",
+      "body": "Most agents think they need more listings. You don't. You need the ones you have to get noticed.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "**GUESSING** WHAT'S WRONG",
+      "body": "You post. A few likes, no messages. You try new hashtags, a new filter. Still nothing. And you never find out why.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "PACKAGE IT TO BE **NOTICED**",
+      "body": "The fix isn't more money on ads. It's the same listing, packaged so buyers notice it, understand it and act.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "WHAT I LOOK AT",
+      "heading": "WHAT I **CHECK** FIRST",
+      "body": null,
+      "bullets": [
+        "Photo order: is your best shot first?",
+        "Hook: does the first second say why to stop?",
+        "Basics: price, location, bedrooms?",
+        "Next step: one clear action?"
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "HOW IT WORKS",
+      "heading": "HOW THE **FREE** REVIEW WORKS",
+      "body": null,
+      "bullets": [
+        "Send: photos of one current listing.",
+        "Where: WhatsApp, Instagram DM or text.",
+        "I show you: how I'd turn it into a premium video and post."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WANT IT DONE FOR YOU?",
+      "heading": "SEND PHOTOS. I'LL DO THE **REST**.",
+      "body": "I turn your photos into premium listing videos, write the captions and post them. No filming. One extra rental a month covers it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "LET'S LOOK AT **YOUR** LISTING",
+      "body": "DM me REVIEW and I'll look at one of your listings",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_0fe584b48f/slide_08.png"
+    }
+  ],
+  "caption": "Stop guessing what's wrong with your listing posts. Send me one and I'll show you.\n\nMost listings aren't bad. They're just not packaged to be noticed.\nSend photos of one current listing by WhatsApp, Instagram DM or text.\nI'll show you how I'd turn it into a premium video and post. It's free.\n\nDM me REVIEW and I'll look at one of your listings.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-26T12:30:00+00:00",
+  "slot_id": "2026-11-26-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:21+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

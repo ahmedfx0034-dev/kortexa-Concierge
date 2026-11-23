@@ -1,0 +1,131 @@
+{
+  "id": "c_1986fae027",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "'DM for more info' is losing you buyers",
+    "angle": "A vague ask makes buyers think. Give one simple action, like a keyword ('DM TOUR') or a WhatsApp or DM link, and never three options at once.",
+    "hook": "\"DM FOR MORE INFO\" IS TOO WEAK"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "WHY LISTINGS GET NO MESSAGES",
+      "heading": "\"DM FOR MORE INFO\" IS TOO **WEAK**",
+      "body": "Interested buyers need one clear next step. Here's how to give it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "A VAGUE ASK MAKES BUYERS **THINK**",
+      "body": "More info about what? The price? A viewing? When buyers have to work out what to say, they often say nothing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "INTERESTED, BUT THEY NEVER **ACT**",
+      "body": "They liked the home. They maybe even saved the post. Then they scrolled on and forgot about it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "ONE KEYWORD. ONE **ACTION**.",
+      "body": "Tell buyers exactly what to send, and where. Make the next step so easy they don't have to think.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "WHAT WORKS",
+      "heading": "CLEAR ASKS THAT **WORK**",
+      "body": null,
+      "bullets": [
+        "Keyword: DM \"TOUR\" to book a viewing.",
+        "Link: one WhatsApp link. Tap and chat.",
+        "Pick one: use it on every post."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE MISTAKE TO AVOID",
+      "heading": "NEVER GIVE **THREE** OPTIONS",
+      "body": "Call, DM or WhatsApp? Choices slow people down. Pick one action and stick with it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAME POST. **CLEARER** ASK.",
+      "body": "Before: Call, WhatsApp or DM for more info.\nAfter: DM \"TOUR\" to book a viewing.\n✓ One word to send\n✓ One place to send it\n✓ They know what happens next",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "FIX THE **LAST LINE** OF EVERY POST",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_1986fae027/slide_08.png"
+    }
+  ],
+  "caption": "\"DM for more info\" sounds helpful. It quietly loses you buyers.\n\nA vague ask makes buyers stop and think. Most won't.\nGive one simple action, like DM \"TOUR\" or one WhatsApp link.\nOne keyword, one place. Never three options.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-27T08:30:00+00:00",
+  "slot_id": "2026-11-27-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:22+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

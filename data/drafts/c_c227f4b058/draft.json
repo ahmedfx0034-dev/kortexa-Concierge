@@ -1,0 +1,127 @@
+{
+  "id": "c_c227f4b058",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Your first WhatsApp reply: 4 things to send",
+    "angle": "A slow 'yes it's available' wastes the buyer's interest. A strong first reply confirms the listing, shares the key basics, asks one question and offers a viewing time.",
+    "hook": "SEND THESE 4 THINGS IN YOUR FIRST REPLY"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR AGENTS ON WHATSAPP",
+      "heading": "YOUR FIRST REPLY NEEDS **4 THINGS**",
+      "body": "Not just \"Yes, it's available.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE BUYER'S SIDE",
+      "heading": "\"YES, IT'S AVAILABLE\" IS **NOT ENOUGH**",
+      "body": "It answers one question and starts ten more. A buyer who waits hours has usually messaged three other agents by then.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "CONFIRM THE **LISTING**",
+      "body": "Name the home, so they know you mean the right one. \"Yes, the 4-bed with the pool is available.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "SHARE THE **BASICS**",
+      "body": "Bedrooms, bathrooms, price and area. Answer what they were about to ask next.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "ASK **ONE** QUESTION",
+      "body": "Just one, to keep the chat going. \"When are you hoping to move?\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 4",
+      "heading": "OFFER A **VIEWING** TIME",
+      "body": "Don't ask \"When are you free?\" Offer a slot: \"I can show you Saturday at 10. Does that work?\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "ONE REPLY, NOT **TEN**",
+      "body": "Before: \"Yes, it's available.\"\nAfter: Yes, the 4-bed with the pool is available.\n4 bed · 3 bath · [Price] · [Area]\nWhen are you hoping to move?\nI can show you Saturday at 10.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "REPLY ONCE. BOOK THE **VIEWING**.",
+      "body": "Save this and use it in your next reply",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": null
+    }
+  ],
+  "caption": "\"Yes, it's available\" is not a reply. It's a delay.\n\nA strong first reply does four things.\nIt confirms the listing and shares the basics.\nIt asks one question and offers a viewing time.\nOne good message beats ten slow ones.\n\nSave this and use it in your next reply.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#whatsappbusiness"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-27T19:30:00+00:00",
+  "slot_id": "2026-11-27-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:59+00:00",
+  "updated_at": "2026-11-23T05:42:01+00:00"
+}

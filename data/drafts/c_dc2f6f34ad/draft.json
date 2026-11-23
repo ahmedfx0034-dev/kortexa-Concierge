@@ -1,0 +1,132 @@
+{
+  "id": "c_dc2f6f34ad",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Hidden basics: why buyers don't bother asking",
+    "angle": "No location, no bedroom count, no price: people who have to ask for basics often don't bother. Showing the basics filters out time-wasters and brings serious buyers forward.",
+    "hook": "IF THEY HAVE TO ASK, THEY LEAVE"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "WHY LISTINGS GET NO MESSAGES",
+      "heading": "IF THEY HAVE TO ASK, THEY **LEAVE**",
+      "body": "Hiding the basics doesn't create mystery. It creates silence.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "SAVING THE DETAILS FOR THE **DMS**",
+      "body": "No price. No location. No bedroom count. You hope buyers will message to ask. Most don't bother.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "SILENCE, THEN \"**HOW MUCH?**\"",
+      "body": "Serious buyers scroll past. The few who message just want the price. Your day goes on chats that go nowhere.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "SHOW THE **BASICS** UP FRONT",
+      "body": "A buyer should know in seconds if the home fits. Then the people who message are already interested.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "THE BASICS",
+      "heading": "WHAT EVERY POST **NEEDS**",
+      "body": null,
+      "bullets": [
+        "Price: show it.",
+        "Location: the area, so they know if it works.",
+        "Size: bedrooms and bathrooms.",
+        "Type: for sale or for rent."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHY IT WORKS",
+      "heading": "THE PRICE IS A **FILTER**",
+      "body": "I know showing it feels risky. But it filters out time-wasters. The people who message already know it fits.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAME HOME. **NOTHING** HIDDEN.",
+      "body": "Before: Lovely home for sale. DM for details and price.\nAfter:\n✓ 4 bedrooms · 3 bathrooms · for sale\n✓ [Area, City]\n✓ [Price]\n✓ DM \"TOUR\" to book a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE **5-LINE** CAPTION",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_dc2f6f34ad/slide_08.png"
+    }
+  ],
+  "caption": "Buyers who have to ask for the basics usually just scroll on.\n\nNo price, no location, no bedroom count means silence.\nShow the basics up front. The price filters out time-wasters.\nThe people who message you already know the home fits.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-25T19:30:00+00:00",
+  "slot_id": "2026-11-25-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:19+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

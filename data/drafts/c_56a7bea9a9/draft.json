@@ -1,0 +1,127 @@
+{
+  "id": "c_56a7bea9a9",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Use one keyword per listing (TOUR1, TOUR2)",
+    "angle": "When every post says 'DM me', you can't tell which listing a message is about. Give each listing its own keyword so you know what's working and reply faster.",
+    "hook": "ONE KEYWORD PER LISTING. HERE'S WHY."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE 5-LINE CAPTION",
+      "heading": "ONE KEYWORD PER LISTING. HERE'S **WHY**.",
+      "body": "Know which home each message is about, and reply faster.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "\"IS IT STILL **AVAILABLE**?\"",
+      "body": "You have five listings live. Every post says DM me. Then a message comes in. Which home do they mean?",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "MORE CHATS. SLOWER **REPLIES**.",
+      "body": "You ask which one. They wait. A buyer who waits hours has usually messaged three other agents by then.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "GIVE EACH LISTING ITS OWN **WORD**",
+      "body": "One keyword per listing, like TOUR1 and TOUR2. When TOUR2 comes in, you know the home before you open the chat.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "PICK A SIMPLE **KEYWORD**",
+      "body": "Short and easy to type. TOUR1, TOUR2, TOUR3. One for each listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "PUT IT IN THE **LAST LINE**",
+      "body": "Line five of your caption is the one action: DM \"TOUR2\" to book a viewing. One keyword, never three options.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "**COUNT** WHAT COMES IN",
+      "body": "Note how many times each keyword arrives. After a month, you'll see which style of post brings real buyers.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE **5-LINE** CAPTION",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_56a7bea9a9/slide_08.png"
+    }
+  ],
+  "caption": "\"Is it still available?\" Which one? If every post says \"DM me\", you can't tell.\n\nGive each listing its own keyword, like TOUR1 and TOUR2.\nYou know the home before you open the chat, so you reply faster.\nAnd after a month, you'll see which posts bring real buyers.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-29T12:30:00+00:00",
+  "slot_id": "2026-11-29-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:26+00:00",
+  "updated_at": "2026-11-23T05:41:48+00:00"
+}

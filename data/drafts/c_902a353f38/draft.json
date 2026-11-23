@@ -1,0 +1,127 @@
+{
+  "id": "c_902a353f38",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "5 reasons your listing gets no DMs",
+    "angle": "The listing isn't bad, it's invisible: photo dump, no hook, hidden basics, a weak next step and posting once. Fix the packaging before you look for more listings.",
+    "hook": "5 REASONS YOUR LISTING GETS NO DMS"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR REAL ESTATE AGENTS",
+      "heading": "5 REASONS YOUR LISTING GETS **NO DMS**",
+      "body": "It's not the house. It's how you post it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL PROBLEM",
+      "heading": "YOUR LISTING ISN'T BAD. IT'S **INVISIBLE**.",
+      "body": "You don't need more listings. You need the ones you have to get noticed. These five things stop that.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Reason 1",
+      "heading": "THE PHOTO **DUMP**",
+      "body": "Twenty photos in random order, gate first. Buyers decide in about a second. Lead with your best shot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Reason 2",
+      "heading": "NO **HOOK**",
+      "body": "Nothing says why this home is worth their time. Open with the area, the size or the standout feature.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Reason 3",
+      "heading": "HIDDEN **BASICS**",
+      "body": "No price, no location, no bedroom count. People who have to ask for the basics often don't bother.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Reason 4",
+      "heading": "NO CLEAR **NEXT STEP**",
+      "body": "\"DM for more info\" is weak. Give buyers one simple action, like a keyword or a WhatsApp link.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Reason 5",
+      "heading": "POSTED **ONCE**, IN ONE PLACE",
+      "body": "One Instagram post, then silence. Most of your audience never sees it. Share it in more places, and repost.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "FIX THE **PACKAGING**, NOT THE LISTING",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_902a353f38/slide_08.png"
+    }
+  ],
+  "caption": "Your listing isn't bad. It's just not getting noticed.\n\nMost listings get no messages for the same five reasons: a photo dump, no hook, hidden basics, no clear next step, and posting once.\nThe fix isn't more money on ads.\nIt's packaging the same listing so buyers notice it, understand it and act on it.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-24T19:30:00+00:00",
+  "slot_id": "2026-11-24-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:41:51+00:00",
+  "updated_at": "2026-11-23T05:42:01+00:00"
+}
