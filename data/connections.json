@@ -1,0 +1,6 @@
+{
+  "ig_user_id": "17841474719062398",
+  "fb_page_name": "Kortexa",
+  "secrets_via_proxy": true,
+  "_note": "Non-secret IDs only. Real keys live in the cloud environment's network secrets: graph.facebook.com (Instagram token), vercel.com (Blob token), api.apify.com (Apify token)."
+}
