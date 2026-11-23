@@ -33,11 +33,11 @@
 | 2026-12-02 | 08:30 | by results | ai-explained | What AI should never do to your listing | LISTING |  |
 | 2026-12-02 | 12:30 | by results | offer | What you get in a free listing review | DM |  |
 | 2026-12-02 | 19:30 | by results | growth | WhatsApp Status is free listing space | LISTING |  |
-| 2026-12-03 | 08:30 | by results | before-after | Real listing: photo dump vs the order that sells | LISTING | yes |
+| 2026-12-03 | 08:30 | by results | before-after | Real listing: photo dump vs the order that sells | LISTING |  |
 | 2026-12-03 | 12:30 | by results | speed | Set up WhatsApp quick replies for listings | SAVE |  |
 | 2026-12-03 | 19:30 | by results | ai-explained | Myth: AI video is too expensive | LISTING |  |
 | 2026-12-04 | 08:30 | by results | growth | Reel or carousel for a listing? Use both | LISTING |  |
-| 2026-12-04 | 12:30 | by results | before-after | Real listing: still photos vs a 15-second video | LISTING | yes |
+| 2026-12-04 | 12:30 | by results | before-after | Real listing: still photos vs a 15-second video | LISTING |  |
 | 2026-12-04 | 19:30 | by results | speed | Decide now who replies, and how fast | LISTING |  |
 | 2026-12-05 | 08:30 | by results | mistakes | Posted once, in one place, then silence | LISTING |  |
 | 2026-12-05 | 12:30 | by results | how-to | Shoot listing photos with your phone | SAVE |  |
@@ -51,7 +51,7 @@
 | 2026-12-08 | 08:30 | by results | offer | One extra rental a month covers it | DM |  |
 | 2026-12-08 | 12:30 | by results | ai-explained | What photos AI needs to make a great video | LISTING |  |
 | 2026-12-08 | 19:30 | by results | growth | Repost your strong listings | LISTING |  |
-| 2026-12-09 | 08:30 | by results | before-after | Real listing: gate-first cover vs hero shot | LISTING | yes |
+| 2026-12-09 | 08:30 | by results | before-after | Real listing: gate-first cover vs hero shot | LISTING |  |
 | 2026-12-09 | 12:30 | by results | speed | Overseas buyers message while you sleep | LISTING |  |
 | 2026-12-09 | 19:30 | by results | mistakes | Kitchen photo mistakes buyers spot first | LISTING |  |
 | 2026-12-10 | 08:30 | by results | how-to | Hooks for rentals vs hooks for sales | LISTING |  |
@@ -71,7 +71,7 @@
 | 2026-12-14 | 19:30 | by results | offer | Your listings, posted everywhere, done for you | DM |  |
 | 2026-12-15 | 08:30 | by results | ai-explained | Myth: AI is only for big agencies | LISTING |  |
 | 2026-12-15 | 12:30 | by results | growth | Show the agency, not just houses | LISTING |  |
-| 2026-12-15 | 19:30 | by results | before-after | Real listing: full makeover, post to video | LISTING | yes |
+| 2026-12-15 | 19:30 | by results | before-after | Real listing: full makeover, post to video | LISTING |  |
 | 2026-12-16 | 08:30 | by results | speed | Voice note or text? How to reply to buyers | LISTING |  |
 | 2026-12-16 | 12:30 | by results | mistakes | Wrong photo shape for the platform | LISTING |  |
 | 2026-12-16 | 19:30 | by results | how-to | Build a WhatsApp broadcast list buyers want | SAVE |  |
@@ -84,14 +84,14 @@
 | 2026-12-19 | 08:30 | by results | how-to | Price-drop posts done right | LISTING |  |
 | 2026-12-19 | 12:30 | by results | ai-explained | What an AI WhatsApp assistant does | LISTING |  |
 | 2026-12-19 | 19:30 | by results | growth | Turn one listing into a week of posts | SAVE |  |
-| 2026-12-20 | 08:30 | by results | before-after | Real rental listing: before vs after | LISTING | yes |
+| 2026-12-20 | 08:30 | by results | before-after | Real rental listing: before vs after | LISTING |  |
 | 2026-12-20 | 12:30 | by results | offer | Start January strong: free listing review | DM |  |
 | 2026-12-20 | 19:30 | by results | speed | After the viewing: a simple follow-up rhythm | SAVE |  |
 | 2026-12-21 | 08:30 | by results | mistakes | Never edit the layout: honest beats perfect | LISTING |  |
 | 2026-12-21 | 12:30 | by results | how-to | The pre-posting checklist | SAVE |  |
 | 2026-12-21 | 19:30 | by results | ai-explained | Will an AI reply sound like a robot? | LISTING |  |
 | 2026-12-22 | 08:30 | by results | growth | Plan January's listing posts before the break | SAVE |  |
-| 2026-12-22 | 12:30 | by results | before-after | Real apartment listing: before vs after | LISTING | yes |
+| 2026-12-22 | 12:30 | by results | before-after | Real apartment listing: before vs after | LISTING |  |
 | 2026-12-22 | 19:30 | by results | speed | Follow up the buyer who went quiet | LISTING |  |
 
 Pillars: mistakes 14, how-to 14, before-after 13, speed 13, ai-explained 13, growth 13, offer 9

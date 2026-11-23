@@ -587,7 +587,7 @@
     "pillar": "before-after",
     "title": "Real listing: photo dump vs the order that sells",
     "hook": "SAME PHOTOS. NEW ORDER. LOOK.",
-    "angle": "Using one real listing's photos: the random order agents usually post, then the same photos re-ordered from hero shot to neighbourhood. The change is the order, not the house.",
+    "angle": "Using one real listing's photos: the random order agents usually post, then the same photos re-ordered from hero shot to neighbourhood. The change is the order, not the house. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agents who post photos in the order they took them",
       "outcome": "A carousel that tells the home's story",
@@ -597,7 +597,7 @@
     },
     "playbook_section": "Step 1: The order that sells",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-03-2",
@@ -667,7 +667,7 @@
     "pillar": "before-after",
     "title": "Real listing: still photos vs a 15-second video",
     "hook": "SAME LISTING. PHOTOS VS A 15-SECOND VIDEO.",
-    "angle": "Using one real listing: the plain photo post, then the 15-second video made from the same photos with a hook, a short tour and one clear ask.",
+    "angle": "Using one real listing: the plain photo post, then the 15-second video made from the same photos with a hook, a short tour and one clear ask. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agents who only post still photos",
       "outcome": "A listing video that looks premium",
@@ -677,7 +677,7 @@
     },
     "playbook_section": "Step 2: The 15-second listing video",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-04-3",
@@ -947,7 +947,7 @@
     "pillar": "before-after",
     "title": "Real listing: gate-first cover vs hero shot",
     "hook": "SAME HOUSE. DIFFERENT FIRST PHOTO.",
-    "angle": "Using one real listing: the cover photo agents usually pick (the gate) next to the hero shot (pool, living room or view). Then why the second one stops the scroll.",
+    "angle": "Using one real listing: the cover photo agents usually pick (the gate) next to the hero shot (pool, living room or view). Then why the second one stops the scroll. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agents choosing a cover photo",
       "outcome": "A cover that makes buyers stop",
@@ -957,7 +957,7 @@
     },
     "playbook_section": "Step 1: The order that sells (Tip: lead with the most impressive shot)",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-09-2",
@@ -1347,7 +1347,7 @@
     "pillar": "before-after",
     "title": "Real listing: full makeover, post to video",
     "hook": "ONE LISTING. FULLY REPACKAGED.",
-    "angle": "Using one real listing: the original post, then the full repackage: hero cover, order that sells, 15-second video and 5-line caption. Each change explained.",
+    "angle": "Using one real listing: the original post, then the full repackage: hero cover, order that sells, 15-second video and 5-line caption. Each change explained. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agency owners deciding where to start",
       "outcome": "A listing that gets noticed, understood and acted on",
@@ -1357,7 +1357,7 @@
     },
     "playbook_section": "Why most listings get no messages (The fix is packaging); Steps 1-3",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-16-1",
@@ -1607,7 +1607,7 @@
     "pillar": "before-after",
     "title": "Real rental listing: before vs after",
     "hook": "A RENTAL POST, REPACKAGED. SEE THE DIFFERENCE.",
-    "angle": "Using one real rental's photos: the usual post with random photos and 'DM for price', then the same rental with the hero shot first, a renter-focused hook and the 5-line caption with move-in details.",
+    "angle": "Using one real rental's photos: the usual post with random photos and 'DM for price', then the same rental with the hero shot first, a renter-focused hook and the 5-line caption with move-in details. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agents who post rentals as quick photo dumps",
       "outcome": "Rental posts that get the right renters messaging",
@@ -1617,7 +1617,7 @@
     },
     "playbook_section": "Step 1: The order that sells; Step 3: The 5-line caption",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-20-2",
@@ -1747,7 +1747,7 @@
     "pillar": "before-after",
     "title": "Real apartment listing: before vs after",
     "hook": "NOT JUST LUXURY HOMES. APARTMENTS TOO.",
-    "angle": "Using one real apartment listing: the plain post, then the upgraded version with upbeat music, bright light and a clear ask. Premium packaging isn't only for villas.",
+    "angle": "Using one real apartment listing: the plain post, then the upgraded version with upbeat music, bright light and a clear ask. Premium packaging isn't only for villas. Text-only before/after (captions, post layouts, first lines) — no house photos.",
     "five_elements": {
       "target": "Agents renting apartments in the city",
       "outcome": "Rentals that get enquiries quickly",
@@ -1757,7 +1757,7 @@
     },
     "playbook_section": "Step 2: The 15-second listing video (music: upbeat for apartments)",
     "cta": "LISTING",
-    "needs_photos": true
+    "needs_photos": false
   },
   {
     "slot_id": "2026-12-22-3",
