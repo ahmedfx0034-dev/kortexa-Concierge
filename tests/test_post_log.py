@@ -44,3 +44,19 @@ def test_collect_review_dir(tmp_path):
     items = {i["draft_id"]: i for i in collect_review_dir(tmp_path)}
     assert items["c_1"]["decision"] == "approve" and items["c_1"]["caption"] == "Hi"
     assert items["c_2"]["feedback"] == "shorter" and "junk" not in items
+
+
+def test_custom_cta_replaces_brand_button():
+    from pathlib import Path
+    from carousel_studio.models import Slide, StyleProfile
+    from carousel_studio.render.renderer import render_html
+    root = Path(__file__).resolve().parent.parent
+    profile = StyleProfile.model_validate_json((root / "data/styles/kortexa-dark/profile.json").read_text())
+    brand = {"call_to_action": "Comment LISTING and I'll send you the playbook",
+             "instagram_handle": "@ahmed.kortexa", "brand_name": "Kortexa"}
+    slides = [Slide(index=1, archetype="hook", layout="center_statement", heading="Hook"),
+              Slide(index=2, archetype="cta", layout="cta", heading="Want this done?",
+                    body="DM me REVIEW and I'll look at one listing")]
+    last = render_html(profile, slides, brand=brand)[-1]
+    assert "REVIEW" in last
+    assert "Comment LISTING" not in last

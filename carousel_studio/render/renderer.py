@@ -649,7 +649,10 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
             handle = "@" + handle
         name = brand.get("brand_name") or handle.lstrip("@") or "•"
         cta_text = cta if cta and cta.lower().rstrip(".!") not in seen else None
-        if slide.body and slide.index == total and _is_brand_cta(slide.body, cta, handle):
+        if slide.body and slide.index == total and (
+                _is_brand_cta(slide.body, cta, handle) or _is_action(slide.body)):
+            # one call to action only: a custom action ("DM me REVIEW…", "Save this…")
+            # replaces the brand button instead of appearing next to it
             # the brand call to action lives in slide.body: render it as the button
             cta_text = Markup(html.escape(smart_quotes(_plain(slide.body))))
             s["body"] = None
@@ -703,6 +706,15 @@ def _ba_lines(text: str) -> list:
 
 def _ba_labels(slide: Slide) -> tuple[str, str]:
     return "Before", "After"
+
+
+_ACTION_RE = re.compile(r"^\s*(dm|save|comment|message|send|book|tap|follow|share|reply|whatsapp)\b", re.I)
+
+
+def _is_action(body: str) -> bool:
+    """A short imperative like 'DM me REVIEW' or 'Save this for your next listing'."""
+    text = _plain(body)
+    return bool(_ACTION_RE.match(text)) and len(text) <= 90
 
 
 def _is_brand_cta(body: str, cta: str, handle: str) -> bool:
