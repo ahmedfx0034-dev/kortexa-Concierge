@@ -414,6 +414,51 @@ def test_editorial_photo_options_and_grade(tmp_path):
     assert editorial_photo("missing.png", None) is None
 
 
+def test_portrait_soft_option_and_skin_grade(tmp_path):
+    import base64
+    import io
+
+    import numpy as np
+    from PIL import ImageDraw
+
+    from carousel_studio.render.renderer import _split_image_opts, cinematic_grade, editorial_photo
+
+    assert _split_image_opts("me.png#portrait&soft")[1] == {"grade": "portrait", "soft": "0.6"}
+    assert _split_image_opts("me.png#portrait&soft=0.2&zoom=0.8")[1]["soft"] == "0.2"
+
+    # light wall, a skin-toned face with a dark 'eye' line (an edge that must stay crisp)
+    im = Image.new("RGB", (400, 500), (205, 205, 200))
+    d = ImageDraw.Draw(im)
+    d.rectangle([100, 120, 300, 500], fill=(140, 92, 64))
+    d.rectangle([140, 250, 260, 256], fill=(25, 15, 10))
+    src = tmp_path / "face.png"
+    im.save(src)
+
+    def grade(**kw):
+        g = cinematic_grade(src, "portrait", **kw)
+        return g, np.asarray(Image.open(io.BytesIO(base64.b64decode(g["uri"].split(",", 1)[1]))).convert("L"), dtype=float)
+
+    def edge(a):                                                    # contrast across the dark line
+        return abs(a[240:246, 150:250].mean() - a[252:254, 150:250].mean())
+
+    _, crisp = grade(soft=0.0)
+    _, soft = grade(soft=1.0)
+    assert edge(soft) < edge(crisp) - 10                            # soft=1 visibly defocuses
+    assert edge(crisp) > 40                                         # smoothing keeps real edges
+    assert crisp[20:60, 20:60].mean() < 80                          # background still dark
+
+    g, out_default = grade()                                        # portrait defaults to a mild soft
+    assert edge(soft) < edge(out_default) < edge(crisp)
+    r, gg, b = np.asarray(Image.open(io.BytesIO(base64.b64decode(cinematic_grade(src, "portrait", soft=0.0)["uri"].split(",", 1)[1]))).convert("RGB"))[400, 200]
+    assert r > b + 30 and r >= 140                                  # warm, not grey, shadows lifted
+
+    zoomed = cinematic_grade(src, "portrait", zoom=0.8)             # zoom out: same shape, face smaller in frame
+    zo = np.asarray(Image.open(io.BytesIO(base64.b64decode(zoomed["uri"].split(",", 1)[1]))).convert("RGB"))
+    assert zo.shape[1] == round(400 / 0.8) and zoomed["ratio"] == pytest.approx(0.8, abs=0.01)
+    ph = editorial_photo(str(src) + "#portrait&soft=0.6", None)
+    assert ph["grade"] == "portrait"
+
+
 def test_editorial_render_with_and_without_photo(tmp_path):
     from carousel_studio.models import Slide
     from carousel_studio.render.renderer import render_slides

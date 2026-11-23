@@ -697,8 +697,10 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
 # "photo.jpg#fit=right&focus=70% 40%". Keys: pos (CSS background-position for a full-bleed crop),
 # fit=right|left (show the whole photo height anchored to that side, fading into black, text column
 # on the other side), focus (centre of the vignette), grade=cinematic|portrait|none (see cinematic_grade).
-# Bare words work too: "founder.png#right&portrait".
-_IMG_OPT_KEYS = ("pos", "fit", "focus", "grade")
+# Bare words work too: "founder.png#right&portrait". soft=0..1 (bare "soft" = 0.6) defocuses the whole photo a
+# little so it sits behind the text (portrait grade defaults to a mild 0.35; soft=0 turns it off); zoom=0.6..1
+# (portrait grade) zooms OUT by padding the photo with its own dark edge, so the face sits smaller and lower.
+_IMG_OPT_KEYS = ("pos", "fit", "focus", "grade", "soft", "zoom")
 
 
 def _split_image_opts(path: str) -> tuple[str, dict]:
@@ -712,6 +714,8 @@ def _split_image_opts(path: str) -> tuple[str, dict]:
             k = k.strip().lower()
             if k in _IMG_OPT_KEYS:
                 opts[k] = re.sub(r"[^\w%. -]", "", v).strip()  # values land in CSS: keep them inert
+        elif part.strip().lower() == "soft":
+            opts["soft"] = "0.6"
         elif part.strip().lower() in ("right", "left"):
             opts["fit"] = part.strip().lower()
         elif part.strip().lower() in ("cinematic", "portrait", "none", "raw"):
@@ -748,17 +752,83 @@ def _edge_connected(mask, step: int = 4):
 GRADES = ("cinematic", "portrait", "none")
 
 
-def cinematic_grade(path: Path, mode: str = "cinematic", max_h: int = 1700) -> Optional[dict]:
+def _num(v, default: float, lo: float, hi: float) -> float:
+    try:
+        return min(hi, max(lo, float(v)))
+    except (TypeError, ValueError):
+        return default
+
+
+def _skin_mask(im):
+    """Soft 0..255 'L' mask of skin-toned pixels (warm orange-brown hues, mid saturation, not too dark):
+    excludes the black cap/T-shirt, the green logo, eye whites and (mostly) the pink/red lips."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+
+    h, s, v = (np.asarray(c, dtype=np.float32) for c in im.convert("HSV").split())
+    ramp = lambda x, a, b: np.clip((x - a) / (b - a), 0, 1)
+    hue_ok = ramp(h, 2, 7) * (1 - ramp(h, 26, 34))                  # orange-brown, not red/pink, not green
+    sat_ok = ramp(s, 45, 90) * (1 - ramp(s, 215, 250))
+    val_ok = ramp(v, 38, 70)
+    m = hue_ok * sat_ok * val_ok
+    return Image.fromarray((m * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(max(1.0, im.width / 300)))
+
+
+def _smooth_skin(im, mask, strength: float = 0.75):
+    """Light edge-preserving smoothing (a surface blur) limited to `mask`: flat skin texture, shine and
+    blemishes soften, while real edges (eyes, brows, lips, beard line, cap) keep their contrast."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+
+    a = np.asarray(im, dtype=np.float32)
+    lum = a @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+    out = a
+    for radius, sigma in ((max(2, im.width // 320), 13.0), (max(3, im.width // 150), 20.0)):
+        blur = np.asarray(im.filter(ImageFilter.GaussianBlur(radius)), dtype=np.float32) if out is a else \
+            np.asarray(Image.fromarray(out.clip(0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(radius)), dtype=np.float32)
+        bl = blur @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+        w = np.exp(-(((lum - bl) / sigma) ** 2))[..., None]        # ~1 on flat skin, ~0 across an edge
+        out = out * (1 - w) + blur * w
+    m = (np.asarray(mask, dtype=np.float32) / 255.0 * strength)[..., None]
+    return Image.fromarray((a * (1 - m) + out * m).clip(0, 255).astype("uint8"))
+
+
+def _grade_skin(im, mask):
+    """Natural, warm, flattering skin: lifted shadows, flatter contrast, a touch of warmth and colour."""
+    import numpy as np
+    from PIL import Image
+
+    a = np.asarray(im, dtype=np.float32) / 255.0
+    m = (np.asarray(mask, dtype=np.float32) / 255.0)[..., None]
+    lum = (a @ np.array([0.299, 0.587, 0.114], dtype=np.float32))[..., None]
+    lifted = 0.035 + 0.965 * np.power(a, 0.84)                       # open the shadows, keep the top
+
+    flat = 0.5 + (lifted - 0.5) * 0.9                                # lower contrast
+    flat = flat * np.array([1.045, 1.0, 0.94], dtype=np.float32)    # gentle warmth
+    g = flat.mean(axis=-1, keepdims=True)
+    flat = g + (flat - g) * 1.1                                      # a little colour back (no grey skin)
+    out = a * (1 - m) + flat.clip(0, 1) * m
+    return Image.fromarray((out * 255).astype("uint8"))
+
+
+def cinematic_grade(path: Path, mode: str = "cinematic", max_h: int = 1700, soft: Optional[float] = None,
+                    zoom: float = 1.0) -> Optional[dict]:
     """Moody 'film still' grade for a real photo, done in Pillow so the browser gets one small JPEG.
 
     cinematic: darker, slightly desaturated, highlights rolled off (skies and white walls go dim but keep
                their detail) - the default for listing photos.
     portrait:  for a person in front of a light background. Bright, colourless areas that touch the
-               frame's edge (ceilings, walls, skies) are crushed to near-black; the subject, including
-               highlights inside it (forehead shine, eye whites), only gets a gentle tone-down, so faces
-               and skin tones stay natural.
-    Returns {"uri", "ratio"} or None."""
-    key = (str(path), path.stat().st_mtime, mode, max_h)
+               frame's edge (ceilings, walls, skies) are crushed to near-black; the subject keeps true,
+               warm skin tone (lifted shadows, lower contrast), with gentle edge-preserving skin
+               smoothing limited to skin-toned pixels (eyes, brows, lips and logos stay crisp) and a
+               mild soft-focus (soft=0..1, default 0.35) so the photo sits behind the text. zoom<1 zooms
+               out by padding with the photo's dark edge (face smaller, more shoulders).
+    soft (any mode) blurs the whole photo a little. Returns {"uri", "ratio"} or None."""
+    if soft is None:
+        soft = 0.35 if mode == "portrait" else 0.0
+    soft = _num(soft, 0.0, 0.0, 1.0)
+    zoom = _num(zoom, 1.0, 0.5, 1.0)
+    key = (str(path), path.stat().st_mtime, mode, max_h, round(soft, 3), round(zoom, 3))
     if key in _GRADE_CACHE:
         return _GRADE_CACHE[key]
     try:
@@ -777,17 +847,25 @@ def cinematic_grade(path: Path, mode: str = "cinematic", max_h: int = 1700) -> O
             # grow, then feather: the background is crushed right up to the outline (no bright halo)
             r = max(2, round(im.width / 220))
             mask = mask.filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
+            skin = ImageChops.multiply(_skin_mask(im), ImageChops.invert(mask))
+            im = _smooth_skin(im, skin)
+            subject = _grade_skin(im, skin)
             crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.27)
-            out = Image.composite(crushed, im, mask)
-            out = ImageEnhance.Color(out).enhance(0.92)
-            out = ImageEnhance.Contrast(out).enhance(1.06)
+            out = Image.composite(crushed, subject, mask)
         else:
             # soft-knee tone curve: shadows a touch deeper, highlights rolled off to ~70%
             curve = [round(255 * (0.86 * x if x < 0.45 else 0.387 + (x - 0.45) * 0.56)) for x in (i / 255 for i in range(256))]
             out = ImageEnhance.Color(im).enhance(0.78).point(curve * 3)
             out = ImageEnhance.Contrast(out).enhance(1.1)
+        if soft > 0:                                                 # defocus: a veil of blur over the sharp photo
+            blurred = out.filter(ImageFilter.GaussianBlur(1.0 + 3.5 * soft))
+            out = Image.blend(out, blurred, 0.25 + 0.45 * soft)
+        if mode == "portrait":
+            out = ImageEnhance.Contrast(out).enhance(1.02)
+        if zoom < 1.0:                                               # zoom out: pad with the dark edge colour
+            out = _zoom_out(out, zoom)
         buf = io.BytesIO()
-        out.save(buf, format="JPEG", quality=88, optimize=True)
+        out.save(buf, format="JPEG", quality=90, optimize=True)
         res = {"uri": "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode(),
                "ratio": round(out.width / out.height, 4)}
     except Exception as e:  # never let a bad photo break rendering
@@ -795,6 +873,21 @@ def cinematic_grade(path: Path, mode: str = "cinematic", max_h: int = 1700) -> O
         res = None
     _GRADE_CACHE[key] = res
     return res
+
+
+def _zoom_out(im, zoom: float):
+    """Pad `im` to 1/zoom of its size: sides and top extend with the photo's own (dark) edge pixels, blurred,
+    the bottom stays put so the shoulders keep anchoring the frame."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+
+    w, h = im.size
+    nw, nh = round(w / zoom), round(h / zoom)
+    left, top = (nw - w) // 2, nh - h
+    a = np.pad(np.asarray(im), ((top, 0), (left, nw - w - left), (0, 0)), mode="edge")
+    canvas = Image.fromarray(a).filter(ImageFilter.GaussianBlur(24))
+    canvas.paste(im, (left, top))
+    return canvas
 
 
 def editorial_photo(image_path: Optional[str], base: Optional[Path], cinematic_default: bool = True) -> Optional[dict]:
@@ -807,7 +900,16 @@ def editorial_photo(image_path: Optional[str], base: Optional[Path], cinematic_d
         log.warning("Slide image not found: %s", raw)
         return None
     grade = opts.get("grade") if opts.get("grade") in GRADES else ("cinematic" if cinematic_default else "none")
-    img = cinematic_grade(p, grade) if grade != "none" else None
+    soft = opts.get("soft")
+    zoom = opts.get("zoom")
+    kw = {}
+    if soft is not None:
+        kw["soft"] = _num(soft, 0.0, 0.0, 1.0)
+    if zoom is not None:
+        kw["zoom"] = _num(zoom, 1.0, 0.5, 1.0)
+    elif grade == "portrait":
+        kw["zoom"] = 0.87  # founder photos: face smaller and lower by default (owner preference)
+    img = cinematic_grade(p, grade, **kw) if grade != "none" else None
     if img is None:
         uri = _image_uri(str(p))
         try:
