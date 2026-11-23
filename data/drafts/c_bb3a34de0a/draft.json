@@ -1,0 +1,133 @@
+{
+  "id": "c_bb3a34de0a",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "The 5-line caption that gets messages",
+    "angle": "Most captions say 'beautiful, spacious, DM for price'. I walk through the five lines (hook, basics, three highlights, price and location, one action) and why each one matters.",
+    "hook": "THE CAPTION THAT GETS BUYERS TO MESSAGE"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE LISTING ENQUIRY PLAYBOOK",
+      "heading": "THE CAPTION THAT GETS BUYERS TO **MESSAGE**",
+      "body": "Five lines. Same order every time. No guesswork.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "\"DM FOR PRICE\" GETS **IGNORED**",
+      "body": "Most captions say beautiful, spacious, DM for price. The buyer learns nothing. People who have to ask for the basics often don't bother.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "THE FIX",
+      "heading": "THE **5-LINE** CAPTION",
+      "body": null,
+      "bullets": [
+        "Hook: the standout feature and area.",
+        "Basics: bedrooms, bathrooms, sale or rent.",
+        "Highlights: three things buyers care about.",
+        "Price and location: show both.",
+        "One action: one keyword or one link."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHY IT WORKS",
+      "heading": "SHOW THE **PRICE**",
+      "body": "I know it feels risky. But a price filters out time-wasters. The people who message you already know it fits.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHY IT WORKS",
+      "heading": "GIVE **ONE** ACTION, NOT THREE",
+      "body": "One keyword or one WhatsApp link. Tip: use a new keyword for each listing, like TOUR1 and TOUR2. Then you know which home they mean.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAME HOUSE. **BETTER** CAPTION.",
+      "body": "Before: Beautiful house for sale. Very nice and spacious. DM for more info and price.\nAfter: Pool, garden and quiet street, close to schools.\n4 bedrooms · 4 bathrooms · for sale\n✓ Gated, 24-hour security\n✓ Fitted kitchen\n✓ 5 minutes to the main road\n[Price] · [Area, City]\nDM \"TOUR\" to book a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "Same five lines. Every listing. No more guessing.",
+      "body": "Save the template. Swap in the details each time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE FULL **PLAYBOOK**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bb3a34de0a/slide_08.png"
+    }
+  ],
+  "caption": "Your caption is the reason buyers message you, or scroll past.\n\n\"DM for price\" tells them nothing.\nUse the same five lines every time: hook, basics, three highlights, price and location, one action.\nSwipe to see a weak caption turned into one that gets messages.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": null,
+  "slot_id": null,
+  "experiment_arm": null,
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-23T05:33:21+00:00",
+  "updated_at": "2026-11-23T05:33:25+00:00"
+}
