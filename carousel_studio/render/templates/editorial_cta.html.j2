@@ -1,0 +1,34 @@
+{% extends "editorial_base.html.j2" %}
+{% block css %}
+.layout-editorial_cta { --top: 330px; --bottom: 150px; }
+.layout-editorial_cta .inner { justify-content: center; }
+.kick { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: calc(var(--k) * 64px); line-height: 1;
+   margin-bottom: calc(var(--k) * 26px); }
+.layout-editorial_cta .h { font-size: calc(var(--k) * 108px); line-height: .9; }
+.sub { margin-top: calc(var(--k) * 36px); font-family: var(--serif); font-style: italic; color: #fff;
+   font-size: calc(var(--k) * 54px); line-height: 1.06; max-width: 880px; }
+.sub .hl { color: var(--accent); }
+.cta-btn { margin-top: calc(var(--k) * 60px); display: inline-flex; align-items: center; gap: .8em; align-self: flex-start;
+   background: var(--accent); color: var(--on-accent); font-family: var(--hfont); font-weight: 800; text-transform: uppercase;
+   letter-spacing: .08em; font-size: calc(var(--k) * 36px); line-height: 1.25; padding: .95em 1.3em; border-radius: 12px;
+   max-width: 100%; box-shadow: 0 18px 60px rgba(152,204,19,.18); }
+.cta-btn .t { text-wrap: balance; }
+.cta-btn svg { width: 1.1em; height: 1.1em; stroke: var(--on-accent); flex: 0 0 auto; stroke-width: 3; }
+.by { margin-top: calc(var(--k) * 40px); font-family: var(--serif); font-style: italic; font-size: calc(var(--k) * 44px);
+   color: rgba(255,255,255,.86); }
+.by b { color: var(--accent); font-weight: 400; }
+{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kick">{{ s.kicker }}</div>{% endif %}
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if s.body %}<div class="sub">{{ s.body }}</div>{% endif %}
+  {% if cta_text %}<div class="cta-btn"><span class="t">{{ cta_text }}</span><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>{% endif %}
+  {% if ed_handle %}<div class="by">see you in the comments, <b>{{ ed_handle }}</b></div>{% endif %}
+{% endblock %}
+{% block foot %}
+  <div class="foot">
+    <div class="handle">{{ ed_handle }}</div>
+    <div class="save"><svg viewBox="0 0 20 24"><path d="M2 2h16v20l-8-6-8 6z"/></svg>save for later</div>
+    <div></div>
+  </div>
+{% endblock %}

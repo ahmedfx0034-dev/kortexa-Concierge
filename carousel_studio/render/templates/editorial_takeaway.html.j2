@@ -1,0 +1,26 @@
+{% extends "editorial_base.html.j2" %}
+{% block css %}
+.layout-editorial_takeaway { --top: 170px; --bottom: 150px; }
+.layout-editorial_takeaway .inner { justify-content: center; }
+.side-right #fit { right: 440px; }
+.side-left #fit { left: 440px; }
+.kick { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: calc(var(--k) * 72px); line-height: 1;
+   margin-bottom: calc(var(--k) * 30px); letter-spacing: -.01em; }
+.layout-editorial_takeaway .h { font-size: calc(var(--k) * 104px); line-height: .9; }
+.side-right .layout-editorial_takeaway .h, .side-right .h { font-size: calc(var(--k) * 80px); }
+.rule2 { width: 100%; height: 2px; background: rgba(255,255,255,.9); margin: calc(var(--k) * 54px) 0 calc(var(--k) * 40px); }
+.sub { font-family: var(--serif); font-style: italic; color: #fff; font-size: calc(var(--k) * 58px); line-height: 1.06;
+   letter-spacing: -.012em; text-wrap: pretty; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+.sub p + p { margin-top: .35em; }
+.sub .hl { color: var(--accent); }
+.notes { margin-top: calc(var(--k) * 34px); display: flex; flex-direction: column; gap: calc(var(--k) * 16px); }
+.note { font-family: var(--serif); font-style: italic; color: rgba(255,255,255,.9); font-size: calc(var(--k) * 50px); line-height: 1.08; }
+.note::before { content: "\2014\00a0"; color: var(--accent); }
+{% endblock %}
+{% block content %}
+  <div class="kick">{{ s.kicker or 'Remember this:' }}</div>
+  <h2 class="h">{{ s.heading }}</h2>
+  {% if s.body or notes %}<div class="rule2"></div>{% endif %}
+  {% if s.body %}<div class="sub">{{ s.body }}</div>{% endif %}
+  {% if notes %}<div class="notes">{% for n in notes %}<div class="note">{{ n }}</div>{% endfor %}</div>{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "editorial_base.html.j2" %}
+{% block css %}
+.layout-editorial_cover { --top: 150px; --bottom: 124px; }
+.layout-editorial_cover .inner { align-items: center; text-align: center; }
+.kick { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: calc(var(--k) * 44px);
+   margin-bottom: calc(var(--k) * 18px); }
+.layout-editorial_cover .h { color: var(--accent); font-size: calc(var(--k) * 128px); line-height: .88; letter-spacing: -.04em;
+   width: 100%; text-shadow: 0 6px 40px rgba(0,0,0,.45); }
+.layout-editorial_cover .h .hl { color: #fff; }
+.layout-editorial_cover .h .dot { color: var(--accent); }
+.layout-editorial_cover .h em { color: #fff; font-size: 1.16em; line-height: .7; letter-spacing: -.02em; padding: 0 .04em; }
+.layout-editorial_cover .sub { margin-top: auto; font-family: var(--serif); font-style: italic; font-size: calc(var(--k) * 60px);
+   line-height: 1.05; color: #fff; letter-spacing: -.012em; max-width: 920px; text-wrap: balance; text-shadow: 0 2px 20px rgba(0,0,0,.6); }
+.layout-editorial_cover .sub p + p { margin-top: .2em; }
+.layout-editorial_cover .sub .hl { color: var(--accent); }
+.spacer { flex: 1 1 auto; min-height: calc(var(--k) * 120px); }
+{% endblock %}
+{% block scrims %}<div class="layer scrim-top"></div><div class="layer" style="background:linear-gradient(0deg, rgba(3,3,5,.82) 0%, rgba(3,3,5,.35) 14%, transparent 26%)"></div>{% endblock %}
+{% block content %}
+  {% if s.kicker %}<div class="kick">{{ s.kicker }}</div>{% endif %}
+  <h1 class="h">{{ s.heading }}</h1>
+  <div class="spacer"></div>
+  {% if s.body %}<div class="sub">{{ s.body }}</div>{% endif %}
+{% endblock %}

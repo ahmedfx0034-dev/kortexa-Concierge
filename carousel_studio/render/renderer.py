@@ -24,7 +24,10 @@ log = logging.getLogger(__name__)
 
 W, H = 1080, 1350
 LAYOUTS = ("center_statement", "top_heading_body", "numbered", "split_image", "list", "quote", "cta",
-           "before_after", "photo")
+           "before_after", "photo", "editorial_cover", "worksheet", "editorial_takeaway", "editorial_cta")
+# the "editorial" family (cinematic photo, giant italic serif numerals, worksheet rules) has its own base template
+EDITORIAL = ("editorial_cover", "worksheet", "editorial_takeaway", "editorial_cta")
+DEFAULT_ACCENT_SERIF = "Instrument Serif"
 TEMPLATES = Path(__file__).parent / "templates"
 
 _env = Environment(
@@ -202,9 +205,14 @@ def parse_decorations(decorations: Sequence[str]) -> dict:
              frame_radius=0, frame_color=None, grain=False, grain_opacity=0.10, progress=False, glow=False,
              glow_hero=False, dots=False, grid=False, blob=False, card=False, marker=False, outline_numbers=False,
              numbered_marks=False, logo=None, logo_mark=False, footer=None, eyebrow=False, eyebrow_bar=False,
-             callout=False, number_rows=False, cta_button=False)
+             callout=False, number_rows=False, cta_button=False, serif=None, cinematic=False)
     for raw in decorations or []:
         s = raw.lower()
+        if re.search(r"\bserif\b", s) and re.search(r"italic|accent|numeral", s):
+            q = re.search(r"[\"\u201c\u2018']([A-Z][A-Za-z0-9 ]{2,40})[\"\u201d\u2019']", raw)
+            d["serif"] = q.group(1).strip() if q else DEFAULT_ACCENT_SERIF
+        if "cinematic" in s:
+            d["cinematic"] = True
         if re.search(r"\bfooter\b", s):
             q = re.search(r"[\"\u201c\u2018']([^\"\u201d\u2019']{2,60})[\"\u201d\u2019']", raw)
             d["footer"] = q.group(1).strip() if q else True
@@ -495,6 +503,7 @@ def _plain(text: Optional[str]) -> str:
 def _image_uri(path: Optional[str], base: Optional[Path] = None) -> Optional[str]:
     if not path:
         return None
+    path = _split_image_opts(path)[0]
     candidates = [Path(path)]
     if base:
         candidates.append(base / path)
@@ -534,6 +543,17 @@ class _Theme:
             self.deco["grain_opacity"] = 0.05  # multiply-grain greys out light backgrounds quickly
         self.logo = brand_logo(brand, self.c["is_dark"]) if self.deco["logo"] else None
         self.logo_on_dark = (brand_logo(brand, True) if self.deco["logo"] else None)
+        self.editorial = any(a.layout in EDITORIAL for a in profile.archetypes)
+        self.serif = self.deco["serif"] or DEFAULT_ACCENT_SERIF
+        if self.editorial:
+            self.logo_on_dark = brand_logo(brand, True)
+            try:
+                extra = fontlib.font_css([], italic_body=self.serif)
+            except Exception as e:  # never let fonts break rendering
+                log.warning("Accent serif loading failed: %s", e)
+                extra = ""
+            self.fonts["css"] = self.fonts["css"] + "\n" + extra
+            self.fonts["serif"] = Markup(fontlib.css_stack(self.serif))
         tops = {self.deco[k] for k in ("counter", "handle", "brand", "logo") if self.deco[k]}
         bottoms = tops | ({self.deco["swipe"]} if self.deco["swipe"] else set()) | ({"bl"} if self.deco["footer"] else set())
         self.has_top = any(p and p.startswith("t") for p in bottoms)
@@ -612,6 +632,8 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
         align=_align_for(p, slide.archetype, layout), hero_logo=hero_logo, hero=hero,
         show_glow=show_glow, show_bar=show_bar,
     )
+    if layout in EDITORIAL:
+        ctx.update(_editorial_ctx(theme, slide, layout, numbered_ordinal, base, s))
     if layout == "list" and deco["number_rows"]:
         rows = []
         src = [b for b in slide.bullets if b and b.strip()]
@@ -641,7 +663,7 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
             ctx.update(attribution=None, quote_body=s["body"])
     if layout == "quote":
         ctx["quote_card"] = bool(theme.deco["card"] or theme.deco["message"])
-    if layout == "cta":
+    if layout in ("cta", "editorial_cta"):
         cta = (brand.get("call_to_action") or "").strip()
         seen = (_plain(slide.heading) + " " + _plain(slide.body)).lower()
         handle = brand.get("instagram_handle") or ""
@@ -660,6 +682,187 @@ def _context(theme: _Theme, slide: Slide, total: int, numbered_ordinal: int, bas
             cta_text = Markup(html.escape(smart_quotes(cta_text)))
         ctx.update(cta_text=cta_text, handle=handle, initial=name[:1].upper())
     return ctx
+
+
+# ---------------------------------------------------------------- editorial
+
+# Photo options ride on slide.image_path after a '#', e.g. "founder.png#pos=50% 0%" or
+# "photo.jpg#fit=right&focus=70% 40%". Keys: pos (CSS background-position for a full-bleed crop),
+# fit=right|left (show the whole photo height anchored to that side, fading into black, text column
+# on the other side), focus (centre of the vignette, defaults to pos), grade=cinematic|none.
+_IMG_OPT_KEYS = ("pos", "fit", "focus", "grade")
+
+
+def _split_image_opts(path: str) -> tuple[str, dict]:
+    if "#" not in path:
+        return path, {}
+    raw, frag = path.split("#", 1)
+    opts: dict = {}
+    for part in re.split(r"[&;]", frag):
+        if "=" in part:
+            k, v = part.split("=", 1)
+            k = k.strip().lower()
+            if k in _IMG_OPT_KEYS:
+                opts[k] = re.sub(r"[^\w%. -]", "", v).strip()  # values land in CSS: keep them inert
+        elif part.strip().lower() in ("right", "left"):
+            opts["fit"] = part.strip().lower()
+        elif part.strip().lower() in ("cinematic", "none", "raw"):
+            opts["grade"] = part.strip().lower()
+    return raw, opts
+
+
+_GRADE_CACHE: dict = {}
+
+
+def _find_image(path: str, base: Optional[Path]) -> Optional[Path]:
+    for c in [Path(path)] + ([base / path] if base else []) + [config.DATA_DIR / path, config.ROOT / path]:
+        if c.is_file():
+            return c
+    return None
+
+
+def cinematic_grade(path: Path, max_h: int = 1700) -> Optional[dict]:
+    """Moody 'film still' grade for a real photo, done in Pillow so the browser gets one small JPEG.
+    Bright, colourless areas (white ceilings, skies, walls) are pulled down hard to near-black, while
+    saturated areas (skin, clothes, logos) only get a gentle global tone-down: faces stay natural.
+    Returns {"uri", "ratio"} or None."""
+    key = (str(path), path.stat().st_mtime, max_h)
+    if key in _GRADE_CACHE:
+        return _GRADE_CACHE[key]
+    try:
+        import io
+
+        from PIL import Image, ImageChops, ImageEnhance, ImageFilter, ImageOps
+
+        im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
+        if im.height > max_h:
+            im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
+        _, sat, val = im.convert("HSV").split()
+        lowsat = sat.point(lambda v: 255 if v < 60 else 0 if v > 115 else int((115 - v) / 55 * 255))
+        bright = val.point(lambda v: 0 if v < 80 else 255 if v > 150 else int((v - 80) / 70 * 255))
+        # grow the mask a little before softening it, so the light background is crushed right up to
+        # the subject's outline (no bright halo) while the feathered edge stays on the background side
+        r = max(2, round(im.width / 220))
+        mask = ImageChops.multiply(lowsat, bright).filter(ImageFilter.MinFilter(3)) \
+            .filter(ImageFilter.MaxFilter(2 * r + 1)).filter(ImageFilter.GaussianBlur(r))
+        crushed = ImageEnhance.Brightness(ImageEnhance.Color(im).enhance(0.3)).enhance(0.2)
+        out = Image.composite(crushed, im, mask)
+        out = ImageEnhance.Color(out).enhance(0.92)
+        out = ImageEnhance.Contrast(out).enhance(1.06)
+        buf = io.BytesIO()
+        out.save(buf, format="JPEG", quality=88, optimize=True)
+        res = {"uri": "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode(),
+               "ratio": round(out.width / out.height, 4)}
+    except Exception as e:  # never let a bad photo break rendering
+        log.warning("Could not grade photo %s: %s", path, e)
+        res = None
+    _GRADE_CACHE[key] = res
+    return res
+
+
+def editorial_photo(image_path: Optional[str], base: Optional[Path], cinematic_default: bool = True) -> Optional[dict]:
+    """Resolve slide.image_path (+ '#options') into what the editorial templates need."""
+    if not image_path:
+        return None
+    raw, opts = _split_image_opts(image_path)
+    p = _find_image(raw, base)
+    if not p:
+        log.warning("Slide image not found: %s", raw)
+        return None
+    grade = opts.get("grade") or ("cinematic" if cinematic_default else "none")
+    img = cinematic_grade(p) if grade == "cinematic" else None
+    if img is None:
+        uri = _image_uri(str(p))
+        try:
+            from PIL import Image
+
+            with Image.open(p) as im:
+                ratio = im.width / im.height
+        except Exception:
+            ratio = W / H
+        img = {"uri": uri, "ratio": round(ratio, 4)}
+    fit = opts.get("fit") if opts.get("fit") in ("left", "right") else "cover"
+    pos = opts.get("pos") or "50% 30%"
+    focus = opts.get("focus") or ("50% 46%" if fit == "cover" else ("72% 42%" if fit == "right" else "28% 42%"))
+    width = min(W, round(H * img["ratio"])) if fit != "cover" else W
+    return dict(uri=img["uri"], fit=fit, pos=pos, focus=focus, width=width, graded=grade == "cinematic")
+
+
+_SCRIBBLE = ('<svg class="scrib" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true">'
+             '<path d="M30 20 C 62 6, 150 4, 184 24 C 204 38, 186 64, 120 71 C 62 77, 12 68, 9 46 '
+             'C 6 26, 52 13, 104 11 C 146 10, 182 18, 193 34"/></svg>')
+
+
+def scribble(markup: Markup) -> Markup:
+    """~~word~~ -> the word circled by a hand-drawn accent ellipse."""
+    return Markup(re.sub(r"~~(.+?)~~", lambda m: f'<span class="scribble">{m.group(1)}{_SCRIBBLE}</span>',
+                         str(markup)))
+
+
+def _strip_scribble(text: str) -> str:
+    return text.replace("~~", "")
+
+
+_FILL_RE = re.compile(r"^\s*_{3,}\s*$")
+
+
+def _worksheet_prompts(bullets: Sequence[str]) -> list:
+    """Bullets ending in ':' become 'Prompt: ______' fill-in rows; a bullet of only underscores
+    adds a blank writing line; anything else is an italic line. Without explicit blank lines, short
+    worksheets get extra writing lines so the slide reads like a page to fill in."""
+    items = [b.strip() for b in bullets if b and b.strip()]
+    explicit = any(_FILL_RE.match(b) for b in items)
+    n_prompts = sum(1 for b in items if b.endswith(":"))
+    extra = 0 if explicit else {1: 3, 2: 2, 3: 1, 4: 1}.get(n_prompts, 0)
+    rows = []
+    for b in items:
+        if _FILL_RE.match(b):
+            rows.append(dict(kind="line"))
+        elif b.endswith(":"):
+            rows.append(dict(kind="prompt", text=scribble(rich(b))))
+            rows.extend(dict(kind="line") for _ in range(extra))
+        else:
+            rows.append(dict(kind="note", text=scribble(rich(b))))
+    return rows
+
+
+_BG_SPOTS = ("78% 14%", "16% 84%", "88% 62%", "24% 18%", "70% 92%", "8% 40%", "92% 30%")
+
+
+def _editorial_ctx(theme: "_Theme", slide: Slide, layout: str, ordinal: int, base: Optional[Path], s: dict) -> dict:
+    brand, deco = theme.brand, theme.deco
+    photo = editorial_photo(slide.image_path, base, cinematic_default=True)
+    numeral = None
+    if layout == "worksheet":
+        m = re.search(r"\d{1,2}", slide.kicker or "")
+        numeral = str(int(m.group(0))) if m else str(ordinal)
+        s["kicker"] = None
+    s["heading"] = scribble(s["heading"])
+    if layout == "editorial_cover":
+        # a white (**) phrase that ends the headline leaves its final period in the accent: "DO IT."
+        s["heading"] = Markup(re.sub(r"([.!?])</span>$", r"</span><span class=\"dot\">\1</span>", str(s["heading"])))
+    if s.get("body"):
+        s["body"] = scribble(s["body"])
+    handle = brand.get("instagram_handle") or ""
+    if handle and not handle.startswith("@"):
+        handle = "@" + handle
+    logo = theme.logo_on_dark
+    logo_html = None
+    if logo:
+        if layout == "editorial_cta":
+            logo_html = Markup(_logo_img(logo["full"], 150, "ed-logo full"))
+        elif layout == "editorial_cover":
+            logo_html = Markup(_logo_img(logo["lockup"], 58, "ed-logo lockup"))
+        else:
+            logo_html = Markup(_logo_img(logo["mark"], 46, "ed-logo mark"))
+    elif brand.get("brand_name"):
+        logo_html = Markup(f'<div class="ed-logo word">{html.escape(brand["brand_name"])}</div>')
+    return dict(
+        photo=photo, numeral=numeral, ed_handle=handle, ed_logo=logo_html,
+        prompts=_worksheet_prompts(slide.bullets) if layout == "worksheet" else [],
+        notes=[scribble(rich(b)) for b in slide.bullets if b and b.strip()] if layout != "worksheet" else [],
+        spot=_BG_SPOTS[(slide.index - 1) % len(_BG_SPOTS)],
+    )
 
 
 def _split_row(text: str) -> tuple[Optional[str], Optional[str]]:
@@ -743,7 +946,7 @@ def render_html(profile: StyleProfile, slides: Sequence[Slide], brand: Optional[
     out, n_ord = [], 0
     total = len(slides)
     for sl in slides:
-        if sl.layout == "numbered":
+        if sl.layout in ("numbered", "worksheet"):
             n_ord += 1
         ctx = _context(theme, sl, total, max(n_ord, 1), base)
         out.append(_env.get_template(f"{ctx['s']['layout']}.html.j2").render(**ctx))

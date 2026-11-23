@@ -1,0 +1,64 @@
+{
+  "name": "kortexa-editorial",
+  "summary": "Cinematic 'worksheet' carousel on black: full-bleed dark, moody photos (real listing or founder photos, graded down with film grain and vignette; a lime-tinted dark backdrop when there is no photo). Each question slide layers a heavy white uppercase Montserrat question over a giant lime italic serif numeral ('1.'), then fill-in prompts in italic serif with long white underline rules. One word is circled with a hand-drawn lime scribble. Cover: huge lime uppercase headline with white words and one white italic serif word. Ends on one lime CTA button.",
+  "palette": {
+    "background": "#030305",
+    "surface": "#111114",
+    "text": "#FFFFFF",
+    "muted_text": "#B4B4BC",
+    "accent": "#98CC13",
+    "accent_2": "#6FA00B"
+  },
+  "typography": {
+    "heading_font": "Montserrat",
+    "body_font": "Inter",
+    "heading_weight": 800,
+    "heading_case": "upper",
+    "heading_size": "xl"
+  },
+  "archetypes": [
+    {
+      "name": "cover",
+      "description": "Cover, centred. Huge lime uppercase headline of 6-10 words. Wrap 1-3 words in **double stars** to turn them white, and ONE short word or number in *single stars* to set it in white italic serif (e.g. 'HOW TO GET YOUR *next* LISTING **NOTICED.**'). Body = one casual italic subline at the bottom (max 10 words). Optional kicker = tiny italic serif line above. Optional photo via image_path (append '#pos=50% 0%' to move the crop).",
+      "layout": "editorial_cover"
+    },
+    {
+      "name": "question",
+      "description": "Worksheet slide. Heading = a short question in uppercase (4-8 words, ends with '?'), drawn in white over a giant lime italic serif numeral. The numeral is the question's number: set kicker to '1', '2'... (or leave it empty to count question slides). Bullets = 1-4 fill-in prompts in the reader's voice; a bullet ending with ':' gets a long underline to write on (e.g. 'My hero shot:', 'Price shown? (yes/no):'); a bullet without ':' is an italic line; a bullet of only '___' adds a blank writing line. Circle ONE word on the slide with ~~tildes~~ (e.g. 'The ~~one~~ keyword I'll use:'). Optional body = one short italic line above the prompts. Photo via image_path; '#right' puts the whole photo on the right with the text column on the left.",
+      "layout": "worksheet"
+    },
+    {
+      "name": "takeaway",
+      "description": "The lesson in one line. Kicker = a short italic serif lead-in in lime (e.g. 'Remember this:'). Heading = uppercase statement of 4-8 words with one **lime** word or one ~~circled~~ word. Body = one or two short italic sentences (max 18 words).",
+      "layout": "editorial_takeaway"
+    },
+    {
+      "name": "cta",
+      "description": "Closing slide with the full Kortexa logo. Optional kicker = italic lead-in (e.g. 'Want my checklist?'). Uppercase heading of 3-6 words with one **lime** word. Body is exactly the call to action ('Comment LISTING and I'll send you the playbook'), rendered as a lime button with black text.",
+      "layout": "editorial_cta"
+    }
+  ],
+  "decorations": [
+    "accent serif italic 'Instrument Serif' for the big numerals, worksheet prompts, the cover's italic word and the @handle",
+    "cinematic photo treatment: dark, desaturated backgrounds, film grain and vignette; lime-tinted dark glow when no photo",
+    "giant lime italic serif numeral with a period layered behind the uppercase question",
+    "long thin white underline rules to fill in after each prompt",
+    "hand-drawn lime scribble ellipse circling one word",
+    "small italic @handle bottom left, 'save for later' bookmark cue bottom centre, 'swipe' arrow bottom right",
+    "Kortexa lockup top left on the cover, small Kortexa mark top right on inner slides, full logo on the CTA",
+    "lime CTA button with black text"
+  ],
+  "uses_photos": false,
+  "words_per_slide": 20,
+  "slide_count": 7,
+  "hook_patterns": [
+    "Worksheet promise: 'YOUR LISTING **CHECKLIST**, *before* YOU POST.'",
+    "Plan + do it: 'HOW TO PLAN YOUR *next* LISTING AND ACTUALLY **SELL IT.**'",
+    "Fill-in invite: 'ANSWER THESE *5* BEFORE YOU **POST.**'",
+    "Self-audit: 'IS YOUR LISTING *really* **READY?**'"
+  ],
+  "tone": "First person 'I' (the founder) talking straight to 'you', the agent, like a friend handing over a worksheet. Simple eighth-grade English, short questions, casual italic asides. Confident and helpful, never hype. No made-up numbers, no prices, no guarantees.",
+  "caption_style": "Five-line formula: 1) hook line restating slide 1 in new words; 2) 2-4 short lines telling them to screenshot and fill it in; 3) a question to spark comments; 4) 'Comment LISTING and I'll send you the playbook.'; 5) 3-5 hashtags such as #realestatemarketing #realestateagent #listingtips. No emojis or at most one. No prices.",
+  "reference_ids": [],
+  "created_at": "2026-11-23T12:00:00+00:00"
+}

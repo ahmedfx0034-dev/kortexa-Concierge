@@ -1,0 +1,39 @@
+{% extends "editorial_base.html.j2" %}
+{% block css %}
+.layout-worksheet { --top: 96px; --bottom: 132px; }
+.side-right #fit { right: 470px; }
+.side-left #fit { left: 470px; }
+.qblock { position: relative; padding-top: calc(var(--k) * 214px); min-height: calc(var(--k) * 500px); flex: 0 0 auto; }
+.numeral { position: absolute; left: calc(var(--k) * 34px); top: calc(var(--k) * -18px); z-index: 1;
+   font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent);
+   font-size: calc(var(--k) * 560px); line-height: .86; letter-spacing: -.04em; white-space: nowrap; }
+.qblock .h { position: relative; z-index: 2; font-size: calc(var(--k) * 84px); }
+.side-right .qblock .h, .side-left .qblock .h { font-size: calc(var(--k) * 72px); }
+.sheet { margin-top: auto; margin-bottom: auto; padding-top: calc(var(--k) * 56px); display: flex; flex-direction: column;
+   gap: calc(var(--k) * 30px); }
+.row { display: flex; align-items: baseline; gap: 16px; }
+.p-text, .note, .sub { font-family: var(--serif); font-style: italic; font-weight: 400; color: #fff;
+   font-size: calc(var(--k) * 60px); line-height: 1.04; letter-spacing: -.012em; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+.p-text { flex: 0 1 auto; white-space: nowrap; }
+.p-text em, .note em { font-style: italic; }
+.p-text .hl, .note .hl, .sub .hl { color: var(--accent); }
+.fill { flex: 1 1 auto; min-width: 120px; height: 2px; background: rgba(255,255,255,.9); align-self: flex-end;
+   margin-bottom: calc(var(--k) * 12px); }
+.line { height: 2px; background: rgba(255,255,255,.9); margin-top: calc(var(--k) * 26px); }
+.sub { font-size: calc(var(--k) * 46px); color: rgba(255,255,255,.88); max-width: 860px; }
+.note { font-size: calc(var(--k) * 54px); }
+{% endblock %}
+{% block content %}
+  <div class="qblock">
+    <div class="numeral">{{ numeral }}.</div>
+    <h2 class="h">{{ s.heading }}</h2>
+  </div>
+  <div class="sheet">
+    {% if s.body %}<div class="sub">{{ s.body }}</div>{% endif %}
+    {% for r in prompts %}
+      {% if r.kind == 'prompt' %}<div class="row"><span class="p-text">{{ r.text }}</span><span class="fill"></span></div>
+      {% elif r.kind == 'line' %}<div class="line"></div>
+      {% else %}<div class="note">{{ r.text }}</div>{% endif %}
+    {% endfor %}
+  </div>
+{% endblock %}

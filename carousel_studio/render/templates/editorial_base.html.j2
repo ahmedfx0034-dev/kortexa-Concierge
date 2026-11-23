@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+{{ font_css | safe }}
+/* Editorial family: cinematic full-bleed photo (or a dark lime-tinted stand-in), film grain, vignette,
+   heavy uppercase sans headings layered over giant italic serif numerals, worksheet rules. */
+:root {
+  --bg: {{ c.bg }}; --accent: {{ c.accent }}; --on-accent: {{ c.on_accent }}; --text: #FFFFFF;
+  --hfont: {{ fonts.heading | safe }}; --bfont: {{ fonts.body | safe }}; --serif: {{ fonts.serif | safe }};
+  --hweight: {{ t.weight }}; --k: 1; --pad: 72px;
+  --top: 150px; --bottom: 150px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); }
+body { font-family: var(--bfont); color: var(--text); -webkit-font-smoothing: antialiased;
+       text-rendering: geometricPrecision; font-kerning: normal; }
+.slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+
+/* ---------- background: photo or a cinematic dark stand-in */
+.ph { position: absolute; top: 0; bottom: 0; background-repeat: no-repeat; background-size: cover; }
+.ph.cover { left: 0; right: 0; }
+.ph.right { right: 0; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%, #000 100%); }
+.ph.left { left: 0; -webkit-mask-image: linear-gradient(270deg, transparent 0%, #000 34%, #000 100%); }
+.dark-bg { background:
+   radial-gradient(620px 520px at {{ spot }}, {{ c.accent_a18 }} 0%, rgba(152,204,19,.05) 42%, transparent 72%),
+   radial-gradient(1100px 900px at 50% 46%, #101113 0%, #08080A 52%, #030305 100%); }
+.haze { background:
+   linear-gradient(115deg, transparent 30%, rgba(255,255,255,.028) 46%, transparent 62%),
+   radial-gradient(420px 300px at {{ spot }}, rgba(255,255,245,.05) 0%, transparent 70%); mix-blend-mode: screen; }
+.scrim-top { background: linear-gradient(180deg, rgba(3,3,5,.62) 0%, rgba(3,3,5,.25) 30%, transparent 46%); }
+.scrim-bottom { background: linear-gradient(0deg, rgba(3,3,5,.9) 0%, rgba(3,3,5,.55) 24%, transparent 46%); }
+.scrim-side-right { background: linear-gradient(90deg, rgba(3,3,5,.72) 0%, rgba(3,3,5,.3) 48%, transparent 64%); }
+.scrim-side-left { background: linear-gradient(270deg, rgba(3,3,5,.72) 0%, rgba(3,3,5,.3) 48%, transparent 64%); }
+.vignette { background: radial-gradient(ellipse 80% 72% at {{ photo.focus if photo else '50% 48%' }}, transparent 46%, rgba(0,0,0,.38) 76%, rgba(0,0,0,.84) 100%); }
+.grain { opacity: .2; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 260px 260px; }
+.grain2 { opacity: .07; mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 -.35'/></filter><rect width='100%25' height='100%25' filter='url(%23m)'/></svg>");
+  background-size: 180px 180px; }
+
+/* ---------- type */
+.h { font-family: var(--hfont); font-weight: var(--hweight); text-transform: uppercase; color: var(--text);
+     line-height: .9; letter-spacing: -.035em; text-wrap: balance; overflow-wrap: break-word;
+     text-shadow: 0 4px 30px rgba(0,0,0,.35); }
+.h .hl { color: var(--accent); }
+.h em, .serif { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -.01em; }
+.nw, .hlnw { white-space: nowrap; }
+.scribble { position: relative; display: inline-block; white-space: nowrap; }
+.scribble .scrib { position: absolute; left: -16%; top: -26%; width: 132%; height: 150%; overflow: visible; pointer-events: none; }
+.scribble .scrib path { fill: none; stroke: var(--accent); stroke-width: 3.2px; stroke-linecap: round; stroke-linejoin: round;
+     vector-effect: non-scaling-stroke; opacity: .95; }
+.h .scribble .scrib path { stroke-width: 5px; }
+
+/* ---------- chrome */
+.ed-logo { position: absolute; z-index: 6; display: block; object-fit: contain; }
+.ed-logo.lockup, .ed-logo.word { left: var(--pad); top: 58px; }
+.ed-logo.mark { right: var(--pad); top: 62px; opacity: .92; }
+.ed-logo.full { left: var(--pad); top: 76px; }
+.ed-logo.word { font-family: var(--hfont); font-weight: 800; font-size: 30px; letter-spacing: .2em; text-transform: uppercase; }
+.foot { position: absolute; left: var(--pad); right: var(--pad); bottom: 52px; height: 44px; z-index: 6;
+        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+        font-family: var(--serif); font-style: italic; color: rgba(255,255,255,.86); }
+.foot .handle { font-size: 31px; letter-spacing: .005em; justify-self: start; }
+.foot .save { font-size: 27px; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.78); }
+.foot .save svg { width: 20px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.foot .swipe { justify-self: end; font-size: 27px; color: rgba(255,255,255,.78); display: flex; align-items: center; gap: 10px; }
+.foot .swipe i { display: block; width: 46px; height: 1.5px; background: var(--accent); position: relative; }
+.foot .swipe i::after { content: ""; position: absolute; right: 0; top: -5px; width: 10px; height: 10px;
+   border-top: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); transform: rotate(45deg); }
+
+/* ---------- content box (auto-fit) */
+#fit { position: absolute; left: var(--pad); right: var(--pad); top: var(--top); bottom: var(--bottom); z-index: 4; overflow: hidden; }
+.inner { min-height: 100%; display: flex; flex-direction: column; }
+{% block css %}{% endblock %}
+</style>
+</head>
+<body>
+<div class="slide layout-{{ s.layout }}{{ ' has-photo' if photo else '' }}{{ (' side-' ~ photo.fit) if photo and photo.fit != 'cover' else '' }}">
+  {% if photo %}
+  <div class="layer" style="background:#030305"></div>
+  <div class="ph {{ photo.fit }}" style="background-image:url('{{ photo.uri }}');{% if photo.fit == 'cover' %}background-position:{{ photo.pos }};{% else %}width:{{ photo.width }}px;background-position:center;{% endif %}"></div>
+  {% if photo.fit != 'cover' %}<div class="layer scrim-side-{{ photo.fit }}"></div>{% endif %}
+  {% else %}
+  <div class="layer dark-bg"></div>
+  <div class="layer haze"></div>
+  {% endif %}
+  {% block scrims %}<div class="layer scrim-top"></div><div class="layer scrim-bottom"></div>{% endblock %}
+  <div class="layer vignette"></div>
+  <div class="layer grain"></div>
+  <div class="layer grain2"></div>
+
+  {% if ed_logo %}{{ ed_logo }}{% endif %}
+
+  <div id="fit"><div class="inner">
+    {% block content %}{% endblock %}
+  </div></div>
+
+  {% block foot %}
+  <div class="foot">
+    <div class="handle">{{ ed_handle }}</div>
+    <div class="save"><svg viewBox="0 0 20 24"><path d="M2 2h16v20l-8-6-8 6z"/></svg>save for later</div>
+    {% if not is_last %}<div class="swipe">swipe<i></i></div>{% else %}<div></div>{% endif %}
+  </div>
+  {% endblock %}
+</div>
+<script>
+(async () => {
+  try { await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 4000))]); } catch (e) {}
+  const box = document.getElementById('fit');
+  const inner = box.firstElementChild;
+  const root = document.documentElement;
+  const wide = () => [...box.querySelectorAll('.h, .p-text, .note, .sub, .cta-btn')].some(el => el.scrollWidth > el.clientWidth + 2);
+  // measure the laid-out boxes (not glyph overflow: tight .9 line-heights and italic serif swashes poke out on purpose)
+  const used = () => Math.max(0, ...[...inner.children].map(e => e.offsetTop + e.offsetHeight));
+  const fits = () => used() <= box.clientHeight + 1 && inner.scrollWidth <= box.clientWidth + 1 && !wide();
+  const set = k => root.style.setProperty('--k', k);
+  let k = 1; set(1);
+  if (!fits()) {
+    let lo = 0.3, hi = 1;
+    for (let i = 0; i < 14; i++) { const mid = (lo + hi) / 2; set(mid); if (fits()) lo = mid; else hi = mid; }
+    k = lo; set(k);
+  }
+  window.__fit = k;
+  window.__overflow = !fits();
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>
