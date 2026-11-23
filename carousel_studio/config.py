@@ -83,5 +83,6 @@ def get_settings() -> Settings:
         if not s.blob_token and c.get("blob_store_id"):
             # The Vercel SDK reads the store id out of the token; the secret part is
             # replaced by the proxy's Authorization header.
-            s.blob_token = f"vercel_blob_rw_{c['blob_store_id']}_{PROXY_PLACEHOLDER}"
+            store = str(c["blob_store_id"]).strip().removeprefix("store_")
+            s.blob_token = f"vercel_blob_rw_{store}_{PROXY_PLACEHOLDER}"
     return s
