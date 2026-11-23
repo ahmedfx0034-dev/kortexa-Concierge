@@ -96,3 +96,21 @@ def log_cmd(last: int = typer.Option(20, help="How many entries to show")):
     for r in read_log()[-last:]:
         typer.echo(f"{r['logged_at']}  {r.get('slot_id',''):<14} {r.get('action',''):<8} "
                    f"{r.get('title','')}  {r.get('permalink') or r.get('reason') or ''}")
+
+
+@campaign_app.command("sync-reviews")
+def sync_reviews_cmd(folder: str):
+    """Apply decisions saved by the review page (a folder exported with ArtifactData out_dir)."""
+    import json as _json
+    import tempfile
+
+    from .reviews import apply_reviews, collect_review_dir
+
+    items = collect_review_dir(folder)
+    if not items:
+        typer.echo("No review decisions found.")
+        return
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as fh:
+        _json.dump(items, fh)
+    for r in apply_reviews(fh.name):
+        typer.echo(r)

@@ -52,3 +52,23 @@ def apply_reviews(path) -> List[dict]:
         out.append({"draft_id": did, "result": decision})
     save_calendar(cal)
     return out
+
+
+def collect_review_dir(folder) -> List[dict]:
+    """Turn a folder of review documents saved by the ArtifactData tool
+    (<folder>/reviews/<draft_id>.json, or <folder>/<draft_id>.json) into the list
+    apply_reviews expects. Each document may be the raw fields or wrapped in "data"."""
+    root = Path(folder)
+    files = sorted(root.glob("reviews/*.json")) or sorted(root.glob("*.json"))
+    items = []
+    for f in files:
+        try:
+            doc = json.loads(f.read_text())
+        except ValueError:
+            continue
+        fields = doc.get("data", doc) if isinstance(doc, dict) else {}
+        if not isinstance(fields, dict) or not fields.get("decision"):
+            continue
+        items.append({"draft_id": doc.get("id") or doc.get("doc_id") or f.stem, **{
+            k: fields[k] for k in ("decision", "caption", "hashtags", "feedback") if k in fields}})
+    return items

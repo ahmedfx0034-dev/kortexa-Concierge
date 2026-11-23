@@ -32,3 +32,15 @@ def test_connections_placeholders(tmp_path, monkeypatch):
     assert s.blob_token == "vercel_blob_rw_abc123_proxy-injected"
     from vercel.blob._internal.credentials import store_from_read_write_token
     assert store_from_read_write_token(s.blob_token) == "abc123"
+
+
+def test_collect_review_dir(tmp_path):
+    import json
+    from carousel_studio.campaign.reviews import collect_review_dir
+    (tmp_path / "reviews").mkdir()
+    (tmp_path / "reviews" / "c_1.json").write_text(json.dumps({"decision": "approve", "caption": "Hi"}))
+    (tmp_path / "reviews" / "c_2.json").write_text(json.dumps({"id": "c_2", "data": {"decision": "revise", "feedback": "shorter"}}))
+    (tmp_path / "reviews" / "junk.json").write_text("{}")
+    items = {i["draft_id"]: i for i in collect_review_dir(tmp_path)}
+    assert items["c_1"]["decision"] == "approve" and items["c_1"]["caption"] == "Hi"
+    assert items["c_2"]["feedback"] == "shorter" and "junk" not in items
