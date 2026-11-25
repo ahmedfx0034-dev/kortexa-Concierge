@@ -63,8 +63,8 @@
       "style": "kortexa-dark",
       "arm": "explore",
       "draft_id": "c_902a353f38",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-25-1",
