@@ -107,8 +107,8 @@
       "style": "kortexa-dark",
       "arm": "explore",
       "draft_id": "c_27e0054507",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-26-2",
@@ -118,8 +118,8 @@
       "style": "kortexa-light",
       "arm": "explore",
       "draft_id": "c_0fe584b48f",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-26-3",
