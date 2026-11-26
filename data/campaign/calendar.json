@@ -74,8 +74,8 @@
       "style": "kortexa-bold",
       "arm": "explore",
       "draft_id": "c_23bf6b6eae",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-25-2",
@@ -85,8 +85,8 @@
       "style": "kortexa-dark",
       "arm": "explore",
       "draft_id": "c_e5c5045b67",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-25-3",
@@ -96,8 +96,8 @@
       "style": "kortexa-light",
       "arm": "explore",
       "draft_id": "c_dc2f6f34ad",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-26-1",
