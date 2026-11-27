@@ -129,8 +129,8 @@
       "style": "kortexa-bold",
       "arm": "explore",
       "draft_id": "c_46db6896b6",
-      "status": "filled",
-      "reason": null
+      "status": "skipped",
+      "reason": "not approved"
     },
     {
       "id": "2026-11-27-1",
