@@ -82,6 +82,14 @@ export function webApi({ agency, llm, limiter = new Limiter(), demos = null, now
     const isChat = url.pathname === "/api/chat", isSummary = url.pathname === "/api/summary";
     if (!(url.pathname === "/api/agency" && req.method === "GET") && !((isChat || isSummary) && req.method === "POST")) return false;
     try {
+      // Speed check: /api/agency?speed=1 times one tiny AI answer (which model, how long).
+      if (url.pathname === "/api/agency" && url.searchParams.get("speed") && llm) {
+        const tooMany = limiter.allow(ipOf(req), now());
+        if (tooMany) { send(res, 429, { error: tooMany }); return true; }
+        try { await llm.chat([{ role: "user", content: "Reply with the word OK." }], { maxTokens: 10, temperature: 0 }); send(res, 200, { ok: true, ...llm.last }); }
+        catch (e) { send(res, 200, { ok: false, error: e.message }); }
+        return true;
+      }
       if (url.pathname === "/api/agency") {
         const code = url.searchParams.get("demo");
         if (code && !demos?.get(code)) { send(res, 404, { error: "No demo with that code." }); return true; }

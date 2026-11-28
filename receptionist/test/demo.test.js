@@ -113,3 +113,17 @@ test("agency style settings change how the AI is told to write", async () => {
   assert.match(s, /- Always greet with 'Akwaaba'/);
   assert.match(styleText({}), /friendly, plain English/, "defaults when no style is set");
 });
+
+test("a slow main model gives up after firstTryMs and the backup answers", async () => {
+  const { LLM } = await import("../src/llm.js");
+  const fetchImpl = (url, o) => {
+    const model = JSON.parse(o.body).model;
+    if (model === "slow") return new Promise((_, rej) => o.signal.addEventListener("abort", () => rej(Object.assign(new Error("aborted"), { name: "AbortError" }))));
+    return Promise.resolve({ ok: true, status: 200, json: async () => ({ choices: [{ message: { content: "fast answer" } }] }) });
+  };
+  const llm = new LLM({ baseUrl: "http://x", model: "slow", fallbackModel: "quick", apiKey: "k", fetchImpl, firstTryMs: 50 });
+  const t = Date.now();
+  assert.equal(await llm.chat([{ role: "user", content: "hi" }]), "fast answer");
+  assert.ok(Date.now() - t < 1000);
+  assert.equal(llm.last.model, "quick");
+});
