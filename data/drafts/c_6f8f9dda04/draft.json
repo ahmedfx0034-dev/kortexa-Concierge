@@ -1,0 +1,127 @@
+{
+  "id": "c_6f8f9dda04",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Too busy to post your listings? Hand it over",
+    "angle": "You know the listings should be posted properly, everywhere, every week, but you're showing homes. I turn your listing photos into premium short videos, write the captions and post them. You send photos and answer buyers.",
+    "hook": "TOO BUSY TO POST YOUR LISTINGS?"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR BUSY AGENCY OWNERS",
+      "heading": "TOO BUSY TO POST YOUR **LISTINGS**?",
+      "body": "You know they should go out. You just don't have the time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "GOOD LISTINGS THAT NEVER GET **POSTED** WELL",
+      "body": "A video, a caption, five places, every week. You know the drill. But you're out showing homes, so the listing sits.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "THE **EDITING** EATS YOUR NIGHTS",
+      "body": "Or you edit the video yourself, late at night. It looks basic. And it still only goes up once.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "IT DOESN'T HAVE TO BE THIS WAY",
+      "heading": "YOUR TIME BELONGS WITH **BUYERS**, NOT EDITING.",
+      "body": "Let someone else package the listing for you.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "I MAKE THE **VIDEO**",
+      "body": "I turn the listing photos you already have into premium short videos. No filming, no camera crew, no reshoot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "I WRITE THE **CAPTIONS**",
+      "body": "A clear hook, the basics, three highlights and one action. Every listing, every time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "I **POST** IT EVERYWHERE",
+      "body": "Instagram, TikTok, Facebook and WhatsApp, every week. You focus on the buyers who message.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "HAND YOUR LISTINGS **OVER**",
+      "body": "DM me and ask for a free listing review",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6f8f9dda04/slide_08.png"
+    }
+  ],
+  "caption": "You know your listings should be posted properly. You just don't have the time.\n\nThat's the part I take off your plate.\nI turn your listing photos into premium short videos, with no filming.\nI write the captions and post them across your platforms, every week.\nYou focus on showing homes and answering buyers.\nOne extra rental a month covers it.\n\nDM me and ask for a free listing review.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-05T19:30:00+00:00",
+  "slot_id": "2026-12-05-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:26+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

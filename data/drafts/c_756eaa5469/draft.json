@@ -1,0 +1,127 @@
+{
+  "id": "c_756eaa5469",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "3 to 4 hours to reply is too slow",
+    "angle": "Busy agencies often take 3 to 4 hours to answer WhatsApp, Instagram DMs or texts. By then a buyer has usually messaged three other agents. More enquiries only matter if someone answers fast.",
+    "hook": "YOUR REPLY CAME. THE BUYER HAD GONE."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "SPEED AND REPLIES",
+      "heading": "YOUR REPLY CAME. THE BUYER HAD **GONE**.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "A FEW HOURS TO REPLY IS FINE",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "THE BUYER MESSAGED **3 AGENTS**",
+      "body": "A buyer who waits hours has usually messaged three other agents by then.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "THE COST",
+      "heading": "BUSY AGENCIES REPLY IN **HOURS**",
+      "body": "Many take 3 to 4 hours to answer. The buyer goes quiet and books elsewhere.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "DECIDE WHO **REPLIES**",
+      "body": "Pick one person for WhatsApp, Instagram DMs and texts. Not \"whoever is free\".",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "SET A **REPLY** TIME",
+      "body": "Agree how fast every enquiry gets an answer. Then stick to it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "HAVE ANSWERS **READY**",
+      "body": "Save short replies for price, location and viewings. Answer in seconds, not hours.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "ANSWER FIRST. WIN THE **VIEWING**.",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_756eaa5469/slide_08.png"
+    }
+  ],
+  "caption": "Your reply was good. It was just too late.\n\nBusy agencies often take 3 to 4 hours to answer WhatsApp, Instagram DMs or texts.\nBy then, the buyer has usually messaged three other agents.\nMore enquiries only matter if someone answers fast.\nDecide who replies, set a reply time and keep short answers ready for the common questions.\n\nHow fast does your team reply right now?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#realestatebusiness"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-30T12:30:00+00:00",
+  "slot_id": "2026-11-30-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:10+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

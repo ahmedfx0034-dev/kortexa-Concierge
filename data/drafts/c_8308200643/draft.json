@@ -1,0 +1,127 @@
+{
+  "id": "c_8308200643",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "Your Instagram bio: before vs after",
+    "angle": "Buyers who like a listing tap your profile next. 'Real estate. DM for info' tells them nothing. After: who you help, where, and one clear action. A mock example agency, no real names.",
+    "hook": "YOUR BIO: BEFORE AND AFTER"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "BEFORE AND AFTER",
+      "heading": "YOUR **BIO**: BEFORE AND AFTER",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "BUYERS TAP YOUR **PROFILE** NEXT",
+      "body": "They like a listing, then check who you are. Your bio decides if they stay.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAY WHAT YOU **DO**",
+      "body": "Before: Real estate.\nAfter:\n✓ Family homes and city apartments\n✓ For sale and to rent",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAY **WHERE** YOU WORK",
+      "body": "Before: No area at all.\nAfter:\n✓ [Your City] and nearby areas\n✓ Buyers know in a second if it fits",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "SAY **WHO** YOU HELP",
+      "body": "Before: Best agent in town!\nAfter:\n✓ Helping families find their next home\n✓ Video tours for out-of-town buyers",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "GIVE ONE CLEAR **ACTION**",
+      "body": "Before: DM for info.\nAfter:\n✓ Tap WhatsApp to book a viewing\n✓ One link. Not three.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE FULL **EXAMPLE** BIO",
+      "body": "Before: Example Realty. Real estate. DM for info.\nAfter:\n✓ Family homes and city apartments\n✓ [Your City] and nearby\n✓ Video tours for out-of-town buyers\n✓ Tap WhatsApp to book a viewing",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "TURN PROFILE VISITS INTO **ENQUIRIES**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_8308200643/slide_08.png"
+    }
+  ],
+  "caption": "A buyer likes your listing. Then they tap your profile. What do they see?\n\n\"Real estate. DM for info\" tells them nothing.\nA good bio says what you do, where you work and who you help.\nThen it gives one clear action, like a WhatsApp link to book a viewing.\nChange it once. It works for you every day.\n\nWhat does your bio say right now?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#instagramforrealtors",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-06T19:30:00+00:00",
+  "slot_id": "2026-12-06-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:29+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

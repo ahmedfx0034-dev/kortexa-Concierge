@@ -1,0 +1,127 @@
+{
+  "id": "c_ae27e2284e",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Caption before vs after",
+    "angle": "Before: 'Beautiful house for sale. Very nice and spacious. DM for more info and price.' After: the 5-line version with hook, basics, three highlights, price and location, and one keyword.",
+    "hook": "THIS CAPTION GETS IGNORED. THIS ONE GETS DMS."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE 5-LINE CAPTION",
+      "heading": "THIS CAPTION GETS IGNORED. THIS ONE GETS **DMS**.",
+      "body": "Same home. Same photos. Only the words change.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "A CAPTION THAT SAYS **NOTHING**",
+      "body": "\"Beautiful house for sale. Very nice and spacious. DM for more info and price.\" It could be any house, anywhere.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "BUYERS SCROLL RIGHT **PAST**",
+      "body": "Nothing tells them why to stop. No size, no area, no price. So they move on to the next post.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "THE SAME FIVE **LINES**, EVERY TIME",
+      "body": "Hook, basics, three highlights, price and location, one action. It's text only. It takes about five minutes.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "LINE 1: LEAD WITH THE **HOOK**",
+      "body": "Before: Beautiful house for sale.\nAfter: Pool, garden and quiet street, close to schools.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "LINES 2–3: **BASICS** AND HIGHLIGHTS",
+      "body": "Before: Very nice and spacious.\nAfter: 4 bedrooms · 4 bathrooms · for sale\n✓ Gated, 24-hour security\n✓ Fitted kitchen\n✓ 5 minutes to the main road",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "LINES 4–5: PRICE, PLACE, **ACTION**",
+      "body": "Before: DM for more info and price.\nAfter: [Price] · [Area, City]\n✓ DM \"TOUR\" to book a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE **5-LINE** CAPTION",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ae27e2284e/slide_08.png"
+    }
+  ],
+  "caption": "Most listing captions say nothing. Here's the same home, written two ways.\n\nBefore: \"Beautiful house for sale. Very nice and spacious. DM for more info and price.\"\nAfter: a hook, the basics, three highlights, price and location, and one clear action.\nSame house. Same photos. Only the words changed.\nIt's text only, and it takes about five minutes.\n\nWhich of the five lines does your last caption skip?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-30T08:30:00+00:00",
+  "slot_id": "2026-11-30-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:47+00:00",
+  "updated_at": "2026-11-28T10:46:03+00:00"
+}

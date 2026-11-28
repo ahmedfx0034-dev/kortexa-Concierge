@@ -1,0 +1,127 @@
+{
+  "id": "c_90f2c2ead1",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Posted once, in one place, then silence",
+    "angle": "One Instagram post and then nothing means most of your audience never sees the listing. It isn't a bad listing; it just never had a chance to be seen.",
+    "hook": "POSTED ONCE. THEN SILENCE. SOUND FAMILIAR?"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR REAL ESTATE AGENTS",
+      "heading": "POSTED ONCE. THEN SILENCE. SOUND **FAMILIAR**?",
+      "body": "It's not a bad listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL PROBLEM",
+      "heading": "IT NEVER HAD A CHANCE TO BE **SEEN**",
+      "body": "One Instagram post, then nothing. Most of your audience never sees it. They didn't say no. They just missed it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "GOOD LISTINGS THAT **DISAPPEAR**",
+      "body": "A day later, the post is buried. No messages. You start to think the listing is the problem. It isn't.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Fix 1",
+      "heading": "SHARE IT IN **FIVE** PLACES",
+      "body": "Instagram, TikTok, Facebook, WhatsApp and property sites. The same video and photos, in the shape each one likes.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Fix 2",
+      "heading": "**REPOST** YOUR STRONG LISTINGS",
+      "body": "Most of your followers missed it the first time. Post it again, with a new first line.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Fix 3",
+      "heading": "POST **EVERY** WEEK",
+      "body": "A few good posts every week beats ten in one day and then nothing for a month.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "YOU DON'T NEED MORE LISTINGS. YOU NEED THEM **SEEN**.",
+      "body": "Reuse what you already made.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GIVE YOUR LISTING A **SECOND** CHANCE",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_90f2c2ead1/slide_08.png"
+    }
+  ],
+  "caption": "You posted the listing. A day later, nothing. Sound familiar?\n\nIt's usually not a bad listing. Most of your audience just never saw it.\nShare the same video and photos in five places.\nRepost your strong listings, because most followers missed them the first time.\nAnd post a few good listings every week, not ten in one day.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-05T08:30:00+00:00",
+  "slot_id": "2026-12-05-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:21+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

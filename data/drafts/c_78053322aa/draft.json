@@ -1,0 +1,127 @@
+{
+  "id": "c_78053322aa",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "One listing, five places",
+    "angle": "Most of your audience never sees a single Instagram post. Put the same listing on Instagram, TikTok, Facebook, WhatsApp and property sites, each in the shape that fits.",
+    "hook": "ONE LISTING. FIVE PLACES. NOT ONE."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR REAL ESTATE AGENTS",
+      "heading": "ONE LISTING. FIVE PLACES. **NOT ONE**.",
+      "body": "Most of your buyers never see that one post.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL PROBLEM",
+      "heading": "YOUR BUYERS AREN'T ALL ON **INSTAGRAM**",
+      "body": "Some scroll TikTok. Some live on WhatsApp. Some only check property sites. Post in one place, and the rest never see it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Place 1",
+      "heading": "INSTAGRAM: **REEL** PLUS PHOTOS",
+      "body": "Post your 15-second video as a Reel. Add a photo carousel for buyers who like to swipe.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Place 2",
+      "heading": "TIKTOK: THE **SAME** VIDEO",
+      "body": "No new work. Post the same 15-second video, upright, with captions you can read with the sound off.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Place 3",
+      "heading": "FACEBOOK: PAGE AND **GROUPS**",
+      "body": "Post it on your Page. Then share it in local groups where people look for homes.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Place 4",
+      "heading": "WHATSAPP: STATUS AND **BROADCAST**",
+      "body": "Put the video on your Status. Then send it to your broadcast lists of past buyers and contacts.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Place 5",
+      "heading": "PROPERTY SITES: THE **FULL** DETAILS",
+      "body": "Use your sideways photos here. Add every detail: bedrooms, bathrooms, price and location.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "MAKE ONE LISTING **WORK** FIVE TIMES",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_78053322aa/slide_08.png"
+    }
+  ],
+  "caption": "One post on Instagram is not enough. Most of your buyers will never see it.\n\nYour buyers are spread out: Instagram, TikTok, Facebook, WhatsApp and property sites.\nYou don't need new content for each one.\nUse the same video and photos, in the shape each place likes.\nOne listing, five places, more people seeing it.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-01T08:30:00+00:00",
+  "slot_id": "2026-12-01-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:11+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

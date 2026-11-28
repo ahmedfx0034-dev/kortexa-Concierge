@@ -1,0 +1,127 @@
+{
+  "id": "c_6962987d66",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "WhatsApp Status is free listing space",
+    "angle": "Your contacts already watch your Status. Post the upright 15-second video there with the area and one keyword, and repost through the week.",
+    "hook": "YOUR WHATSAPP STATUS IS A SHOP WINDOW"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "ONE LISTING, FIVE PLACES",
+      "heading": "YOUR WHATSAPP STATUS IS A **SHOP WINDOW**",
+      "body": "The people who already know you are watching. Show them what you sell.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "YOUR CONTACTS DON'T KNOW WHAT YOU **SELL**",
+      "body": "Hundreds of people have your number. Old clients, friends, neighbours. Most have no idea which homes you have right now.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "THEY BUY FROM SOMEONE **ELSE**",
+      "body": "A friend of a friend needs a home. They never saw your listing. So they call the agent they saw last.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "TREAT STATUS AS **FREE** LISTING SPACE",
+      "body": "Your contacts already watch your Status. It costs nothing to post. Put your listings where they already look.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "POST THE **UPRIGHT** VIDEO",
+      "body": "Use your 15-second listing video, in upright shape. It fills the phone screen, the way Status is watched.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "ADD THE AREA AND ONE **KEYWORD**",
+      "body": "Bold text with the area, like \"3-bed, quiet street, [Area]\". Then one action: reply \"TOUR\" to book a viewing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "**REPOST** THROUGH THE WEEK",
+      "body": "Status disappears after a day. Post it again on a few days. Most of your contacts missed it the first time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "PUT EVERY LISTING IN **FIVE** PLACES",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_6962987d66/slide_08.png"
+    }
+  ],
+  "caption": "Your WhatsApp Status is free listing space, and your contacts already watch it.\n\nMost people who have your number don't know which homes you have right now.\nPost your upright 15-second video there.\nAdd the area and one keyword, like reply \"TOUR\".\nThen repost through the week. Most contacts miss it the first time.\n\nDo you post your listings on Status, or only on Instagram?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-02T19:30:00+00:00",
+  "slot_id": "2026-12-02-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:53+00:00",
+  "updated_at": "2026-11-28T10:46:03+00:00"
+}

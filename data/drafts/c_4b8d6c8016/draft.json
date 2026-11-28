@@ -1,0 +1,127 @@
+{
+  "id": "c_4b8d6c8016",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "Reel or carousel for a listing? Use both",
+    "angle": "A Reel helps new people find the listing; a photo carousel lets interested buyers look closely at each room. Post the 15-second video as a Reel and the best photos as a carousel, with the same keyword on both.",
+    "hook": "REEL OR CAROUSEL? USE BOTH, LIKE THIS."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "AGENCY GROWTH",
+      "heading": "REEL OR CAROUSEL? USE **BOTH**, LIKE THIS.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "PICK ONE FORMAT AND STICK TO IT",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "EACH ONE DOES A DIFFERENT **JOB**",
+      "body": "Pick only one and you miss half the buyers.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "THE REEL **FINDS** BUYERS",
+      "body": "Post the 15-second video as a Reel. It helps new people find the listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "THE CAROUSEL **SHOWS** DETAIL",
+      "body": "Post your best photos as a carousel. Interested buyers look closely at each room.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "SAME **KEYWORD** ON BOTH",
+      "body": "Use one keyword, like TOUR1, on both posts. You'll know which listing they mean.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "ONE LISTING. **TWO** POSTS.",
+      "body": "Before: One photo post. Then silence.\nAfter:\n✓ A 15-second Reel for reach\n✓ A photo carousel for detail\n✓ The same keyword on both",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET MORE FROM EVERY **LISTING**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_4b8d6c8016/slide_08.png"
+    }
+  ],
+  "caption": "Reel or carousel? You don't have to choose.\n\nA Reel helps new people find the listing.\nA photo carousel lets interested buyers look closely at each room.\nPost the 15-second video as a Reel and the best photos as a carousel.\nPut the same keyword on both, like TOUR1, so you know which listing each message is about.\nSame photos. Two formats. More buyers see it.\n\nWhich do you post more today?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#instagramforrealtors",
+    "#listingvideo",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-04T08:30:00+00:00",
+  "slot_id": "2026-12-04-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:25+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

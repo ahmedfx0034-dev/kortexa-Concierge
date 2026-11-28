@@ -1,0 +1,127 @@
+{
+  "id": "c_2a412623ef",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Decide now who replies, and how fast",
+    "angle": "When everyone is busy, nobody replies. Name one person per shift (including evenings and weekends) and agree how fast they answer, so no enquiry waits for hours.",
+    "hook": "WHO ANSWERS YOUR WHATSAPP AT 9PM?"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "REPLY FAST, OR LOSE THEM",
+      "heading": "WHO ANSWERS YOUR WHATSAPP AT **9PM**?",
+      "body": "If the answer is \"whoever sees it first\", it's often no one.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "WHEN EVERYONE'S BUSY, **NOBODY** REPLIES",
+      "body": "Each person thinks someone else has it. The message sits unread. Busy agencies can take 3 to 4 hours to reply.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "THE BUYER DIDN'T **WAIT**",
+      "body": "A buyer who waits hours has usually messaged three other agents by then. Your listing did its job. The reply didn't.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE FIX",
+      "heading": "DECIDE NOW WHO **REPLIES**",
+      "body": "You don't need new hires. You need a simple rota. One name per shift, and an agreed reply time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "ONE PERSON PER **SHIFT**",
+      "body": "Morning, afternoon, evening. One name for each. If it's everyone's job, it's no one's job.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "COVER EVENINGS AND **WEEKENDS**",
+      "body": "Buyers often scroll after work and at weekends. Put a name on those hours too, so no message waits till Monday.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "AGREE HOW **FAST** THEY ANSWER",
+      "body": "Pick a reply time your team can keep, like within 15 minutes. Even \"Yes, it's available, when can you view?\" keeps them with you.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "LEAVE NO ENQUIRY **WAITING**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_2a412623ef/slide_08.png"
+    }
+  ],
+  "caption": "Who answers your WhatsApp at 9pm? If it's \"whoever sees it\", it's often no one.\n\nWhen everyone is busy, messages sit unread for hours.\nBy then, the buyer has usually messaged three other agents.\nThe fix is a simple rota, not new hires.\nOne name per shift, evenings and weekends included, and an agreed reply time.\n\nWho replies to your enquiries after hours?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-04T19:30:00+00:00",
+  "slot_id": "2026-12-04-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:57+00:00",
+  "updated_at": "2026-11-28T10:46:03+00:00"
+}

@@ -1,0 +1,127 @@
+{
+  "id": "c_9281952cc5",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "From photos to video: how it works",
+    "angle": "I show the simple process: you send the listing photos, AI adds slow camera moves to each one, then we add the hook, captions and the ask. No crew, no reshoot.",
+    "hook": "YOUR PHOTOS IN. A SMOOTH VIDEO OUT."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "AI EXPLAINED",
+      "heading": "YOUR PHOTOS IN. A SMOOTH **VIDEO** OUT.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "A GOOD VIDEO NEEDS A FILM DAY",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "YOUR PHOTOS ARE **ENOUGH**",
+      "body": "AI can turn the listing photos you already have into smooth, cinematic video.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "START WITH THE **PHOTOS**",
+      "body": "Bright, tidy, taken from the corner of each room. Best shot first.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "ADD SLOW **CAMERA** MOVES",
+      "body": "Each photo gets a calm, smooth move. Two to three seconds per shot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "ADD THE **HOOK**",
+      "body": "Your best shot with bold text, like \"4-bed with pool, quiet street.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 4",
+      "heading": "END WITH ONE **ASK**",
+      "body": "Price, location and one clear action, like \"DM TOUR to book a viewing.\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE 15-SECOND **FORMULA**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_9281952cc5/slide_08.png"
+    }
+  ],
+  "caption": "No crew. No reshoot. No editing at night.\n\nHere is how a listing video gets made from photos.\nStart with bright, tidy photos, best shot first.\nAI adds a slow, smooth camera move to each one.\nThen add a bold hook at the start and one clear ask at the end.\nThe result is a 15-second video of the real home.\n\nWhich listing would you turn into a video first?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realestatevideo",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-11-30T19:30:00+00:00",
+  "slot_id": "2026-11-30-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:18+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

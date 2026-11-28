@@ -1,0 +1,127 @@
+{
+  "id": "c_ea01467938",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Shoot listing photos with your phone",
+    "angle": "A recent phone works if you follow the rules: daylight with curtains open, clear the clutter, shoot from the corner at chest height, hold it straight, take upright and sideways.",
+    "hook": "YOUR PHONE IS ENOUGH. SHOOT LIKE THIS."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR AGENTS WHO SHOOT ON A PHONE",
+      "heading": "YOUR PHONE IS **ENOUGH**. SHOOT LIKE THIS.",
+      "body": "No photographer needed. Just five rules.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "BAD PHOTOS MAKE GOOD HOMES LOOK **CHEAP**",
+      "body": "Dark, tilted photos make rooms look small. The phone isn't the problem. How you shoot is.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "SHOOT IN **DAYLIGHT**",
+      "body": "Curtains open, lights on. Late morning usually gives the most even light.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "CLEAR THE **CLUTTER**",
+      "body": "Buckets, wires, clothes, anything personal. Clear it before you shoot, not after.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "CORNER, AT **CHEST HEIGHT**",
+      "body": "Stand in the corner of each room, with the phone at chest height. The room looks open and true to size.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 4",
+      "heading": "HOLD IT **STRAIGHT**",
+      "body": "Tilted walls make a home look cheap. Keep the walls straight up and down in the frame.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 5",
+      "heading": "TAKE **BOTH** SHAPES",
+      "body": "Upright for Reels, Status and TikTok. Sideways for property websites.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "YOUR PHONE. THESE **RULES**.",
+      "body": "Save this before your next listing shoot",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ea01467938/slide_08.png"
+    }
+  ],
+  "caption": "You don't need a photographer. A recent phone is enough, if you shoot it right.\n\nShoot in daylight with the curtains open.\nClear the clutter before you start.\nStand in the corner at chest height and hold the phone straight.\nTake upright photos for Reels and sideways ones for property sites.\nMake it look good, and keep it honest.\n\nSave this before your next listing shoot.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realestatephotography",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-05T12:30:00+00:00",
+  "slot_id": "2026-12-05-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:24+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

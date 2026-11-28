@@ -1,0 +1,127 @@
+{
+  "id": "c_ecc320f761",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "Set up WhatsApp quick replies for listings",
+    "angle": "Say you get 20 messages a week asking the same things. Saved quick replies in WhatsApp Business let you answer basics in seconds and keep your time for real buyers.",
+    "hook": "STOP TYPING THE SAME REPLY 20 TIMES"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FOR AGENTS ON WHATSAPP",
+      "heading": "STOP TYPING THE SAME REPLY **20 TIMES**",
+      "body": "Set it up once. Use it on every listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "THE SAME QUESTIONS, **EVERY** WEEK",
+      "body": "Say you get 20 messages a week. Most ask the same things. Is it available? Where is it? Can I see it? You type each answer by hand.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "SLOW REPLIES. **LATE** NIGHTS.",
+      "body": "You reply when you're free, so buyers wait. And you're still typing the same answers at night.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "OPEN WHATSAPP **BUSINESS**",
+      "body": "Go to Settings, then Business tools. Tap Quick replies.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "SAVE YOUR **TOP 3** ANSWERS",
+      "body": "Is it available, with the basics. How to book a viewing. Where it is. Give each one a short shortcut word.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "TYPE A SLASH. **SEND** IN SECONDS.",
+      "body": "Type / in any chat and pick your reply. Add the listing name. Send.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "LET QUICK REPLIES DO THE **BASICS**.",
+      "body": "Then add one personal line, so it never feels like a robot. Keep your time for real buyers.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "SET IT UP **ONCE**",
+      "body": "Save this and set it up today",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_ecc320f761/slide_08.png"
+    }
+  ],
+  "caption": "If you type the same reply again and again, you're losing time and buyers.\n\nSay you get 20 messages a week asking the same things.\nWhatsApp Business lets you save quick replies for the basics.\nType a slash, pick the reply, add the listing name, send.\nYou reply faster, and you don't work later.\n\nSave this and set it up today.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#whatsappbusiness"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-03T12:30:00+00:00",
+  "slot_id": "2026-12-03-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:19+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

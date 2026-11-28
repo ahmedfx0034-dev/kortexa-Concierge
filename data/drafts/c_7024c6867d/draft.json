@@ -1,0 +1,127 @@
+{
+  "id": "c_7024c6867d",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "Myth: AI video is too expensive",
+    "angle": "Compare it to the real cost: a camera crew, a reshoot, or a listing that sits for months. AI works from photos you already have, so there's no shoot day to pay for.",
+    "hook": "\"AI VIDEO MUST BE EXPENSIVE.\" LET'S SEE."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "MYTH VS TRUTH",
+      "heading": "\"AI VIDEO MUST BE **EXPENSIVE**.\" LET'S SEE.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "PREMIUM VIDEO NEEDS A BIG BUDGET",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL COST",
+      "heading": "A LISTING THAT **SITS**",
+      "body": "Weeks of posts nobody stops for. That costs more than any video.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL COST",
+      "heading": "ADS ON POSTS THAT **DON'T WORK**",
+      "body": "Boosting a weak post just shows a weak post to more people.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "NO **SHOOT DAY** NEEDED",
+      "body": "AI works from the photos you already have. No crew, no reshoot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "ONE **RENTAL** COVERS IT",
+      "body": "One extra rental a month covers it. It pays for itself.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "THE REAL QUESTION IS **VALUE**",
+      "body": "Not \"what does it cost?\" but \"what does a quiet listing cost me?\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "SEE WHAT YOUR PHOTOS CAN **DO**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7024c6867d/slide_08.png"
+    }
+  ],
+  "caption": "Premium video sounds like a big expense. Look at what you already pay for.\n\nA listing that sits for weeks with no messages.\nAds on posts that don't stop the scroll.\nA camera crew or a reshoot, if you film it the old way.\nAI works from the photos you already have, so there's no shoot day at all.\nOne extra rental a month covers it.\n\nWhat stops you from using video on every listing?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realestatevideo",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-03T19:30:00+00:00",
+  "slot_id": "2026-12-03-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:22+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

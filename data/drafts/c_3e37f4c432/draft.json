@@ -1,0 +1,135 @@
+{
+  "id": "c_3e37f4c432",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Myth: AI will replace agents",
+    "angle": "Buyers still want a person they trust to show the home, answer hard questions and guide the deal. AI takes over slow jobs like turning photos into video or first replies, so you have more time for people.",
+    "hook": "\"AI WILL REPLACE AGENTS.\" NO. HERE'S WHY."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "AI, EXPLAINED SIMPLY",
+      "heading": "\"AI WILL REPLACE AGENTS.\" **NO**. HERE'S WHY.",
+      "body": "Buyers still want a person. AI just takes the slow jobs off your desk.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE MYTH",
+      "heading": "AI WILL MAKE YOU **LESS** NEEDED",
+      "body": "Many agents believe this. So they stay away from AI completely. Even the tools that would save them time.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "STUCK DOING IT THE **SLOW** WAY",
+      "body": "Editing videos at night. Typing the same reply again and again. Less time left for the people who actually buy.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE TRUTH",
+      "heading": "BUYERS WANT A PERSON THEY **TRUST**",
+      "body": "A home is a big decision. Buyers want someone to show them round, answer hard questions and guide the deal. That's you.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "WHAT AI CAN DO",
+      "heading": "THE **SLOW** JOBS AI CAN TAKE",
+      "body": null,
+      "bullets": [
+        "Video: turns your real listing photos into a smooth, short tour.",
+        "First replies: answers \"Is it still available?\" quickly.",
+        "Repeat tasks: the same steps, done the same way every time."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "breakdown",
+      "layout": "list",
+      "kicker": "WHAT STAYS WITH YOU",
+      "heading": "WHAT STAYS **HUMAN**",
+      "body": null,
+      "bullets": [
+        "Viewings: showing the home in person.",
+        "Hard questions: the area, the price, the paperwork.",
+        "Trust: guiding the buyer all the way to a deal."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "AI does the slow jobs. You do the people jobs.",
+      "body": "More time for viewings and clients.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET THE **15-SECOND** VIDEO FORMULA",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_3e37f4c432/slide_08.png"
+    }
+  ],
+  "caption": "\"AI will replace agents.\" I hear this a lot. I don't believe it.\n\nBuying a home is a big decision. Buyers want a person they trust to show them round and guide the deal.\nAI helps with the slow jobs, like turning your real listing photos into a short video, or sending first replies.\nThat gives you more time for viewings and clients.\n\nWhich slow job would you hand over first?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-06T08:30:00+00:00",
+  "slot_id": "2026-12-06-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:59+00:00",
+  "updated_at": "2026-11-28T10:46:03+00:00"
+}

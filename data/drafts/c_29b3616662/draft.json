@@ -1,0 +1,131 @@
+{
+  "id": "c_29b3616662",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "First slide: weak hook vs strong hook",
+    "angle": "Text-only before/afters: 'House for sale' becomes '4-bed with a pool'. 'Apartment available' becomes 'Quiet 2-bed near the mall'.",
+    "hook": "YOUR FIRST LINE: BEFORE AND AFTER"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "BEFORE AND AFTER",
+      "heading": "YOUR FIRST LINE: **BEFORE** AND AFTER",
+      "body": "One line decides if they stop.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "\"HOUSE FOR SALE\" SAYS **NOTHING**",
+      "body": "Buyers decide in about a second whether to keep looking. A plain first line gives them no reason to stop.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **FAMILY** HOME",
+      "body": "Before: \"House for sale.\"\nAfter:\n✓ \"4-bed with a pool, quiet street\"\n✓ The size comes first\n✓ One standout feature\n✓ A reason to stop",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE CITY **APARTMENT**",
+      "body": "Before: \"Apartment available.\"\nAfter:\n✓ \"Quiet 2-bed near the mall\"\n✓ Says how big it is\n✓ Says where it is\n✓ Says why it's nice to live in",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **RENTAL**",
+      "body": "Before: \"Nice house for rent. DM for info.\"\nAfter:\n✓ \"3-bed family home, close to schools\"\n✓ Speaks to the right renter\n✓ Answers their first question",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "list",
+      "layout": "list",
+      "kicker": "THE FORMULA",
+      "heading": "WHAT A STRONG FIRST LINE **HAS**",
+      "body": null,
+      "bullets": [
+        "Size: the bedroom count, house or apartment.",
+        "Area: the street, or what's close by.",
+        "Standout: a pool, a garden or a view."
+      ],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "SAME LISTING. ONE BETTER **LINE**.",
+      "body": "Put it on your first photo and in the first 3 seconds of your video.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "WRITE A FIRST LINE THAT **STOPS** THEM",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_29b3616662/slide_08.png"
+    }
+  ],
+  "caption": "\"House for sale\" is not a hook. It's a label.\n\nBuyers decide in about a second whether to keep looking.\nYour first line has to tell them why this home is worth their time.\nSay the size, the area or the standout feature.\n\"4-bed with a pool, quiet street\" stops people. \"House for sale\" doesn't.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-01T12:30:00+00:00",
+  "slot_id": "2026-12-01-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:14+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}

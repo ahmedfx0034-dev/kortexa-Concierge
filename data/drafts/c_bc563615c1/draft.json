@@ -1,0 +1,127 @@
+{
+  "id": "c_bc563615c1",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "What you get in a free listing review",
+    "angle": "I walk through the free listing review step by step: you send one listing's photos by WhatsApp, Instagram DM or text, I show how I'd turn it into a premium video and post, and some agencies get a free sample video.",
+    "hook": "WHAT HAPPENS WHEN YOU SEND ME A LISTING"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "FREE LISTING REVIEW",
+      "heading": "WHAT HAPPENS WHEN YOU SEND ME A **LISTING**",
+      "body": "No filming. Nothing to pay. Here's exactly how the review works.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE REAL PROBLEM",
+      "heading": "WOULD THIS WORK FOR **MY** LISTINGS?",
+      "body": "You've seen the tips. But you don't know if they'd work for your homes, your area, your buyers. So you wait.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "WAITING KEEPS YOUR LISTINGS **INVISIBLE**",
+      "body": "Every week you wait, the same posts go out. A few likes, no messages. And you still don't know why.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "SEND ME ONE **LISTING**",
+      "body": "Pick one current listing. Send it on WhatsApp, Instagram DM or text. That's all you do.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "I CHECK WHAT **BUYERS** SEE",
+      "body": "Photo order, hook, basics and next step. I look at what makes buyers stop, and what makes them scroll past.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "I SHOW YOU THE **PREMIUM** VERSION",
+      "body": "I show you how I'd turn it into a premium video and post. For some agencies, I make a free sample video too.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WANT IT DONE FOR YOU?",
+      "heading": "YOU SEND. I DO THE **REST**.",
+      "body": "If you like what you see, I make the videos, write the captions and post them. No filming. One extra rental a month covers it.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "LET'S LOOK AT **YOUR** LISTING",
+      "body": "DM me REVIEW and I'll look at one of your listings",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_bc563615c1/slide_08.png"
+    }
+  ],
+  "caption": "Not sure if this would work for your listings? Let me show you on one of them.\n\nSend me one current listing on WhatsApp, Instagram DM or text.\nI check what buyers see first: photo order, hook, basics and next step.\nThen I show you how I'd turn it into a premium video and post.\nFor some agencies, I make a free sample video too. No filming, nothing to pay.\n\nDM me REVIEW and I'll look at one of your listings.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realtortips",
+    "#realestatetips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-02T12:30:00+00:00",
+  "slot_id": "2026-12-02-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:51+00:00",
+  "updated_at": "2026-11-28T10:47:01+00:00"
+}

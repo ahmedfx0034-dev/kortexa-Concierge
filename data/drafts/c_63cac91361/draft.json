@@ -1,0 +1,127 @@
+{
+  "id": "c_63cac91361",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "Example listing: still photos vs a 15-second video",
+    "angle": "Using one example listing: the plain photo post, then the 15-second video made from the same photos with a hook, a short tour and one clear ask. Text-only before/after (captions, post layouts, first lines), no house photos.",
+    "hook": "SAME LISTING. PHOTOS VS A 15-SECOND VIDEO."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "BEFORE AND AFTER",
+      "heading": "SAME LISTING. PHOTOS VS A **15-SECOND** VIDEO.",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "THE EXAMPLE",
+      "heading": "A 4-BED **FAMILY** HOME",
+      "body": "An example listing: garden, pool, quiet street. Same photos in both versions.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "THE **FIRST** THING BUYERS SEE",
+      "body": "Before: The front gate. No text.\nAfter:\n✓ The pool, moving slowly\n✓ \"4-bed with pool, quiet street\" in bold",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "FROM PHOTO DUMP TO **TOUR**",
+      "body": "Before: Twenty photos in random order.\nAfter:\n✓ Living room, kitchen, master bedroom\n✓ Garden and pool to finish\n✓ Two to three seconds each",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "FROM \"DM FOR INFO\" TO ONE **ASK**",
+      "body": "Before: \"DM for more info and price.\"\nAfter:\n✓ Price and area on screen\n✓ \"DM TOUR to book a viewing\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "READABLE WITH THE **SOUND** OFF",
+      "body": "Before: No text. Music only.\nAfter:\n✓ Big captions in brand colours\n✓ Calm music that fits the home",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "SAME PHOTOS. NEW **PACKAGING**.",
+      "body": "Nothing was reshot. Nothing fake was added. The home just got easier to notice.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "TURN PHOTOS INTO **VIDEO**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_63cac91361/slide_08.png"
+    }
+  ],
+  "caption": "Same example listing. Same photos. Two very different posts.\n\nBefore: twenty still photos, the gate first, \"DM for more info.\"\nAfter: a 15-second video with a bold hook on the best shot, a short tour of the main rooms and one clear ask.\nNothing was reshot. Nothing fake was added.\nShort videos reach far more people than photo posts.\n\nWhich version would you stop scrolling for?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realestatevideo",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-04T12:30:00+00:00",
+  "slot_id": "2026-12-04-2",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:27+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

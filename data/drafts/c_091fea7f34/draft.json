@@ -1,0 +1,127 @@
+{
+  "id": "c_091fea7f34",
+  "style": "kortexa-bold",
+  "idea": {
+    "title": "What AI should never do to your listing",
+    "angle": "Honest AI video moves through real rooms. It should never invent furniture, rooms or views. Buyers who feel misled at the viewing don't come back.",
+    "hook": "AI SHOULD NEVER ADD A FAKE ROOM"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "AI EXPLAINED",
+      "heading": "AI SHOULD NEVER ADD A **FAKE** ROOM",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "myth",
+      "layout": "center_statement",
+      "kicker": "MYTH",
+      "heading": "A LITTLE EXTRA MAKES IT SELL",
+      "body": null,
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "BUYERS SEE IT AT THE **VIEWING**",
+      "body": "If the home doesn't match the video, trust breaks on the spot.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "truth",
+      "layout": "top_heading_body",
+      "kicker": "TRUTH",
+      "heading": "MISLED BUYERS DON'T **COME BACK**",
+      "body": "Make it look good. Keep it honest. That's the whole rule.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 1",
+      "heading": "NO **FAKE** FURNITURE",
+      "body": "Show the rooms as they are. Clear the clutter before the photos instead.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 2",
+      "heading": "NO EXTRA **ROOMS**",
+      "body": "Never change the layout. The video shows the home buyers will walk into.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Step 3",
+      "heading": "NO BORROWED **VIEWS**",
+      "body": "No sea, city or garden that isn't really there. Show the real view.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "MAKE VIDEOS BUYERS **TRUST**",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_091fea7f34/slide_08.png"
+    }
+  ],
+  "caption": "The fastest way to lose a buyer is a video that lies.\n\nHonest AI video moves through your real rooms.\nIt should never add furniture, extra rooms or a view that isn't there.\nBuyers will see the real home at the viewing.\nIf it doesn't match, they won't come back.\nMake it look good. Keep it honest.\n\nWhat worries you most about AI and your listings?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#listingvideo",
+    "#realestatetips",
+    "#realtortips"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-02T08:30:00+00:00",
+  "slot_id": "2026-12-02-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:20+00:00",
+  "updated_at": "2026-11-28T10:45:32+00:00"
+}

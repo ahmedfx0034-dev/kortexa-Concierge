@@ -1,0 +1,127 @@
+{
+  "id": "c_a804cf13da",
+  "style": "kortexa-light",
+  "idea": {
+    "title": "Real listing: photo dump vs the order that sells",
+    "angle": "Using one real listing's photos: the random order agents usually post, then the same photos re-ordered from hero shot to neighbourhood. The change is the order, not the house. Text-only before/after (captions, post layouts, first lines) — no house photos.",
+    "hook": "SAME PHOTOS. NEW ORDER. LOOK."
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE ORDER THAT SELLS",
+      "heading": "SAME PHOTOS. NEW ORDER. **LOOK**.",
+      "body": "Take an example 4-bed family home. Nothing about the house changes. Only the order.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "THE PROBLEM",
+      "heading": "POSTED IN THE ORDER YOU **TOOK** THEM",
+      "body": "Gate first. Then a corridor. Then a bathroom. Buyers decide in about a second if they'll keep looking.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "idea",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "THEY SWIPE AWAY AFTER **PHOTO ONE**",
+      "body": "The pool and garden are near the end. Most buyers never get that far. The best part of the home stays hidden.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "FIX THE **FIRST** PHOTO",
+      "body": "Before: Photo 1 is the front gate.\nAfter: Photo 1 is the hero shot.\n✓ The pool and garden, in daylight\n✓ Bold text: \"4-bed with pool, quiet street\"",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "PUT THE ROOMS IN **ORDER**",
+      "body": "Before: Gate, corridor, bathroom, kitchen, bedroom, pool.\nAfter:\n✓ Hero shot, living room, kitchen\n✓ Master bedroom, master bathroom\n✓ Other bedrooms\n✓ Pool, then the neighbourhood",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "before_after",
+      "layout": "before_after",
+      "kicker": null,
+      "heading": "FROM PHOTO DUMP TO **STORY**",
+      "body": "Before: Twenty photos in random order.\nAfter: Eight photos that tell the home's story.\n✓ Each one shows a new space\n✓ Ends with the area nearby",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "The house didn't change. The order did.",
+      "body": "Lead with your best shot, even if it's not the front.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "GET **THE ORDER** THAT SELLS",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_a804cf13da/slide_08.png"
+    }
+  ],
+  "caption": "Same photos, same house. The only thing that changed is the order.\n\nMost listings go up in the order the photos were taken: gate, corridor, bathroom.\nBuyers decide in about a second, so they swipe away.\nLead with the hero shot. Then living room, kitchen, master bedroom, master bathroom, other bedrooms, standout feature and the neighbourhood.\nYou already have the photos. Just change the order.\n\nWhat's the first photo on your latest listing?\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#listingvideo"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-03T08:30:00+00:00",
+  "slot_id": "2026-12-03-1",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:45:55+00:00",
+  "updated_at": "2026-11-28T10:46:03+00:00"
+}

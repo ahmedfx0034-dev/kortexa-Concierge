@@ -1,0 +1,127 @@
+{
+  "id": "c_7b1f7dd4ae",
+  "style": "kortexa-dark",
+  "idea": {
+    "title": "The buyer messaged 3 agents. Who won?",
+    "angle": "I tell it from the buyer's side: she sees a city apartment, messages three agents, and books with whoever answers first. Speed often beats the best listing.",
+    "hook": "SHE MESSAGED 3 AGENTS. WHO WON?"
+  },
+  "slides": [
+    {
+      "index": 1,
+      "archetype": "hook",
+      "layout": "center_statement",
+      "kicker": "THE BUYER'S SIDE",
+      "heading": "SHE MESSAGED **3 AGENTS**. WHO WON?",
+      "body": "Not the one with the best listing.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_01.png"
+    },
+    {
+      "index": 2,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "THE STORY",
+      "heading": "SHE FINDS A CITY **APARTMENT**",
+      "body": "Say she sees three similar 2-bed apartments, from three agents. She likes all of them. So she messages all three.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_02.png"
+    },
+    {
+      "index": 3,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Agent 1",
+      "heading": "REPLIES THE **NEXT DAY**",
+      "body": "A long, friendly message. Great photos too. But she has already booked a viewing somewhere else.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_03.png"
+    },
+    {
+      "index": 4,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Agent 2",
+      "heading": "REPLIES IN **3 HOURS**",
+      "body": "\"Yes, it's available.\" Nothing more. By then she already has a viewing time from someone else.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_04.png"
+    },
+    {
+      "index": 5,
+      "archetype": "step",
+      "layout": "numbered",
+      "kicker": "Agent 3",
+      "heading": "REPLIES IN **MINUTES**",
+      "body": "Confirms the apartment, shares the basics and offers Saturday at 10. She says yes. This agent wins.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_05.png"
+    },
+    {
+      "index": 6,
+      "archetype": "problem",
+      "layout": "top_heading_body",
+      "kicker": "WHAT IT COSTS",
+      "heading": "YOU DID THE HARD PART. THEN **LOST** HER.",
+      "body": "Your post worked. She messaged you. A slow reply handed her to another agent.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_06.png"
+    },
+    {
+      "index": 7,
+      "archetype": "takeaway",
+      "layout": "quote",
+      "kicker": "THE TAKEAWAY",
+      "heading": "SPEED OFTEN BEATS THE **BEST** LISTING.",
+      "body": "Decide now who replies, and how fast.",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_07.png"
+    },
+    {
+      "index": 8,
+      "archetype": "cta",
+      "layout": "cta",
+      "kicker": "NEXT STEP",
+      "heading": "BE THE AGENT WHO **REPLIES** FIRST",
+      "body": "Comment LISTING and I'll send you the playbook",
+      "bullets": [],
+      "image_prompt": null,
+      "image_path": null,
+      "rendered_path": "/home/user/kortexa-Concierge/data/drafts/c_7b1f7dd4ae/slide_08.png"
+    }
+  ],
+  "caption": "She messaged three agents about the same kind of apartment. Only one got the viewing.\n\nIt wasn't the agent with the best photos.\nIt was the one who answered first, with the basics and a viewing time.\nA buyer who waits hours has usually messaged other agents by then.\nMore enquiries only matter if someone answers fast.\n\nComment LISTING and I'll send you the playbook.",
+  "hashtags": [
+    "#realestateagent",
+    "#realestatemarketing",
+    "#realtortips",
+    "#realestatetips",
+    "#whatsappbusiness"
+  ],
+  "status": "draft",
+  "feedback": null,
+  "ig_media_id": null,
+  "ig_permalink": null,
+  "error": null,
+  "scheduled_at": "2026-12-01T19:30:00+00:00",
+  "slot_id": "2026-12-01-3",
+  "experiment_arm": "explore",
+  "image_urls": [],
+  "published_at": null,
+  "created_at": "2026-11-28T10:46:17+00:00",
+  "updated_at": "2026-11-28T10:46:28+00:00"
+}
