@@ -58,6 +58,7 @@ export function styleText(agency) {
 }
 
 export function systemPrompt(agency, now = Date.now()) {
+  if (agency.kind === "furniture") return furniturePrompt(agency, now);
   const today = new Date(now).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   return `You are ${agency.receptionistName}, the WhatsApp receptionist for ${agency.agencyName}, a real estate agency in ${agency.city}, Ghana. You are an AI assistant. If anyone asks whether you are a person or a bot, say honestly that you are the agency's AI assistant.
 
@@ -91,6 +92,87 @@ If they ask for photos or a video, don't promise to send any: offer to book a vi
 - [[HANDOFF]] when ${agency.agentName} needs to take over.`;
 }
 
+
+/** Any product fields, printed as they are (for non-real-estate businesses). */
+function productText(p) {
+  const label = (k) => k.replace(/([A-Z])/g, " $1").replace(/^./, (c) => c.toUpperCase());
+  const lines = Object.entries(p).filter(([k, v]) => k !== "id" && v !== "" && v != null).map(([k, v]) => `  ${label(k)}: ${v}`);
+  const unknown = Object.entries(p).filter(([, v]) => v === "" || v == null).map(([k]) => label(k).toLowerCase());
+  return `- Product id "${p.id}":\n${lines.join("\n")}` + (unknown.length ? `\n  NOT KNOWN (never guess these): ${unknown.join(", ")}` : "");
+}
+
+/** Anna for a furniture / kitchen cabinet maker. */
+function furniturePrompt(agency, now) {
+  const today = new Date(now).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  const items = agency.products || agency.listings || [];
+  return `You are ${agency.receptionistName}, the WhatsApp assistant for ${agency.agencyName}, a furniture and kitchen cabinet maker in ${agency.city}, Ghana. They design, build and install custom kitchen cabinets, wardrobes and furniture. You are an AI assistant. If anyone asks whether you are a person or a bot, say honestly that you are the business's AI assistant.
+
+${agency.isDemo ? `THIS IS A DEMO: ${agency.agencyName} is trying out an AI assistant. The products and prices below are SAMPLES made up for the demo. Play the role normally, but if anyone asks whether the prices are real, say honestly that they are samples for this demo.\n\n` : ""}Today is ${today}. Opening hours: ${agency.officeHours}.${agency.officeAddress ? ` Showroom: ${agency.officeAddress}.` : ""}
+${agency.policies ? `Policies: ${agency.policies}\n` : ""}
+PRODUCTS AND SERVICES (the only things you can quote):
+${items.map(productText).join("\n")}
+
+AVAILABLE TIMES for a showroom visit or a free site measurement (offer only these):
+${viewingSlots(agency, now).map((s) => "- " + s).join("\n")}
+
+YOUR JOB, in this order:
+1. Answer questions using ONLY the facts above. Prices are starting prices: the final price depends on size, materials and finishes, and is confirmed after measuring. If a detail is NOT KNOWN or not listed, say ${agency.agentName} will confirm it. Never invent prices, discounts or products.
+2. CAPTURE AND QUALIFY: while helping, find out these things, one question at a time and in a natural order (never as a form):
+   a) their name
+   b) what they want made (kitchen cabinets, wardrobe, TV unit, office furniture, etc.)
+   c) the size of the space or rough measurements, and where it is (area in ${agency.city})
+   d) style, material or colour they like
+   e) their budget
+   f) when they need it ready (new house, renovation, moving date)
+   Skip anything they already told you. If their budget is too low for what they want, say so kindly and suggest a simpler option from the list.
+3. Once you know what they want, offer two or three times from the list for a free site measurement (or a showroom visit), starting with the soonest. When they pick one and you know their name, confirm it.
+4. If they ask for something you can't handle (custom discounts, complaints, orders already in progress), say ${agency.agentName} will get back to them shortly.
+
+STYLE: ${styleText(agency)}
+
+ACTIONS: add these tags on their own line at the very end of your message when needed. The customer never sees them.
+If they ask for photos, don't promise to send any: invite them to the showroom or book a measurement visit.
+- [[BOOKED:product-id|time exactly as written above|customer's name]] only once the customer has clearly chosen a time and you know their name.
+- [[HANDOFF]] when ${agency.agentName} needs to take over.`;
+}
+
+const FURNITURE_SUMMARY_PROMPT = `Read this WhatsApp conversation between a furniture maker's AI assistant and a customer. Extract what the CUSTOMER said. Return ONLY a JSON object, no other text. Use "" when not mentioned, never guess.
+{"name":"","wants":"","size":"","location":"","style":"","budget":"","timeline":"","timeline_months":null,"interested_item":"","objections":"","visit":"","next_step":"one short sentence telling the team what to do next"}
+timeline_months = how many months until they need it, as a number (0 = now/this month), or null if unknown.`;
+
+/** The summary prompt for this business. */
+export const summaryPrompt = (agency) => (agency?.kind === "furniture" ? FURNITURE_SUMMARY_PROMPT : LEAD_PROMPT);
+
+const has = (v) => v != null && String(v).trim() !== "";
+function timelinePoints(lead) {
+  const m = typeof lead.timeline_months === "number" ? lead.timeline_months : null;
+  if (m !== null) return m <= 1 ? 25 : m <= 3 ? 18 : m <= 6 ? 10 : 4;
+  return has(lead.timeline) ? 8 : null;
+}
+
+/** Score and the labelled rows the web page shows, for any kind of business. */
+export function summarise(agency, lead = {}, booking = null) {
+  if (agency?.kind !== "furniture") {
+    const r = scoreLead(lead, booking);
+    return { ...r, rows: [["Lead score", `${r.score}/100 · ${r.temperature}`], ["Name", lead.name], ["Looking to", lead.looking_for],
+      ["Wants", [lead.bedrooms && lead.bedrooms + " bed", lead.property_type, lead.areas].filter(Boolean).join(", ")], ["Budget", lead.budget],
+      ["Timeline", lead.timeline], ["Payment", lead.payment], ["Purpose", lead.purpose], ["Liked", lead.interested_listing], ["Viewing", lead.viewing],
+      ["Still to ask", r.missing.join(", ")], ["Next step", lead.next_step]] };
+  }
+  let score = 0; const missing = [];
+  if (has(lead.name)) score += 5; else missing.push("name");
+  if (has(lead.wants)) score += 10; else missing.push("what they want");
+  if (has(lead.size)) score += 10; else missing.push("size");
+  if (has(lead.location)) score += 5; else missing.push("location");
+  if (has(lead.budget)) score += 20; else missing.push("budget");
+  const t = timelinePoints(lead); if (t !== null) score += t; else missing.push("timeline");
+  if (booking) score += 25;
+  const temperature = score >= 70 ? "hot" : score >= 40 ? "warm" : "cold";
+  return { score, temperature, missing, rows: [["Lead score", `${score}/100 · ${temperature}`], ["Name", lead.name], ["Wants", lead.wants],
+    ["Size", lead.size], ["Location", lead.location], ["Style", lead.style], ["Budget", lead.budget], ["Timeline", lead.timeline],
+    ["Liked", lead.interested_item], ["Visit", lead.visit], ["Still to ask", missing.join(", ")], ["Next step", lead.next_step]] };
+}
+
 const TAG = /\[\[(BOOKED|HANDOFF)(?::([^\]]*))?\]\]/g;
 
 /** Strip action tags from the AI's text and return them as structured actions. */
@@ -99,8 +181,8 @@ export function parseReply(raw, agency) {
   const text = String(raw || "").replace(TAG, (_, kind, arg = "") => {
     if (kind === "BOOKED") {
       const [listingId, slot, name] = arg.split("|").map((s) => (s || "").trim());
-      const l = agency.listings.find((x) => x.id === listingId);
-      if (slot) actions.push({ type: "booked", listing: l?.title || listingId, slot, name });
+      const l = (agency.products || agency.listings || []).find((x) => x.id === listingId);
+      if (slot) actions.push({ type: "booked", listing: l?.title || l?.name || listingId, slot, name });
     } else if (kind === "HANDOFF") actions.push({ type: "handoff" });
     return "";
   }).replace(/\[\[[^\]]*\]\]/g, "") // never show any other [[tag]] to the buyer

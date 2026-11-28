@@ -3,7 +3,7 @@
 // The conversation lives in the visitor's browser and is sent with each message.
 
 import { LLM, LLMError } from "./llm.js";
-import { systemPrompt, parseReply, SUMMARY_PROMPT, scoreLead } from "./prompt.js";
+import { systemPrompt, parseReply, summaryPrompt, summarise } from "./prompt.js";
 
 const MAX_TURNS = 30;        // messages per conversation
 const MAX_CHARS = 600;       // per message
@@ -85,8 +85,9 @@ export function webApi({ agency, llm, limiter = new Limiter(), demos = null, now
       if (url.pathname === "/api/agency") {
         const code = url.searchParams.get("demo");
         if (code && !demos?.get(code)) { send(res, 404, { error: "No demo with that code." }); return true; }
-        const { agencyName, receptionistName, listings, isDemo = false } = agencyFor(code);
-        send(res, 200, { agencyName, receptionistName, isDemo, listings: listings.map(({ id, title, price }) => ({ id, title, price })) });
+        const { agencyName, receptionistName, isDemo = false, kind = "real-estate" } = agencyFor(code);
+        const items = agencyFor(code).products || agencyFor(code).listings || [];
+        send(res, 200, { agencyName, receptionistName, isDemo, kind, listings: items.map(({ id, title, name, price }) => ({ id, title: title || name, price })) });
         return true;
       }
       if (!llm) { send(res, 503, { error: "The AI isn't connected yet. Add LLM_API_KEY to the server settings." }); return true; }
@@ -101,13 +102,13 @@ export function webApi({ agency, llm, limiter = new Limiter(), demos = null, now
         send(res, 200, parseReply(raw, ag));
         return true;
       }
-      const transcript = messages.map((m) => `${m.role === "user" ? "BUYER" : "RECEPTIONIST"}: ${m.content}`).join("\n");
-      const raw = await llm.chat([{ role: "system", content: SUMMARY_PROMPT }, { role: "user", content: transcript }], { maxTokens: 300, temperature: 0 });
+      const transcript = messages.map((m) => `${m.role === "user" ? (ag.kind === "furniture" ? "CUSTOMER" : "BUYER") : "RECEPTIONIST"}: ${m.content}`).join("\n");
+      const raw = await llm.chat([{ role: "system", content: summaryPrompt(ag) }, { role: "user", content: transcript }], { maxTokens: 300, temperature: 0 });
       const match = raw.match(/\{[\s\S]*\}/);
       let summary = null;
       try { summary = match ? JSON.parse(match[0]) : null; } catch { /* handled below */ }
       if (!summary) { send(res, 502, { error: "Couldn't make the summary. Try again." }); return true; }
-      send(res, 200, { ...summary, ...scoreLead(summary, summary.viewing ? true : null) });
+      send(res, 200, { ...summary, ...summarise(ag, summary, summary.viewing || summary.visit ? true : null) });
       return true;
     } catch (e) {
       if (!(e instanceof LLMError)) log.error(e);
