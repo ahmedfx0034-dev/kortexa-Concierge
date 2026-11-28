@@ -127,3 +127,20 @@ test("a slow main model gives up after firstTryMs and the backup answers", async
   assert.ok(Date.now() - t < 1000);
   assert.equal(llm.last.model, "quick");
 });
+
+test("backup race: busy main error switches at once; a real error is reported; slow main loses", async () => {
+  const { LLM } = await import("../src/llm.js");
+  const reply = (content) => Promise.resolve({ ok: true, status: 200, json: async () => ({ choices: [{ message: { content } }] }) });
+  const make = (main) => new LLM({ baseUrl: "http://x", model: "main", fallbackModel: "backup", apiKey: "k", firstTryMs: 50,
+    fetchImpl: (u, o) => (JSON.parse(o.body).model === "main" ? main(o) : reply("backup answer")) });
+  const busy = make(() => Promise.resolve({ ok: false, status: 503, json: async () => ({}) }));
+  assert.equal(await busy.chat([{ role: "user", content: "hi" }]), "backup answer");
+  const bad = () => Promise.resolve({ ok: false, status: 400, json: async () => ({ error: { message: "bad key" } }) });
+  const broken = new LLM({ baseUrl: "http://x", model: "main", fallbackModel: "backup", apiKey: "k", firstTryMs: 50, fetchImpl: bad });
+  await assert.rejects(broken.chat([{ role: "user", content: "hi" }]), /bad key/, "both fail: the error is reported");
+  const slow = make(() => new Promise((r) => setTimeout(() => r({ ok: true, status: 200, json: async () => ({ choices: [{ message: { content: "late" } }] }) }), 300)));
+  assert.equal(await slow.chat([{ role: "user", content: "hi" }]), "backup answer");
+  const fast = make(() => reply("main answer"));
+  assert.equal(await fast.chat([{ role: "user", content: "hi" }]), "main answer");
+  assert.equal(fast.last.model, "main");
+});

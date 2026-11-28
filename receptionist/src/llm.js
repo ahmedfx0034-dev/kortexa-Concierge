@@ -8,7 +8,7 @@ export class LLM {
    *                         "none" makes Gemini answer in about a second. "" = model default.
    * @param fallbackModel    tried once if the main model is busy, slow or failing.
    */
-  constructor({ baseUrl, model, apiKey, reasoningEffort = "", fallbackModel = "", fetchImpl = globalThis.fetch, timeoutMs = 40000, firstTryMs = 10000 }) {
+  constructor({ baseUrl, model, apiKey, reasoningEffort = "", fallbackModel = "", fetchImpl = globalThis.fetch, timeoutMs = 40000, firstTryMs = 4000 }) {
     this.baseUrl = baseUrl.replace(/\/+$/, "");
     // With a backup model, the main one gets only firstTryMs before we switch, so a busy
     // model costs a few seconds instead of a minute.
@@ -19,17 +19,27 @@ export class LLM {
 
   async chat(messages, opts = {}) {
     const start = Date.now();
-    try {
-      const text = await this.#call(this.model, this.reasoningEffort, messages, opts, this.fallbackModel ? this.firstTryMs : this.timeoutMs);
-      this.last = { model: this.model, ms: Date.now() - start };
-      return text;
-    } catch (e) {
-      const retryable = e.status === 429 || e.status === 503 || e.status === 502;
-      if (!this.fallbackModel || !retryable) throw e;
-      const text = await this.#call(this.fallbackModel, "", messages, opts, this.timeoutMs);
-      this.last = { model: this.fallbackModel, ms: Date.now() - start, mainFailed: e.message };
-      return text;
-    }
+    const record = (model, extra = {}) => (text) => { this.last = { model, ms: Date.now() - start, ...extra }; return text; };
+    if (!this.fallbackModel) return this.#call(this.model, this.reasoningEffort, messages, opts, this.timeoutMs).then(record(this.model));
+    const retryable = (e) => e.status === 429 || e.status === 503 || e.status === 502;
+    // Ask the main model. If it hasn't answered after firstTryMs, or fails because it's busy,
+    // also ask the backup, and use whichever answers first.
+    return new Promise((resolve, reject) => {
+      let pending = 1, backup = false, settled = false;
+      const finish = (fn, v) => { if (!settled) { settled = true; clearTimeout(timer); fn(v); } };
+      const ok = (model, extra) => (text) => finish(resolve, record(model, extra)(text));
+      const fail = (e) => { if (--pending === 0 && (backup || !retryable(e))) finish(reject, e); };
+      const startBackup = (why) => {
+        if (backup || settled) return;
+        backup = true; pending++;
+        this.#call(this.fallbackModel, "", messages, opts, this.timeoutMs).then(ok(this.fallbackModel, { mainSlow: why }), fail);
+      };
+      const timer = setTimeout(() => startBackup(`no answer after ${this.firstTryMs} ms`), this.firstTryMs);
+      this.#call(this.model, this.reasoningEffort, messages, opts, this.timeoutMs).then(ok(this.model), (e) => {
+        if (retryable(e)) startBackup(e.message);
+        fail(e);
+      });
+    });
   }
 
   async #call(model, effort, messages, { maxTokens = 400, temperature = 0.5 } = {}, timeoutMs = this.timeoutMs) {
