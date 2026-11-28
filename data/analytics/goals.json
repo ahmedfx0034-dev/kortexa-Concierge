@@ -1,0 +1,12 @@
+{
+  "per_reach": 1000,
+  "snapshot_target_hours": 48,
+  "weights": {
+    "comments": 2.0,
+    "follows": 10.0,
+    "likes": 0.5,
+    "profile_visits": 4.0,
+    "saved": 3.0,
+    "shares": 3.0
+  }
+}
